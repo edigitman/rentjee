@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template.xhtml">
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/frags/search.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <p>Inregistreaza-te:</p>
+        <h:form>
+            <h:panelGrid columns="2" id="registerForm">
+                <p:outputLabel for="email" value="Email: "/>
+                <p:inputText id="email" value="#{registerMB.user.email}"/>
+
+                <h:outputLabel for="password" value="Parola: " />
+                <p:password id="password" value="#{registerMB.user.password}" feedback="true"
+                            promptLabel="Siguranta parola" weakLabel="Slaba" required="true"
+                            goodLabel="Medie" strongLabel="Puternica" match="confirm"/>
+
+                <h:outputText value="Confirma: "/>
+                <p:password id="confirm" value="#{registerMB.confirm}" required="true"/>
+
+                <h:outputText/>
+                <p:commandButton value="Inregistrare" action="#{registerMB.register}" update="registerForm"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>

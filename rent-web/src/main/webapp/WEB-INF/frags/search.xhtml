@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <h:form>
+    <h2><p:commandLink value="La Chirie" action="index?faces-redirect=true"/></h2>
+    <p:panel id="search" header="cautare" style="margin-top: 13px">
+        <h:panelGrid columns="1" cellpadding="10" style="width: 100%">
+            <p:outputLabel for="city" value="Oras"/>
+            <p:selectOneMenu id="city" style="width: 100%">
+                <f:selectItems value="#{mdSessionMB.cities}"/>
+            </p:selectOneMenu>
+
+            <p:commandButton value="caute" style="width: 100%"/>
+
+        </h:panelGrid>
+    </p:panel>
+    </h:form>
+</ui:composition>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <h:outputStylesheet name="rent.css" library="css"/>
+    <title>Rent 1.0</title>
+</h:head>
+
+<h:body>
+
+    <p:layout style="width:760px; height:600px; margin: 0 auto; margin-top:20px">
+
+        <p:layoutUnit position="west" resizable="false" size="180" style="border: none">
+            <ui:insert name="menu">
+                west
+            </ui:insert>
+
+        </p:layoutUnit>
+
+        <!--User status-->
+        <p:layoutUnit position="center" style="border: none">
+            <h:form>
+                <!--USer not logged in-->
+                <p:panelGrid columns="3" styleClass="noBorders" rendered="#{!userMB.userLogged}">
+                    <p:commandLink value="Login" action="user/home?faces-redirect=true"/>
+                    <h:outputText value="|"/>
+                    <p:commandLink value="Register" action="register"/>
+                </p:panelGrid>
+
+                <!--User logged in-->
+                <p:panelGrid columns="3" styleClass="noBorders" rendered="#{userMB.userLogged}">
+                    <p:commandLink value="Account" action="user/home?faces-redirect=true"/>
+                    <h:outputText value="|"/>
+                    <p:commandLink value="Logout" action="#{userMB.logOut}"/>
+                </p:panelGrid>
+            </h:form>
+            <ui:insert name="content">
+                Center
+            </ui:insert>
+
+
+        </p:layoutUnit>
+    </p:layout>
+
+</h:body>
+</html>

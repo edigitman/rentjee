@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template.xhtml">
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/frags/userMenu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+        <h2><h:outputText value="Adauga anunt"/></h2>
+
+        <div class="ui-grid">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-12">
+                    <p:outputLabel for="description" value="Descriere"/>
+                    <p:inputTextarea id="description" maxlength="100"
+                                     value="#{addMB.advert.description}"
+                                     counterTemplate="{0} charactere remase."
+                                     style="width: 98%; height: 50px; resize: none"/>
+                </div>
+            </div>
+
+            <div class="ui-grid-row" style="margin-top: 10px">
+                <div class="ui-grid-col-12">
+                    <p:outputLabel value="Adresa"/>
+                </div>
+            </div>
+
+            <div class="ui-grid-row" style="margin-top: 10px">
+                <div class="ui-grid-col-12">
+                    <p:outputLabel for="city" value="Oras:"/>
+                    <p:selectOneMenu id="city" value="#{addMB.advert.address.city}"
+                                     converter="omnifaces.SelectItemsConverter">
+                        <f:selectItems value="#{mdSessionMB.cities}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="street" value="Strada:" style="margin-left: 10px"/>
+                    <p:inputText id="street" value="#{addMB.advert.address.street}" size="45"/>
+
+                    <p:outputLabel for="nr" value="Nr.:" style="margin-left: 10px"/>
+                    <p:inputText id="nr" value="#{addMB.advert.address.nr}" size="2"/>
+                </div>
+            </div>
+
+            <div class="ui-grid-row" style="margin-top: 10px">
+                <div class="ui-grid-col-12">
+                    <p:outputLabel for="type" value="Tip:"/>
+                    <p:selectOneMenu id="type" value="#{addMB.advert.adType}"
+                                     converter="omnifaces.SelectItemsConverter">
+                        <f:selectItems value="#{mdSessionMB.types}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="accomodation" value="Acomodare.:" style="margin-left: 10px"/>
+                    <p:selectOneMenu id="accomodation" value="#{addMB.advert.buildingType}"
+                                     converter="omnifaces.SelectItemsConverter">
+                        <f:selectItems value="#{mdSessionMB.accomodations}"/>
+                    </p:selectOneMenu>
+                </div>
+            </div>
+
+
+            <div class="ui-grid-row" style="margin-top: 10px">
+                <div class="ui-grid-col-12">
+                    <p:commandButton value="Adauga" action="#{addMB.save()}" ajax="false"/>
+                </div>
+            </div>
+
+        </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>
