@@ -10,6 +10,7 @@ import java.util.List;
  */
 @Local
 public interface MdService {
+
     List<MdCity> findAllCities();
 
     List<MdAdType> findAllAdType();

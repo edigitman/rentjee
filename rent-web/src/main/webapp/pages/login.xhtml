@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -11,27 +12,39 @@
 
     <ui:define name="content">
 
-        <p>Autentificare:</p>
-        <form method="post" action="j_security_check">
-            <h:messages layout="table" errorStyle="background: #AFEEEE;"
-                        infoStyle="background: #AFEEEE;" globalOnly="true" />
-            <h:panelGrid columns="2">
-                <h:outputLabel value="email: " />
-                <input type="text" id="j_username" name="j_username" />
-
-                <h:outputLabel value="parola: " />
-                <input type="password" id="j_password" name="j_password" />
-
-                <h:outputText value="" />
-                <h:panelGrid columns="1">
-                    <input type="submit" name="submit" value="Login" />
-                </h:panelGrid>
-            </h:panelGrid>
-            <br />
-        </form>
+        <h3>Autentificare:</h3>
         <h:form>
-            <h:commandLink action="register?faces-redirect=true" value="Inregistreaza-te"/>
+                <p:messages />
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="username" value="Email: "/>
+                    <p:inputText id="username" value="#{userMB.username}"
+                                 required="true" label="Email"
+                                 requiredMessage="Completeaza andresa de email"
+                                 validatorMessage="Email invalid">
+                        <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>
+
+                    <p:outputLabel for="password" value="Password : "/>
+                    <p:password id="password" value="#{userMB.password}"
+                                required="true"
+                                requiredMessage="Parola obligatorie"/>
+
+                    <h:outputText/>
+                    <p:outputPanel layout="block">
+                        <p:commandButton value="Login" actionListener="#{userMB.login()}" update="@form"/>
+                        <p:commandButton value="Curata" type="reset"/>
+                    </p:outputPanel>
+                </h:panelGrid>
+
+            <p:outputPanel layout="block" style="margin-top: 10px">
+                <h:commandLink action="home?faces-redirect=true" value="Inregistreaza-te" />
+                <br/><br/>
+                <h:commandLink value="Recupereaza parola"/>
+            </p:outputPanel>
         </h:form>
+
     </ui:define>
 </ui:composition>
 </html>

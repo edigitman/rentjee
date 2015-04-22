@@ -4,16 +4,16 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <h2><p:commandLink value="La Chirie" action="/pages/index?faces-redirect=true"/></h2>
     <p:panel id="search" header="cautare" style="margin-top: 13px">
         <h:panelGrid columns="1" cellpadding="10" style="width: 100%">
-
-
-
-            <p:commandLink value="caute" style="width: 100%">
-                <h:outputText value="Informatii"/>
-                <h:outputText value="Anunturi"/>
-                <h:outputText value="Setari"/>
-            </p:commandLink>
+            <h:form>
+                <h:commandLink value="Anunturi" action="home?page-redirect=true"/>
+                <br/><br/>
+                <h:commandLink value="Adauga anunt" action="add?page-redirect=true"/>
+                <br/><br/>
+                <h:commandLink value="Setari" action="setari?page-redirect=true"/>
+            </h:form>
 
         </h:panelGrid>
     </p:panel>

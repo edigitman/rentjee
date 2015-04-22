@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/pages/template.xhtml">
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/frags/search.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="details">
+            <p:growl id="growl" showDetail="true" sticky="true" />
+
+            <h2>Detalii anunt -
+                <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/> -
+                <h:outputText id="type" value="#{detailsMB.selected.adType.name}"/>
+            </h2>
+
+            <div class="ui-grid">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <h:outputText id="description" maxlength="150"
+                                      value="#{detailsMB.selected.description}"
+                                      style="width: 98%; height: 30px; resize: none"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <p:outputLabel for="value" value="Pret: "/>
+                        <h:outputText id="value" size="5" style="text-align: right"
+                                      value="#{detailsMB.selected.value.value}"/>
+
+                        <p:outputLabel for="deposit" value="Garantie: " style="margin-left: 10px"
+                                       rendered="#{detailsMB.hasDeposit()}"/>
+                        <h:outputText id="deposit" size="5" style="text-align: right"
+                                      rendered="#{detailsMB.hasDeposit()}"
+                                     value="#{detailsMB.selected.value.deposit}"/>
+
+                        <h:outputText id="curr" size="5" style="text-align: right"
+                                     value=" #{detailsMB.selected.value.currency.name}"/>
+
+                        <h:outputText value=" Negociabil" rendered="#{detailsMB.selected.value.negotiable}"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <p:outputLabel value="Adresa:"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <h:outputText value="#{detailsMB.selected.address.city.name}"/>
+
+                        <p:outputLabel for="street" value="Strada:" style="margin-left: 10px"/>
+                        <h:outputText id="street" size="40" value="#{detailsMB.selected.address.street}"/>
+
+                        <p:outputLabel for="nr" value="Nr.:" style="margin-left: 10px"/>
+                        <h:outputText id="nr" size="2" value="#{detailsMB.selected.address.nr}"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-4">
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+
+
+
+                        </h:panelGrid>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-2">
+                        <h:outputText value="Dotari:"/>
+                    </div>
+                    <div class="ui-grid-col-10">
+                        <ui:repeat value="#{detailsMB.dotari()}" var="dot">
+                            <h:outputText value="#{dot}"/>
+                        </ui:repeat>
+                    </div>
+                </div>
+
+                <p:panelGrid columns="1" style="margin-top: 10px">
+                    <h3><h:outputText value="Poze:" rendered="#{not empty detailsMB.selected.imageList}"/></h3>
+                    <p:galleria value="#{detailsMB.selected.imageList}"
+                                rendered="#{not empty detailsMB.selected.imageList}"
+                                var="image" panelWidth="500" panelHeight="313">
+                        <img src="#{image.url}" alt="Image Description for #{image.url}"/>
+                    </p:galleria>
+                </p:panelGrid>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>

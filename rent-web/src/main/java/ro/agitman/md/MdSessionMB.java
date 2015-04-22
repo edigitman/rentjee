@@ -4,6 +4,7 @@ import ro.agitman.facade.MdService;
 import ro.agitman.model.MdAdType;
 import ro.agitman.model.MdBuildingType;
 import ro.agitman.model.MdCity;
+import ro.agitman.model.MdCurrency;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -26,6 +27,7 @@ public class MdSessionMB implements Serializable {
     private List<SelectItem> cities;
     private List<SelectItem> types;
     private List<SelectItem> accomodations;
+    private List<SelectItem> currencies;
 
     public List<SelectItem> getCities() {
         if (cities == null) {
@@ -55,5 +57,15 @@ public class MdSessionMB implements Serializable {
             }
         }
         return accomodations;
+    }
+
+    public List<SelectItem> getCurrencies() {
+        if (currencies == null) {
+            currencies = new ArrayList<>();
+            for(MdCurrency currency: mdService.findAllCurrency()){
+                currencies.add(new SelectItem(currency, currency.getName()));
+            }
+        }
+        return currencies;
     }
 }

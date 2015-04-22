@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<composite:interface>
+    <composite:attribute name="adverts" required="true"/>
+</composite:interface>
+
+<composite:implementation>
+    <p:messages autoUpdate="true" for="indexAds"/>
+    <p:dataTable id="indexAds" var="ad" styleClass="adList"
+                 value="#{cc.attrs.adverts}"
+                 rowIndexVar="rowIdx"
+                 rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}"
+                 selectionMode="single"
+                 selection="#{detailsMB.selected}"
+                 rowKey="#{ad.id}">
+
+        <p:ajax event="rowSelect" listener="#{detailsMB.onRowSelect()}" />
+
+        <p:column headerText="" style="width: 95px;">
+            <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
+        </p:column>
+
+        <p:column headerText="">
+            <p:panelGrid columns="1"
+                         columnClasses="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}
+                                        #{(rowIdx mod 2) eq 1 ? 'highlight' : ''}
+                                        #{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
+                <h:outputText value="#{ad.description}" />
+
+                <p:outputPanel>
+                    <h:outputText value="Adresa: "/>
+                    <h:outputText value="#{ad.address.city.name}, "/>
+                    <h:outputText value="Str. #{ad.address.street}"/>
+                </p:outputPanel>
+
+                <p:outputPanel>
+                    <h:outputText value="Contact: "/>
+                    <h:outputText value="#{ad.user.phone}"/>
+                </p:outputPanel>
+
+            </p:panelGrid>
+        </p:column>
+
+        <p:column headerText="" style="width: 93px">
+            <p:outputPanel>
+                <h:outputText value="Pret: "/>
+                <h:outputText value="#{ad.value.value} "/>
+                <h:outputText value="#{ad.value.currency.name}"/>
+                <h:outputText value=", Negociabil" rendered="#{ad.value.negotiable}"/>
+            </p:outputPanel>
+        </p:column>
+
+    </p:dataTable>
+</composite:implementation>
+</html>

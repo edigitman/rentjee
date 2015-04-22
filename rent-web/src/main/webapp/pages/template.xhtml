@@ -13,9 +13,9 @@
 
 <h:body>
 
-    <p:layout style="width:760px; height:600px; margin: 0 auto; margin-top:20px">
+    <p:layout style="width:760px; margin: 0 auto; margin-top:20px">
 
-        <p:layoutUnit position="west" resizable="false" size="180" style="border: none">
+    <p:layoutUnit position="west" resizable="false" size="180" style="border: none">
             <ui:insert name="menu">
                 west
             </ui:insert>
@@ -23,22 +23,10 @@
         </p:layoutUnit>
 
         <!--User status-->
-        <p:layoutUnit position="center" style="border: none">
-            <h:form>
-                <!--USer not logged in-->
-                <p:panelGrid columns="3" styleClass="noBorders" rendered="#{!userMB.userLogged}">
-                    <p:commandLink value="Login" action="user/home?faces-redirect=true"/>
-                    <h:outputText value="|"/>
-                    <p:commandLink value="Register" action="register"/>
-                </p:panelGrid>
+        <p:layoutUnit position="center" style="border: none; min-height:200px;" >
+            <ui:include src="/WEB-INF/frags/topBar.xhtml"/>
 
-                <!--User logged in-->
-                <p:panelGrid columns="3" styleClass="noBorders" rendered="#{userMB.userLogged}">
-                    <p:commandLink value="Account" action="user/home?faces-redirect=true"/>
-                    <h:outputText value="|"/>
-                    <p:commandLink value="Logout" action="#{userMB.logOut}"/>
-                </p:panelGrid>
-            </h:form>
+
             <ui:insert name="content">
                 Center
             </ui:insert>
@@ -46,6 +34,11 @@
 
         </p:layoutUnit>
     </p:layout>
+
+    <ui:insert name="dialogs">
+
+    </ui:insert>
+
 
 </h:body>
 </html>

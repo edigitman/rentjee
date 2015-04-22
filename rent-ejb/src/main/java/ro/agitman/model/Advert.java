@@ -12,12 +12,16 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Advert.findAll", query = "select a from Advert a"),
-		@NamedQuery(name = "findByUser", query = "select a from Advert a where a.user = :user") // ,
+		@NamedQuery(name = Advert.FIND_FOR_USER, query = "select a from Advert a where a.user = :user"),
+		@NamedQuery(name = Advert.FIND_FAV_BY_USER, query = "select a from Advert a where a.user = :user")
 // @NamedQuery(name = "findActive", query =
 // "select a from Advert a where a.state = 1")
 })
 @Table(name = "rt_advert")
 public class Advert extends AbstractModel {
+
+	public static final String FIND_FOR_USER = "Advert.findForUser";
+	public static final String FIND_FAV_BY_USER = "Advert.findFavForUser";
 
 	private Long id;
 	private User user;
@@ -32,6 +36,7 @@ public class Advert extends AbstractModel {
 	private Date dateExpires;
 	private List<Image> imageList = new ArrayList<>();
 	private MdAdType adType;
+	private long dotari;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,6 +64,16 @@ public class Advert extends AbstractModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Basic
+	@Column(name = "dotari")
+	public long getDotari() {
+		return dotari;
+	}
+
+	public void setDotari(long dotari) {
+		this.dotari = dotari;
 	}
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -140,7 +155,7 @@ public class Advert extends AbstractModel {
 		this.dateExpires = dateExpires;
 	}
 
-	@OneToMany(mappedBy = "advert", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "advert", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<Image> getImageList() {
 		return imageList;
 	}
@@ -149,7 +164,7 @@ public class Advert extends AbstractModel {
 		this.imageList = imageList;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "typeId")
 	public MdAdType getAdType() {
 		return adType;

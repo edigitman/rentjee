@@ -23,7 +23,6 @@ public class RegisterMB extends AbstractMB {
     private String confirm;
 
     public String register() {
-        //TODO implement register
         userService.register(user);
         info("Cont create cu succes");
         return "index?faces-redirect=true";

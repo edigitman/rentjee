@@ -16,4 +16,9 @@ public class MailServiceImpl implements MailService {
     public void sendConfirmMail(User u) {
         //TODO implement mail service
     }
+
+    @Override
+    public void sendAdvertAdded(User u){
+
+    }
 }

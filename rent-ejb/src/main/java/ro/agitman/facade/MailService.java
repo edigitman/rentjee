@@ -12,4 +12,6 @@ public interface MailService {
 
     void sendConfirmMail(User u);
 
+    void sendAdvertAdded(User u);
+
 }

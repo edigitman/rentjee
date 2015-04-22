@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:r = "http://java.sun.com/jsf/composite/components">
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -11,8 +12,19 @@
 
     <ui:define name="content">
 
-        <h1>home</h1>
+        <h3>Anunturi</h3>
 
+        <p:tabView dynamic="true" cache="true">
+            <p:tab title="Anunturile active">
+                <r:advertList adverts="#{addMB.myAds}"/>
+            </p:tab>
+            <p:tab title="Anunturi favorite">
+                <r:advertList adverts="#{addMB.favAds}"/>
+            </p:tab>
+            <p:tab title="Anunturi dezactivate">
+                <r:advertList adverts="#{addMB.dezAds}"/>
+            </p:tab>
+        </p:tabView>
 
 
 

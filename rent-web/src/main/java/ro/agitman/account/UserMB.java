@@ -1,36 +1,53 @@
 package ro.agitman.account;
 
+import ro.agitman.AbstractMB;
 import ro.agitman.facade.UserService;
 import ro.agitman.model.User;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.security.Principal;
 
 /**
  * Created by edi on 2/11/2015.
  */
 @ManagedBean
 @SessionScoped
-public class UserMB implements Serializable {
+public class UserMB extends AbstractMB {
 
     private User user;
+    private String username;
+    private String password;
 
     @EJB
     private UserService userFacade;
 
-    public User getUser(){
-        if(user == null){
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            String userEmail = context.getUserPrincipal().getName();
+    public void login(){
+        try {
+            //Login via the Servlet Context
+            getRequest().login(username, password);
 
+            redirect("user/home");
+
+        } catch (ServletException e) {
+            error("Email sau parola gresita");
+            e.printStackTrace();
+        }
+    }
+
+    public User getUser(){
+        if (user == null) {
+            String userEmail = getExternalContext().getUserPrincipal().getName();
             user = userFacade.findUserByEmail(userEmail);
         }
-
         return user;
     }
 
@@ -43,11 +60,23 @@ public class UserMB implements Serializable {
     }
 
     public String logOut(){
-        getRequest().getSession().invalidate();
-        return "logout";
+        getRequest().getSession(false).invalidate();
+        return "/pages/index?faces-redirect=true";
     }
 
-    private HttpServletRequest getRequest() {
-        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

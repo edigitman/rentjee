@@ -5,3 +5,18 @@
 .ui-panelgrid td, .ui-panelgrid tr {
     border-style: none !important
 }
+
+.adList table thead tr {
+    display: none;
+}
+
+.ui-datatable.adList thead th,
+.ui-datatable.adList tbody,
+.ui-datatable.adList tbody tr,
+.ui-datatable.adList tbody td {
+    border-style: none;
+}
+
+.highlight {
+    background: #E3FFED  !important ;
+}

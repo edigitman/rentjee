@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -13,65 +14,177 @@
 
     <ui:define name="content">
         <h:form>
-        <h2><h:outputText value="Adauga anunt"/></h2>
+            <h3><h:outputText value="Adauga anunt"/></h3>
 
-        <div class="ui-grid">
-            <div class="ui-grid-row">
-                <div class="ui-grid-col-12">
-                    <p:outputLabel for="description" value="Descriere"/>
-                    <p:inputTextarea id="description" maxlength="100"
-                                     value="#{addMB.advert.description}"
-                                     counterTemplate="{0} charactere remase."
-                                     style="width: 98%; height: 50px; resize: none"/>
+            <p:messages severity="error"/>
+
+            <div class="ui-grid">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <o:outputLabel for="description" value="Descriere:"/>
+                        <p:inputTextarea id="description" maxlength="150"
+                                         required="true"
+                                         requiredMessage="Decriere obligatorie"
+                                         counter="decriptionLeft"
+                                         value="#{addMB.advert.description}"
+                                         counterTemplate="{0} charactere remase."
+                                         style="width: 98%; height: 30px; resize: none"/>
+                        <h:outputText id="decriptionLeft"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <p:outputLabel for="value" value="Valoare:"/>
+                        <p:inputText id="value" size="3" style="text-align: right"
+                                     value="#{addMB.advert.value.value}"
+                                     required="true"
+                                     requiredMessage="Valoare obligatorie">
+                            <f:convertNumber maxFractionDigits="2" maxIntegerDigits="4"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="deposit" value="Garantie:" style="margin-left: 10px"/>
+                        <p:inputText id="deposit" size="3" style="text-align: right"
+                                     value="#{addMB.advert.value.deposit}"/>
+
+                        <p:selectOneMenu id="curr" value="#{addMB.advert.value.currency}"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         style="vertical-align:middle; margin-left: 10px">
+                            <f:selectItems value="#{mdSessionMB.currencies}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="negot" value="Negociabil:" style="margin-left: 10px"/>
+                        <p:selectBooleanCheckbox id="negot" style="vertical-align:middle"
+                                                 value="#{addMB.advert.value.negotiable}"/>
+                    </div>
+                </div>
+
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <p:outputLabel value="Adresa"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <p:outputLabel for="city" value="Oras:"/>
+                        <p:selectOneMenu id="city" value="#{addMB.advert.address.city}"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         required="true"
+                                         requiredMessage="Oras obligatoriu"
+                                         style="vertical-align:middle">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>
+                            <f:selectItems value="#{mdSessionMB.cities}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="street" value="Strada:" style="margin-left: 10px"/>
+                        <p:inputText id="street" size="40"
+                                     required="true"
+                                     requiredMessage="Strada obligatorie"
+                                     value="#{addMB.advert.address.street}"/>
+
+                        <p:outputLabel for="nr" value="Nr.:" style="margin-left: 10px"/>
+                        <p:inputText id="nr" size="2"
+                                     required="true"
+                                     requiredMessage="Numar obligatoriu"
+                                     value="#{addMB.advert.address.nr}"/>
+                    </div>
+                </div>
+
+                <!--detalii adresa, sc bloc et, CP-->
+                <h:panelGroup layout="block" style="margin-top: 10px" styleClass="ui-grid-row">
+                    <div class="ui-grid-col-3">
+                        <p:button id="showme" value="Detalii adresa" onclick="return false;">
+                            <p:effect type="fade" event="click" for="detaliiAdresa">
+                                <f:param name="mode" value="'show'"/>
+                            </p:effect>
+                        </p:button>
+                    </div>
+                    <h:panelGroup layout="block" id="detaliiAdresa" style="display: none" class="ui-grid-col-9">
+                        <p:outputLabel for="bloc" value="Bloc: " style="margin-left: 19px;"/>
+                        <p:inputText id="bloc" size="3" style="text-align: right; margin-right: 5px"
+                                     value="#{addMB.advert.address.bloc}"/>
+
+                        <p:outputLabel for="scara" value="Scara: "/>
+                        <p:inputText id="scara" size="3" style="text-align: right; margin-right: 5px"
+                                     value="#{addMB.advert.address.sc}"/>
+
+                        <p:outputLabel for="etaj" value="Etaj: "/>
+                        <p:inputText id="etaj" size="3" style="text-align: right; margin-right: 5px"
+                                     value="#{addMB.advert.address.et}"/>
+
+                        <p:outputLabel for="cp" value="C.P.: "/>
+                        <p:inputText id="cp" size="3" style="text-align: right"
+                                     value="#{addMB.advert.address.cp}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+
+                        <p:selectOneButton id="type" value="#{addMB.advert.adType}"
+                                           converter="omnifaces.SelectItemsConverter"
+                                           required="true"
+                                           requiredMessage="Tip acomodare obligatoiu">
+                            <f:selectItems value="#{mdSessionMB.types}"/>
+                        </p:selectOneButton>
+
+                        <p:selectOneMenu id="accomodation" value="#{addMB.advert.buildingType}"
+                                         style="vertical-align:middle"
+                                         converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{mdSessionMB.accomodations}"/>
+                        </p:selectOneMenu>
+
+                        <p:selectCheckboxMenu id="grid" value="#{addMB.dotariSelected}" label="Dotari"
+                                              style="margin-left: 10px"
+                                              filter="true" filterMatchMode="startsWith"
+                                              converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{addMB.dotari}" />
+                        </p:selectCheckboxMenu>
+
+                        <h:outputText value=" Disponibil din: "/>
+                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}"
+                                    locale="ro" size="4" pattern="dd/MM/yy">
+                            <p:ajax event="dateSelect" process="@this" update="untilDate"/>
+                        </p:calendar>
+
+                        <h:outputText value=" Pana: "/>
+                        <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
+                                    mindate="#{addMB.advert.interval.fromDate}"
+                                    locale="ro"  size="4" pattern="dd/MM/yy"/>
+
+                    </div>
+                </div>
+
+                <p:outputPanel id="uploadPanel" styleClass="ui-grid-row" style="margin-top: 10px">
+                    <p:fileUpload fileUploadListener="#{addMB.handleFileUpload}"
+                                  rendered="#{!addMB.filesUploaded}"
+                                  update="uploadPanel"
+                                  mode="advanced"
+                                  dragDropSupport="false"
+                                  multiple="true"
+                                  sizeLimit="2097152"
+                                  fileLimit="5"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  uploadLabel="Incarca"
+                                  cancelLabel="Anuleaza"
+                                  label="Alege poze"
+                                  fileLimitMessage="Maxim 5 poze"
+                                  invalidFileMessage="Fisier invalid"
+                                  invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
+                    <h:outputText id="uploadOk" value="Pozele incarcate cu succes" rendered="#{addMB.filesUploaded}"/>
+                </p:outputPanel>
+
+                <div class="ui-grid-row" style="margin-top: 10px">
+                    <div class="ui-grid-col-12">
+                        <p:commandButton value="Adauga anunt"
+                                         styleClass="btn btn-primary"
+                                         update="@form"
+                                         actionListener="#{addMB.save()}"/>
+                    </div>
                 </div>
             </div>
-
-            <div class="ui-grid-row" style="margin-top: 10px">
-                <div class="ui-grid-col-12">
-                    <p:outputLabel value="Adresa"/>
-                </div>
-            </div>
-
-            <div class="ui-grid-row" style="margin-top: 10px">
-                <div class="ui-grid-col-12">
-                    <p:outputLabel for="city" value="Oras:"/>
-                    <p:selectOneMenu id="city" value="#{addMB.advert.address.city}"
-                                     converter="omnifaces.SelectItemsConverter">
-                        <f:selectItems value="#{mdSessionMB.cities}"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="street" value="Strada:" style="margin-left: 10px"/>
-                    <p:inputText id="street" value="#{addMB.advert.address.street}" size="45"/>
-
-                    <p:outputLabel for="nr" value="Nr.:" style="margin-left: 10px"/>
-                    <p:inputText id="nr" value="#{addMB.advert.address.nr}" size="2"/>
-                </div>
-            </div>
-
-            <div class="ui-grid-row" style="margin-top: 10px">
-                <div class="ui-grid-col-12">
-                    <p:outputLabel for="type" value="Tip:"/>
-                    <p:selectOneMenu id="type" value="#{addMB.advert.adType}"
-                                     converter="omnifaces.SelectItemsConverter">
-                        <f:selectItems value="#{mdSessionMB.types}"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="accomodation" value="Acomodare.:" style="margin-left: 10px"/>
-                    <p:selectOneMenu id="accomodation" value="#{addMB.advert.buildingType}"
-                                     converter="omnifaces.SelectItemsConverter">
-                        <f:selectItems value="#{mdSessionMB.accomodations}"/>
-                    </p:selectOneMenu>
-                </div>
-            </div>
-
-
-            <div class="ui-grid-row" style="margin-top: 10px">
-                <div class="ui-grid-col-12">
-                    <p:commandButton value="Adauga" action="#{addMB.save()}" ajax="false"/>
-                </div>
-            </div>
-
-        </div>
 
         </h:form>
     </ui:define>
