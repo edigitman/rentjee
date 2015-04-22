@@ -6,17 +6,36 @@
 
 
     <h:form>
-    <h2><p:commandLink value="La Chirie" action="index?faces-redirect=true"/></h2>
-    <p:panel id="search" header="cautare" style="margin-top: 13px">
-        <h:panelGrid columns="1" cellpadding="10" style="width: 100%">
-            <p:outputLabel for="city" value="Oras"/>
-            <p:selectOneMenu id="city" style="width: 100%">
-                <f:selectItems value="#{mdSessionMB.cities}"/>
-            </p:selectOneMenu>
+        <h2><p:commandLink value="La Chirie" action="index?faces-redirect=true"/></h2>
+        <p:panel id="search" header="cautare" style="margin-top: 13px">
+            <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
+                <p:outputLabel for="city" value="Oras"/>
+                <p:selectOneMenu id="city" value="#{indexMB.city}"
+                                 converter="omnifaces.SelectItemsConverter">
+                    <f:selectItems value="#{mdSessionMB.cities}"/>
+                </p:selectOneMenu>
 
-            <p:commandButton value="caute" style="width: 100%"/>
+                <p:row>
+                    <p:column rowspan="2">
+                        <p:panelGrid columns="1">
+                            <h:outputText id="displayRange"
+                                          value="Pret intre #{indexMB.minPrice} si #{indexMB.maxPrice} EURO"/>
+                            <p:slider for="txt6,txt7" display="displayRange"
+                                      style="width: 200px" range="true"
+                                      minValue="50" maxValue="1000" step="10"
+                                      displayTemplate="Pret intre {min} si {max} EURO"/>
+                            <h:inputHidden id="txt6" value="#{indexMB.minPrice}"/>
+                            <h:inputHidden id="txt7" value="#{indexMB.maxPrice}"/>
+                        </p:panelGrid>
+                    </p:column>
+                </p:row>
 
-        </h:panelGrid>
-    </p:panel>
+                <h:outputText value="Doar cu poze"/>
+                <p:selectBooleanCheckbox value="#{indexMB.onlyImages}"/>
+
+                <p:commandButton value="cauta" actionListener="#{indexMB.search()}" style="width: 100%"/>
+
+            </h:panelGrid>
+        </p:panel>
     </h:form>
 </ui:composition>

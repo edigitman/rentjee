@@ -18,11 +18,9 @@
 
     <ui:define name="content">
 
-        <p>Inregistreaza-te:</p>
+        <p>Reseteaza parola</p>
         <h:form>
             <h:panelGrid columns="2" id="registerForm">
-                <p:outputLabel for="email" value="Email: "/>
-                <p:inputText id="email" value="#{registerMB.user.email}"/>
 
                 <h:outputLabel for="password" value="Parola: "/>
                 <p:password id="password" value="#{registerMB.user.password}" feedback="true"
@@ -39,7 +37,7 @@
                 </p:row>
 
                 <h:outputText/>
-                <p:commandButton value="Inregistrare" action="#{registerMB.register}" update="registerForm"/>
+                <p:commandButton value="Rseteaza" action="#{registerMB.recoverConfirm}" update="registerForm"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

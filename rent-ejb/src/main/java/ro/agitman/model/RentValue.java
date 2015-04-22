@@ -1,67 +1,62 @@
 package ro.agitman.model;
 
-import java.math.BigDecimal;
+import ro.agitman.dto.CurrencyEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "rt_value")
 public class RentValue extends AbstractModel {
 
-	private Long id;
-	private BigDecimal value;
-	private BigDecimal deposit;
-	private Boolean negotiable;
-	private MdCurrency currency;
+    private Long id;
+    private BigDecimal value;
+    private BigDecimal deposit;
+    private Boolean negotiable;
+    private CurrencyEnum currency;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public BigDecimal getValue() {
-		return value;
-	}
+    public BigDecimal getValue() {
+        return value;
+    }
 
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
 
-	public BigDecimal getDeposit() {
-		return deposit;
-	}
+    public BigDecimal getDeposit() {
+        return deposit;
+    }
 
-	public void setDeposit(BigDecimal deposit) {
-		this.deposit = deposit;
-	}
+    public void setDeposit(BigDecimal deposit) {
+        this.deposit = deposit;
+    }
 
-	public Boolean getNegotiable() {
-		return negotiable;
-	}
+    public Boolean getNegotiable() {
+        return negotiable;
+    }
 
-	public void setNegotiable(Boolean negotiable) {
-		this.negotiable = negotiable;
-	}
+    public void setNegotiable(Boolean negotiable) {
+        this.negotiable = negotiable;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "currencyId")
-	public MdCurrency getCurrency() {
-		return currency;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "currency")
+    public CurrencyEnum getCurrency() {
+        return currency;
+    }
 
-	public void setCurrency(MdCurrency currency) {
-		this.currency = currency;
-	}
+    public void setCurrency(CurrencyEnum currency) {
+        this.currency = currency;
+    }
 
 }

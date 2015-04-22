@@ -18,7 +18,7 @@
 
             <p:messages severity="error"/>
 
-            <div class="ui-grid">
+            <p:outputPanel id="addPanel" layout="block" styleClass="ui-grid">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12">
                         <o:outputLabel for="description" value="Descriere:"/>
@@ -58,7 +58,6 @@
                                                  value="#{addMB.advert.value.negotiable}"/>
                     </div>
                 </div>
-
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-12">
@@ -140,7 +139,7 @@
                                               style="margin-left: 10px"
                                               filter="true" filterMatchMode="startsWith"
                                               converter="omnifaces.SelectItemsConverter">
-                            <f:selectItems value="#{addMB.dotari}" />
+                            <f:selectItems value="#{addMB.dotari}"/>
                         </p:selectCheckboxMenu>
 
                         <h:outputText value=" Disponibil din: "/>
@@ -152,7 +151,7 @@
                         <h:outputText value=" Pana: "/>
                         <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
                                     mindate="#{addMB.advert.interval.fromDate}"
-                                    locale="ro"  size="4" pattern="dd/MM/yy"/>
+                                    locale="ro" size="4" pattern="dd/MM/yy"/>
 
                     </div>
                 </div>
@@ -178,14 +177,16 @@
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-12">
-                        <p:commandButton value="Adauga anunt"
-                                         styleClass="btn btn-primary"
+                        <p:commandButton id="saveBtn" value="Adauga anunt"
                                          update="@form"
                                          actionListener="#{addMB.save()}"/>
                     </div>
                 </div>
-            </div>
+            </p:outputPanel>
 
+            <p:blockUI block="addPanel" trigger="saveBtn">
+                datele se salveaza
+            </p:blockUI>
         </h:form>
     </ui:define>
 

@@ -5,13 +5,14 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
         version="2.0">
 
+
     <application>
         <locale-config>
             <default-locale>en</default-locale>
             <supported-locale>ro</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>ro.agitman.messages</base-name>
+            <base-name>messages</base-name>
             <var>msgs</var>
         </resource-bundle>
         <message-bundle>
@@ -19,6 +20,10 @@
         </message-bundle>
     </application>
 
-
+    <lifecycle>
+        <phase-listener>
+            com.ocpsoft.pretty.application.MultiPageMessagesSupport
+        </phase-listener>
+    </lifecycle>
 
 </faces-config>

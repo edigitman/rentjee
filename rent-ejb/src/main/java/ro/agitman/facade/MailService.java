@@ -1,5 +1,6 @@
 package ro.agitman.facade;
 
+import ro.agitman.model.Advert;
 import ro.agitman.model.User;
 
 import javax.ejb.Local;
@@ -12,6 +13,6 @@ public interface MailService {
 
     void sendConfirmMail(User u);
 
-    void sendAdvertAdded(User u);
+    void sendAdvertAdded(Advert advert);
 
 }

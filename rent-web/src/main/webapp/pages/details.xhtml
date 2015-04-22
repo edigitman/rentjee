@@ -1,9 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+        >
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -12,7 +13,7 @@
 
     <ui:define name="content">
         <h:form id="details">
-            <p:growl id="growl" showDetail="true" sticky="true" />
+            <p:growl id="growl" showDetail="true" sticky="true"/>
 
             <h2>Detalii anunt -
                 <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/> -
@@ -38,12 +39,12 @@
                                        rendered="#{detailsMB.hasDeposit()}"/>
                         <h:outputText id="deposit" size="5" style="text-align: right"
                                       rendered="#{detailsMB.hasDeposit()}"
-                                     value="#{detailsMB.selected.value.deposit}"/>
+                                      value="#{detailsMB.selected.value.deposit}"/>
 
                         <h:outputText id="curr" size="5" style="text-align: right"
-                                     value=" #{detailsMB.selected.value.currency.name}"/>
+                                      value=" #{detailsMB.selected.value.currency.name}"/>
 
-                        <h:outputText value=" Negociabil" rendered="#{detailsMB.selected.value.negotiable}"/>
+                        <h:outputText value=", Negociabil" rendered="#{detailsMB.selected.value.negotiable}"/>
                     </div>
                 </div>
 
@@ -65,36 +66,24 @@
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 10px">
-                    <div class="ui-grid-col-4">
-                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-
-
-
-
-                        </h:panelGrid>
-                    </div>
-                </div>
+                <p:galleria value="#{detailsMB.selected.imageList}"
+                            rendered="#{not empty detailsMB.selected.imageList}"
+                            var="image" panelWidth="500" panelHeight="313">
+                    <img src="#{image.url}" alt="Image Description for #{image.url}"/>
+                </p:galleria>
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-2">
                         <h:outputText value="Dotari:"/>
                     </div>
                     <div class="ui-grid-col-10">
-                        <ui:repeat value="#{detailsMB.dotari()}" var="dot">
-                            <h:outputText value="#{dot}"/>
-                        </ui:repeat>
+                        <ul>
+                            <ui:repeat value="#{detailsMB.dotari()}" var="dot">
+                                <li><h:outputText value="#{dot}"/></li>
+                            </ui:repeat>
+                        </ul>
                     </div>
                 </div>
-
-                <p:panelGrid columns="1" style="margin-top: 10px">
-                    <h3><h:outputText value="Poze:" rendered="#{not empty detailsMB.selected.imageList}"/></h3>
-                    <p:galleria value="#{detailsMB.selected.imageList}"
-                                rendered="#{not empty detailsMB.selected.imageList}"
-                                var="image" panelWidth="500" panelHeight="313">
-                        <img src="#{image.url}" alt="Image Description for #{image.url}"/>
-                    </p:galleria>
-                </p:panelGrid>
 
                 <div class="ui-grid-row" style="margin-top: 10px">
 

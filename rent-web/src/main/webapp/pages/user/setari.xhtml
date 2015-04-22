@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
@@ -12,7 +13,7 @@
     <ui:define name="content">
         <h3>Setari</h3>
 
-        <h:form>
+        <h:form id="detailsForm">
             <p:panelGrid columns="2">
                 <p:outputLabel for="email" value="Email:"/>
                 <h:outputText id="email" value="#{userMB.user.email}"/>
@@ -21,14 +22,18 @@
                 <p:inputText id="nume" value="#{userMB.user.name}"/>
 
                 <p:outputLabel for="telefon" value="Telefon:"/>
-                <p:inputText id="telefon"  value="#{userMB.user.phone}"/>
+                <p:inputText id="telefon" value="#{userMB.user.phone}"/>
 
                 <p:outputLabel for="mobil" value="Mobil:"/>
-                <p:inputText id="mobil"  value="#{userMB.user.phone2}"/>
+                <p:inputText id="mobil" value="#{userMB.user.phone2}"/>
 
                 <h:outputText/>
                 <p:commandButton type="button" value="Salveaza" onclick="PF('confChange').show();"/>
             </p:panelGrid>
+            <br/>
+            <br/>
+            <br/>
+
         </h:form>
     </ui:define>
 
@@ -37,10 +42,10 @@
             <h:form>
                 <p:panelGrid columns="2">
                     <p:outputLabel for="parola" value="Parola: "/>
-                    <p:password id="parola"/>
+                    <p:password id="parola" value="#{userMB.password}"/>
 
                     <p:spacer width="10px"/>
-                    <p:commandButton value="Confirma"/>
+                    <p:commandButton value="Confirma" actionListener="#{userMB.update()}" update=":detailsForm"/>
                 </p:panelGrid>
             </h:form>
         </p:dialog>

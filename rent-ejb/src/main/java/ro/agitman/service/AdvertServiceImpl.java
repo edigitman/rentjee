@@ -43,27 +43,27 @@ public class AdvertServiceImpl implements AdvertService {
         if (advert.getId() == null) {
             service.create(advert);
             imageService.uploadImages(advert, images);
-            mailService.sendAdvertAdded(advert.getUser());
+            mailService.sendAdvertAdded(advert);
         } else {
             service.update(advert);
         }
     }
 
-    public List<Advert> findAll(){
-       return service.findAll(Advert.class);
+    public List<Advert> findAll() {
+        return service.findAll(Advert.class);
     }
 
-    public List<Advert> findForUser(User user){
+    public List<Advert> findForUser(User user) {
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
         return service.findWithNamedQuery(Advert.FIND_FOR_USER, map);
     }
 
-    public List<Advert> findFavoritesForUser(User user){
+    public List<Advert> findFavoritesForUser(User user) {
         return new ArrayList<>();
     }
 
-    public List<Advert> findDezByUser(User user){
+    public List<Advert> findDezByUser(User user) {
         return new ArrayList<>();
     }
 

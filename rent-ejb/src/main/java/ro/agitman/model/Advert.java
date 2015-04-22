@@ -1,10 +1,11 @@
 package ro.agitman.model;
 
+import ro.agitman.dto.AdTypeEnum;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.*;
 
 /**
  * Created by Edi on 11/12/2014.
@@ -35,8 +36,9 @@ public class Advert extends AbstractModel {
 	private Date dateCreated;
 	private Date dateExpires;
 	private List<Image> imageList = new ArrayList<>();
-	private MdAdType adType;
-	private long dotari;
+    private AdTypeEnum adType;
+    private long dotari;
+    private Boolean privateOwner;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -164,13 +166,23 @@ public class Advert extends AbstractModel {
 		this.imageList = imageList;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "typeId")
-	public MdAdType getAdType() {
-		return adType;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "adType")
+    public AdTypeEnum getAdType() {
+        return adType;
+    }
 
-	public void setAdType(MdAdType adType) {
-		this.adType = adType;
-	}
+    public void setAdType(AdTypeEnum adType) {
+        this.adType = adType;
+    }
+
+    @Basic
+    @Column(name = "private_owned_bl")
+    public Boolean getPrivateOwner() {
+        return privateOwner;
+    }
+
+    public void setPrivateOwner(Boolean privateOwner) {
+        this.privateOwner = privateOwner;
+    }
 }

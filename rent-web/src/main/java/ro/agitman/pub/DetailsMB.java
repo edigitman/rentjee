@@ -1,13 +1,17 @@
 package ro.agitman.pub;
 
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.primefaces.context.RequestContext;
 import ro.agitman.AbstractMB;
 import ro.agitman.dto.DotariEnum;
+import ro.agitman.dto.DotariEnumCmp;
 import ro.agitman.model.Advert;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +20,9 @@ import java.util.List;
  */
 @ManagedBean
 @SessionScoped
+@URLMappings(mappings = {
+        @URLMapping(id = "details", pattern = "details", viewId = "/pages/details.jsf")
+})
 public class DetailsMB extends AbstractMB{
 
     private Advert selected;
@@ -38,18 +45,15 @@ public class DetailsMB extends AbstractMB{
                 }
             }
         }
+        Collections.sort(dotari, new DotariEnumCmp());
     }
 
     public List<DotariEnum> dotari(){
         return dotari;
     }
 
-    public boolean hasDeposit(){
-        if(selected!=null){
-            return !new BigDecimal("0.00").equals( selected.getValue().getDeposit());
-        }
-
-        return false ;
+    public boolean hasDeposit() {
+        return selected != null && !new BigDecimal("0.00").equals(selected.getValue().getDeposit());
     }
 
     public Advert getSelected() {

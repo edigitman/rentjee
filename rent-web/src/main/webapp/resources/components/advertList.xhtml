@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 
 <composite:interface>
     <composite:attribute name="adverts" required="true"/>
@@ -15,15 +15,15 @@
     <p:dataTable id="indexAds" var="ad" styleClass="adList"
                  value="#{cc.attrs.adverts}"
                  rowIndexVar="rowIdx"
-                 rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}"
-                 selectionMode="single"
-                 selection="#{detailsMB.selected}"
-                 rowKey="#{ad.id}">
-
-        <p:ajax event="rowSelect" listener="#{detailsMB.onRowSelect()}" />
+                 rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
 
         <p:column headerText="" style="width: 95px;">
             <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
+
+            <p:commandButton update=":form:carDetail" actionListener="#{detailsMB.onRowSelect()}" icon="fa fa-search"
+                             title="Detalii">
+                <f:setPropertyActionListener value="#{ad}" target="#{detailsMB.selected}"/>
+            </p:commandButton>
         </p:column>
 
         <p:column headerText="">
@@ -31,7 +31,8 @@
                          columnClasses="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}
                                         #{(rowIdx mod 2) eq 1 ? 'highlight' : ''}
                                         #{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
-                <h:outputText value="#{ad.description}" />
+
+                <h:outputText value="#{ad.description}"/>
 
                 <p:outputPanel>
                     <h:outputText value="Adresa: "/>

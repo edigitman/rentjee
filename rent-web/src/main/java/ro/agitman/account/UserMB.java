@@ -5,16 +5,9 @@ import ro.agitman.facade.UserService;
 import ro.agitman.model.User;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.Serializable;
-import java.security.Principal;
 
 /**
  * Created by edi on 2/11/2015.
@@ -28,9 +21,9 @@ public class UserMB extends AbstractMB {
     private String password;
 
     @EJB
-    private UserService userFacade;
+    private UserService userService;
 
-    public void login(){
+    public void login() {
         try {
             //Login via the Servlet Context
             getRequest().login(username, password);
@@ -43,23 +36,28 @@ public class UserMB extends AbstractMB {
         }
     }
 
-    public User getUser(){
+    public void update() {
+
+//        userService.update();
+    }
+
+    public User getUser() {
         if (user == null) {
             String userEmail = getExternalContext().getUserPrincipal().getName();
-            user = userFacade.findUserByEmail(userEmail);
+            user = userService.findUserByEmail(userEmail);
         }
         return user;
     }
 
-    public boolean isUserLogged(){
+    public boolean isUserLogged() {
         return getRequest().getUserPrincipal() != null;
     }
 
-    public boolean isUserAdmin(){
+    public boolean isUserAdmin() {
         return getRequest().isUserInRole("ADMIN");
     }
 
-    public String logOut(){
+    public String logOut() {
         getRequest().getSession(false).invalidate();
         return "/pages/index?faces-redirect=true";
     }
