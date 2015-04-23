@@ -26,12 +26,12 @@
 
                 <p:row>
                     <p:column colspan="2">
-                        <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
+                        <!--<div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>-->
                     </p:column>
                 </p:row>
 
                 <h:outputText/>
-                <p:commandButton value="Recupereaza" action="#{registerMB.register}" update="registerForm"/>
+                <p:commandButton value="Recupereaza" action="#{registerMB.recover()}" ajax="false"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

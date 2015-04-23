@@ -23,18 +23,8 @@ public class MdServiceImpl implements MdService {
     }
 
     @Override
-    public List<MdAdType> findAllAdType(){
-        return service.findWithNamedQuery(MdAdType.FIND_ALL);
-    }
-
-    @Override
     public List<MdBuildingType> findAllBuildingType(){
         return service.findWithNamedQuery(MdBuildingType.FIND_ALL);
-    }
-
-    @Override
-    public List<MdCurrency> findAllCurrency(){
-        return service.findWithNamedQuery(MdCurrency.FIND_ALL);
     }
 
     @Override

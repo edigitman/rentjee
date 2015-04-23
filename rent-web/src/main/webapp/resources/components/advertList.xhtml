@@ -15,12 +15,13 @@
     <p:dataTable id="indexAds" var="ad" styleClass="adList"
                  value="#{cc.attrs.adverts}"
                  rowIndexVar="rowIdx"
+                 emptyMessage="Nu sunt anunturi"
                  rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
 
         <p:column headerText="" style="width: 95px;">
             <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
 
-            <p:commandButton update=":form:carDetail" actionListener="#{detailsMB.onRowSelect()}" icon="fa fa-search"
+            <p:commandButton actionListener="#{detailsMB.onRowSelect()}" icon="fa fa-search"
                              title="Detalii">
                 <f:setPropertyActionListener value="#{ad}" target="#{detailsMB.selected}"/>
             </p:commandButton>
@@ -52,7 +53,7 @@
             <p:outputPanel>
                 <h:outputText value="Pret: "/>
                 <h:outputText value="#{ad.value.value} "/>
-                <h:outputText value="#{ad.value.currency.name}"/>
+                <h:outputText value="#{ad.value.currency}"/>
                 <h:outputText value=", Negociabil" rendered="#{ad.value.negotiable}"/>
             </p:outputPanel>
         </p:column>

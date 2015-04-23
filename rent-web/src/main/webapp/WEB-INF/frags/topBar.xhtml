@@ -2,12 +2,12 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
 
     <h:form>
         <h:panelGrid columns="6" cellpadding="10">
 
-            <p:commandButton value="Adauga anunt" action="/pages/user/add?faces-redirect=true"/>
+            <p:commandButton value="Adauga anunt" action="pretty:add"/>
             <p:commandButton value="Ajutor"/>
             <p:commandButton value="Contact"/>
             <h:outputText/>
@@ -15,14 +15,20 @@
             <p:outputPanel layout="block" style="display: inline-block">
                 <!--USer not logged in-->
                 <p:panelGrid columns="3" styleClass="noBorders" rendered="#{!userMB.userLogged}">
-                    <h:commandLink value="Login" action="/pages/user/home?faces-redirect=true"/>
+                    <pretty:link mappingId="home">
+                        <h:outputText value="Login"/>
+                    </pretty:link>
                     <h:outputText value="|"/>
-                    <h:commandLink value="Register" action="/pages/register"/>
+                    <pretty:link mappingId="register">
+                        <h:outputText value="Register"/>
+                    </pretty:link>
                 </p:panelGrid>
 
                 <!--User logged in-->
                 <p:panelGrid columns="3" styleClass="noBorders" rendered="#{userMB.userLogged}">
-                    <h:commandLink value="Account" action="/pages/user/home"/>
+                    <pretty:link mappingId="home">
+                        <h:outputText value="Account"/>
+                    </pretty:link>
                     <h:outputText value="|"/>
                     <h:commandLink value="Logout" action="#{userMB.logOut()}"/>
                 </p:panelGrid>

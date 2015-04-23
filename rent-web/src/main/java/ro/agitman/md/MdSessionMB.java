@@ -1,10 +1,10 @@
 package ro.agitman.md;
 
+import ro.agitman.dto.AdTypeEnum;
+import ro.agitman.dto.CurrencyEnum;
 import ro.agitman.facade.MdService;
-import ro.agitman.model.MdAdType;
 import ro.agitman.model.MdBuildingType;
 import ro.agitman.model.MdCity;
-import ro.agitman.model.MdCurrency;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -42,8 +42,8 @@ public class MdSessionMB implements Serializable {
     public List<SelectItem> getTypes() {
         if (types == null) {
             types = new ArrayList<>();
-            for(MdAdType adType: mdService.findAllAdType()){
-                types.add(new SelectItem(adType, adType.getName()));
+            for(AdTypeEnum adType: AdTypeEnum.values()){
+                types.add(new SelectItem(adType, adType.name()));
             }
         }
         return types;
@@ -62,8 +62,8 @@ public class MdSessionMB implements Serializable {
     public List<SelectItem> getCurrencies() {
         if (currencies == null) {
             currencies = new ArrayList<>();
-            for(MdCurrency currency: mdService.findAllCurrency()){
-                currencies.add(new SelectItem(currency, currency.getName()));
+            for(CurrencyEnum currency: CurrencyEnum.values()){
+                currencies.add(new SelectItem(currency, currency.name()));
             }
         }
         return currencies;

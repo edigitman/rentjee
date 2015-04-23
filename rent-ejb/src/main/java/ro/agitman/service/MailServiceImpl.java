@@ -25,4 +25,9 @@ public class MailServiceImpl implements MailService {
     public void sendAdvertAdded(Advert advert) {
         mailSender.sendEmail(advert.getUser().getEmail(), "Anunt adaugat", "Anunt adaugat " + advert.getId());
     }
+
+    @Override
+    public void sendNewPwd(User user){
+        mailSender.sendEmail(user.getEmail(), "Schima parola", user.getRegToken());
+    }
 }

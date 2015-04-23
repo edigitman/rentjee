@@ -1,5 +1,7 @@
 package ro.agitman.pub;
 
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.MdCity;
@@ -16,6 +18,9 @@ import java.util.List;
  */
 @ManagedBean
 @ViewScoped
+@URLMappings(mappings = {
+        @URLMapping(id = "index", pattern = "/index", viewId = "/pages/index.jsf?faces-redirect=true")
+})
 public class IndexMB implements Serializable{
 
     private List<Advert> adverts;

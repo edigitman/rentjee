@@ -1,5 +1,7 @@
 package ro.agitman.account;
 
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import ro.agitman.AbstractMB;
@@ -24,6 +26,10 @@ import java.util.List;
  */
 @ManagedBean
 @ViewScoped
+@URLMappings(mappings = {
+        @URLMapping(id = "add", pattern = "/u/add", viewId = "/pages/user/add.xhtml?faces-redirect=true"),
+        @URLMapping(id = "home", pattern = "/u/home", viewId = "/pages/user/home.xhtml?faces-redirect=true")
+})
 public class AddMB extends AbstractMB implements Serializable {
 
     @EJB
@@ -51,7 +57,7 @@ public class AddMB extends AbstractMB implements Serializable {
         advert.setDotari(mapDotari());
         advertService.save(advert, files);
 
-        redirect("/pages/user/home");
+        redirectPretty("home");
     }
 
     private long mapDotari() {

@@ -13,4 +13,12 @@ public interface UserService {
 	User register(User u);
 
 	User create(User u);
+
+	boolean confirm(String registerConfirmToken);
+
+	void update(User user);
+
+	boolean recover(String email);
+
+	boolean recoverConfirm(String password, String recoverConfirmToken);
 }

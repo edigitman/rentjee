@@ -1,5 +1,7 @@
 package ro.agitman.account;
 
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import ro.agitman.AbstractMB;
 import ro.agitman.facade.UserService;
 import ro.agitman.model.User;
@@ -8,17 +10,22 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.ServletException;
+import java.security.Principal;
 
 /**
  * Created by edi on 2/11/2015.
  */
 @ManagedBean
 @SessionScoped
+@URLMappings(mappings = {
+        @URLMapping(id = "settings", pattern = "/u/setari", viewId = "/pages/user/setari.xhtml?faces-redirect=true")
+})
 public class UserMB extends AbstractMB {
 
     private User user;
     private String username;
     private String password;
+    private String newPassword;
 
     @EJB
     private UserService userService;
@@ -28,7 +35,7 @@ public class UserMB extends AbstractMB {
             //Login via the Servlet Context
             getRequest().login(username, password);
 
-            redirect("user/home");
+            redirectPretty("home");
 
         } catch (ServletException e) {
             error("Email sau parola gresita");
@@ -37,14 +44,26 @@ public class UserMB extends AbstractMB {
     }
 
     public void update() {
-
-//        userService.update();
+        if (password != null && !password.isEmpty() && password.equals(user.getPassword())) {
+            if (newPassword != null) {
+                user.setPassword(newPassword);
+            }
+            userService.update(user);
+            info("Informatii modificate cu succes");
+        } else {
+            error("Parola incorecta");
+        }
+        user = userService.findUserByEmail(user.getEmail());
     }
 
     public User getUser() {
+
         if (user == null) {
-            String userEmail = getExternalContext().getUserPrincipal().getName();
-            user = userService.findUserByEmail(userEmail);
+            Principal principal = getExternalContext().getUserPrincipal();
+            if (principal != null) {
+                String userEmail = principal.getName();
+                user = userService.findUserByEmail(userEmail);
+            }
         }
         return user;
     }
@@ -59,7 +78,7 @@ public class UserMB extends AbstractMB {
 
     public String logOut() {
         getRequest().getSession(false).invalidate();
-        return "/pages/index?faces-redirect=true";
+        return "pretty:index";
     }
 
     public String getUsername() {
@@ -76,5 +95,13 @@ public class UserMB extends AbstractMB {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

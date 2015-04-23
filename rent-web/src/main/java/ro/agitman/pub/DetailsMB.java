@@ -21,7 +21,7 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "details", pattern = "details", viewId = "/pages/details.jsf")
+        @URLMapping(id = "details", pattern = "/details", viewId = "/pages/details.jsf?faces-redirect=true")
 })
 public class DetailsMB extends AbstractMB{
 

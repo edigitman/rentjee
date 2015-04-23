@@ -2,17 +2,25 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
 
     <h2><p:commandLink value="La Chirie" action="/pages/index?faces-redirect=true"/></h2>
     <p:panel id="search" header="cautare" style="margin-top: 13px">
         <h:panelGrid columns="1" cellpadding="10" style="width: 100%">
             <h:form>
-                <h:commandLink value="Anunturi" action="home?page-redirect=true"/>
+                <pretty:link mappingId="home">
+                    <h:outputText value="Anunturi"/>
+                </pretty:link>
                 <br/><br/>
-                <h:commandLink value="Adauga anunt" action="add?page-redirect=true"/>
+
+                <pretty:link mappingId="add">
+                    <h:outputText value="Adauga anunt"/>
+                </pretty:link>
                 <br/><br/>
-                <h:commandLink value="Setari" action="setari?page-redirect=true"/>
+
+                <pretty:link mappingId="settings">
+                    <h:outputText value="Setari"/>
+                </pretty:link>
             </h:form>
 
         </h:panelGrid>

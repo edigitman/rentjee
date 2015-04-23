@@ -13,11 +13,7 @@ public interface MdService {
 
     List<MdCity> findAllCities();
 
-    List<MdAdType> findAllAdType();
-
     List<MdBuildingType> findAllBuildingType();
-
-    List<MdCurrency> findAllCurrency();
 
     List<MdHeatSource> findAllHeatSource();
 }

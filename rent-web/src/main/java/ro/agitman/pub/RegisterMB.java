@@ -1,6 +1,8 @@
 package ro.agitman.pub;
 
 import com.google.gson.Gson;
+import com.ocpsoft.pretty.PrettyContext;
+import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import ro.agitman.AbstractMB;
@@ -23,9 +25,10 @@ import java.net.URL;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "register", pattern = "/register", viewId = "/pages/register.jsf"),
-        @URLMapping(id = "recover", pattern = "/recover", viewId = "/pages/recover.jsf"),
-        @URLMapping(id = "recoverConfirm", pattern = "/recoverConfirm/" + "#{registerMB.recoverConfirmToken}", viewId = "/pages/recoverConfirm.jsf")
+        @URLMapping(id = "register", pattern = "/register", viewId = "/pages/register.xhtml?faces-redirect=true"),
+        @URLMapping(id = "registerConfirm", pattern = "/confirm/#{registerMB.registerConfirmToken}", viewId = "/pages/registerConfirm.xhtml?faces-redirect=true"),
+        @URLMapping(id = "recover", pattern = "/recover", viewId = "/pages/recover.xhtml?faces-redirect=true"),
+        @URLMapping(id = "recoverConfirm", pattern = "/recoverConfirm/#{registerMB.recoverConfirmToken}", viewId = "/pages/recoverConfirm.xhtml?faces-redirect=true")
 })
 public class RegisterMB extends AbstractMB {
 
@@ -37,7 +40,20 @@ public class RegisterMB extends AbstractMB {
     private User user = new User();
     private String confirm;
     private String recoverConfirmToken;
+    private String registerConfirmToken;
 
+    @URLAction(onPostback = false)
+    public void load() {
+        String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
+
+        if("registerConfirm".equals(viewId)){
+            if(userService.confirm(registerConfirmToken)){
+                redirect("login");
+            }else{
+              error("Token expirat");
+            }
+        }
+    }
 
     public String register() {
         //TODO call captcha validate
@@ -48,12 +64,18 @@ public class RegisterMB extends AbstractMB {
 
     public String recover() {
         //TODO call captcha validate
-        // userService.recover(user.getEmail());
-        return "index?faces-redirect=true";
+        if (userService.recover(user.getEmail())){
+            info("Verifica emailul");
+        }else {
+            error("Eroare !");
+        }
+        return "pretty:index";
     }
 
     public String recoverConfirm() {
-        //userService.recoverConfirm(user.getEmail());
+        if(userService.recoverConfirm(user.getPassword(), recoverConfirmToken)){
+
+        }
         return "/pages/login?faces-redirect=true";
     }
 
@@ -123,5 +145,13 @@ public class RegisterMB extends AbstractMB {
 
     public void setRecoverConfirmToken(String recoverConfirmToken) {
         this.recoverConfirmToken = recoverConfirmToken;
+    }
+
+    public String getRegisterConfirmToken() {
+        return registerConfirmToken;
+    }
+
+    public void setRegisterConfirmToken(String registerConfirmToken) {
+        this.registerConfirmToken = registerConfirmToken;
     }
 }

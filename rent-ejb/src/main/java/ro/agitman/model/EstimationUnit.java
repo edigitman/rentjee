@@ -1,5 +1,7 @@
 package ro.agitman.model;
 
+import ro.agitman.dto.CurrencyEnum;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,7 +17,7 @@ public class EstimationUnit extends AbstractModel {
 	private Date fromDate;
 	private Date toDate;
 	private BigDecimal value;
-	private MdCurrency currency;
+	private CurrencyEnum currency;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -66,13 +68,13 @@ public class EstimationUnit extends AbstractModel {
 		this.value = value;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "currencyId")
-	public MdCurrency getCurrency() {
+	@Enumerated(EnumType.STRING)
+	@Column(name = "currency")
+	public CurrencyEnum getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(MdCurrency currency) {
+	public void setCurrency(CurrencyEnum currency) {
 		this.currency = currency;
 	}
 

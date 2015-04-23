@@ -2,11 +2,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:pretty="http://ocpsoft.com/prettyfaces">
 
 
     <h:form>
-        <h2><p:commandLink value="La Chirie" action="index?faces-redirect=true"/></h2>
+        <h2>
+            <pretty:link mappingId="index">
+                <h:outputText value="La Chirie"/>
+            </pretty:link>
+        </h2>
         <p:panel id="search" header="cautare" style="margin-top: 13px">
             <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
                 <p:outputLabel for="city" value="Oras"/>
