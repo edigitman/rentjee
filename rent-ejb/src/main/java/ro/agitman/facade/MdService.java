@@ -1,6 +1,9 @@
 package ro.agitman.facade;
 
-import ro.agitman.model.*;
+import ro.agitman.model.MdBuildingType;
+import ro.agitman.model.MdCity;
+import ro.agitman.model.MdHeatSource;
+import ro.agitman.model.MdNeighborhood;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -10,6 +13,8 @@ import java.util.List;
  */
 @Local
 public interface MdService {
+
+    List<MdNeighborhood> findAllNeighborhood(MdCity city);
 
     List<MdCity> findAllCities();
 

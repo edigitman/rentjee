@@ -5,6 +5,7 @@ import ro.agitman.dto.CurrencyEnum;
 import ro.agitman.facade.MdService;
 import ro.agitman.model.MdBuildingType;
 import ro.agitman.model.MdCity;
+import ro.agitman.model.MdNeighborhood;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -25,6 +26,7 @@ public class MdSessionMB implements Serializable {
     private MdService mdService;
 
     private List<SelectItem> cities;
+    private List<SelectItem> neighborhoods;
     private List<SelectItem> types;
     private List<SelectItem> accomodations;
     private List<SelectItem> currencies;
@@ -32,17 +34,27 @@ public class MdSessionMB implements Serializable {
     public List<SelectItem> getCities() {
         if (cities == null) {
             cities = new ArrayList<>();
-            for(MdCity city: mdService.findAllCities()){
+            for (MdCity city : mdService.findAllCities()) {
                 cities.add(new SelectItem(city, city.getName()));
             }
         }
         return cities;
     }
 
+    public List<SelectItem> getNeighborhoods(MdCity city) {
+        if (neighborhoods == null) {
+            neighborhoods = new ArrayList<>();
+            for (MdNeighborhood neighborhood : mdService.findAllNeighborhood(city)) {
+                neighborhoods.add(new SelectItem(neighborhood, neighborhood.getName()));
+            }
+        }
+        return neighborhoods;
+    }
+
     public List<SelectItem> getTypes() {
         if (types == null) {
             types = new ArrayList<>();
-            for(AdTypeEnum adType: AdTypeEnum.values()){
+            for (AdTypeEnum adType : AdTypeEnum.values()) {
                 types.add(new SelectItem(adType, adType.name()));
             }
         }
@@ -52,7 +64,7 @@ public class MdSessionMB implements Serializable {
     public List<SelectItem> getAccomodations() {
         if (accomodations == null) {
             accomodations = new ArrayList<>();
-            for(MdBuildingType buildingType: mdService.findAllBuildingType()){
+            for (MdBuildingType buildingType : mdService.findAllBuildingType()) {
                 accomodations.add(new SelectItem(buildingType, buildingType.getName()));
             }
         }
@@ -62,7 +74,7 @@ public class MdSessionMB implements Serializable {
     public List<SelectItem> getCurrencies() {
         if (currencies == null) {
             currencies = new ArrayList<>();
-            for(CurrencyEnum currency: CurrencyEnum.values()){
+            for (CurrencyEnum currency : CurrencyEnum.values()) {
                 currencies.add(new SelectItem(currency, currency.name()));
             }
         }

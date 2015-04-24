@@ -67,7 +67,7 @@
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-12">
-                        <p:outputLabel for="city" value="Oras:"/>
+                        <!--<p:outputLabel for="city" value="Oras:"/>-->
                         <p:selectOneMenu id="city" value="#{addMB.advert.address.city}"
                                          converter="omnifaces.SelectItemsConverter"
                                          required="true"
@@ -75,10 +75,19 @@
                                          style="vertical-align:middle">
                             <f:selectItem itemLabel="" itemValue="#{null}"/>
                             <f:selectItems value="#{mdSessionMB.cities}"/>
+                            <p:ajax event="change" update="neighborhood"/>
+                        </p:selectOneMenu>
+
+                        <p:selectOneMenu id="neighborhood" value="#{addMB.advert.address.neighborhood}"
+                                         filter="true" filterMatchMode="contains"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         style="vertical-align:middle">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>
+                            <f:selectItems value="#{mdSessionMB.getNeighborhoods(addMB.advert.address.city)}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel for="street" value="Strada:" style="margin-left: 10px"/>
-                        <p:inputText id="street" size="40"
+                        <p:inputText id="street" size="20"
                                      required="true"
                                      requiredMessage="Strada obligatorie"
                                      value="#{addMB.advert.address.street}"/>
@@ -94,10 +103,11 @@
                 <!--detalii adresa, sc bloc et, CP-->
                 <h:panelGroup layout="block" style="margin-top: 10px" styleClass="ui-grid-row">
                     <div class="ui-grid-col-3">
-                        <p:button id="showme" value="Detalii adresa" onclick="return false;">
+                        <p:button id="moreAddress" value="Detalii adresa" onclick="return false;">
                             <p:effect type="fade" event="click" for="detaliiAdresa">
                                 <f:param name="mode" value="'show'"/>
                             </p:effect>
+                            <p:effect type="fade" event="click" for="moreAddress"/>
                         </p:button>
                     </div>
                     <h:panelGroup layout="block" id="detaliiAdresa" style="display: none" class="ui-grid-col-9">
