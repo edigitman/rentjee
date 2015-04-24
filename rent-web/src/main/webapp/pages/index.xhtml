@@ -8,17 +8,21 @@
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
-        <ui:include src="/WEB-INF/frags/search.xhtml"/>
+        <ui:include src="/WEB-INF/frags/search.xhtml" >
+            <ui:param name="form" value="indexForm:addList" />
+        </ui:include>
     </ui:define>
 
     <ui:define name="content">
-        <h:form>
+        <h:form id="indexForm">
             <ui:param name="loggedIn" value="#{userMB.userLogged}"/>
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages autoUpdate="true"/>
 
-            <h2>Anunturi recente</h2>
-            <r:advertList adverts="#{indexMB.adverts}"/>
+            <p:outputPanel id="addList" layout="block">
+                <h2>Anunturi recente</h2>
+                <r:advertList adverts="#{indexMB.adverts}"/>
+            </p:outputPanel>
 
         </h:form>
     </ui:define>

@@ -14,7 +14,9 @@ import java.util.List;
 @NamedQueries({
 		@NamedQuery(name = "Advert.findAll", query = "select a from Advert a"),
 		@NamedQuery(name = Advert.FIND_FOR_USER, query = "select a from Advert a where a.user = :user"),
-		@NamedQuery(name = Advert.FIND_FAV_BY_USER, query = "select a from Advert a where a.user = :user")
+		@NamedQuery(name = Advert.FIND_FAV_BY_USER, query = "select a from Advert a where a.user = :user"),
+		@NamedQuery(name = Advert.FIND_SEARCH, query =
+				"select a from Advert a where a.address.city = :city and a.value.value >= :minPrice and a.value.value <= :maxPrice and size(a.imageList) > :img")
 // @NamedQuery(name = "findActive", query =
 // "select a from Advert a where a.state = 1")
 })
@@ -22,6 +24,7 @@ import java.util.List;
 public class Advert extends AbstractModel {
 
 	public static final String FIND_FOR_USER = "Advert.findForUser";
+	public static final String FIND_SEARCH = "Advert.findSearch";
 	public static final String FIND_FAV_BY_USER = "Advert.findFavForUser";
 
 	private Long id;

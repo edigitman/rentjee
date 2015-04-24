@@ -18,7 +18,7 @@ import java.security.Principal;
 @ManagedBean
 @SessionScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "settings", pattern = "/u/setari", viewId = "/pages/user/setari.xhtml?faces-redirect=true")
+        @URLMapping(id = "settings", pattern = "/u/settings", viewId = "/pages/user/setari.xhtml?faces-redirect=true")
 })
 public class UserMB extends AbstractMB {
 

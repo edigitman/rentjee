@@ -8,8 +8,12 @@ import ro.agitman.model.MdCity;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,7 +21,7 @@ import java.util.List;
  * Created by edi on 2/10/2015.
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 @URLMappings(mappings = {
         @URLMapping(id = "index", pattern = "/index", viewId = "/pages/index.jsf?faces-redirect=true")
 })
@@ -25,8 +29,8 @@ public class IndexMB implements Serializable{
 
     private List<Advert> adverts;
     private MdCity city;
-    private Integer minPrice;
-    private Integer maxPrice;
+    private Integer minPrice = 100;
+    private Integer maxPrice = 400;
     private Boolean onlyImages;
 
     @EJB
@@ -38,7 +42,7 @@ public class IndexMB implements Serializable{
     }
 
     public void search() {
-
+        adverts = advertService.findSearch(city, minPrice, maxPrice, onlyImages);
     }
 
     public List<Advert> getAdverts() {

@@ -20,3 +20,7 @@
 .highlight {
     background: #E3FFED  !important ;
 }
+
+.tableNoPadding .ui-panelgrid-cell{
+    padding: 0 !important;
+}

@@ -6,40 +6,35 @@
 
 
     <h:form>
-        <h2>
-            <pretty:link mappingId="index">
-                <h:outputText value="La Chirie"/>
-            </pretty:link>
-        </h2>
-        <p:panel id="search" header="cautare" style="margin-top: 13px">
-            <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
-                <p:outputLabel for="city" value="Oras"/>
+        <p:panel id="search" header="cautare">
+
+                <p:outputLabel for="city" value="Oras "/>
                 <p:selectOneMenu id="city" value="#{indexMB.city}"
+                                 style="vertical-align:middle" required="true"
                                  converter="omnifaces.SelectItemsConverter">
                     <f:selectItems value="#{mdSessionMB.cities}"/>
                 </p:selectOneMenu>
 
-                <p:row>
-                    <p:column rowspan="2">
-                        <p:panelGrid columns="1">
-                            <h:outputText id="displayRange"
-                                          value="Pret intre #{indexMB.minPrice} si #{indexMB.maxPrice} EURO"/>
-                            <p:slider for="txt6,txt7" display="displayRange"
-                                      style="width: 200px" range="true"
-                                      minValue="50" maxValue="1000" step="10"
-                                      displayTemplate="Pret intre {min} si {max} EURO"/>
-                            <h:inputHidden id="txt6" value="#{indexMB.minPrice}"/>
-                            <h:inputHidden id="txt7" value="#{indexMB.maxPrice}"/>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
+                <p:panelGrid columns="1" styleClass="tableNoPadding" style="margin-top: 10px">
+                    <h:outputText id="displayRange"
+                                  value="Pret intre #{indexMB.minPrice} si #{indexMB.maxPrice} EURO"/>
+                    <p:slider for="txt6,txt7" display="displayRange"
+                              style="width: 140px; margin-top: 5px" range="true"
+                              minValue="50" maxValue="1000" step="10"
+                              displayTemplate="Pret intre {min} si {max} EURO"/>
+                    <h:inputHidden id="txt6" value="#{indexMB.minPrice}"/>
+                    <h:inputHidden id="txt7" value="#{indexMB.maxPrice}"/>
+                </p:panelGrid>
 
-                <h:outputText value="Doar cu poze"/>
-                <p:selectBooleanCheckbox value="#{indexMB.onlyImages}"/>
+            <p:panelGrid columns="2" styleClass="tableNoPadding" style="margin-top: 10px">
+                <h:outputText value="Doar cu poze:"/>
+                <p:selectBooleanCheckbox value="#{indexMB.onlyImages}"
+                                         style="vertical-align:middle; margin-left: 10px"/>
+            </p:panelGrid>
 
-                <p:commandButton value="cauta" actionListener="#{indexMB.search()}" style="width: 100%"/>
+            <p:commandButton value="cauta" style="width: 100%; margin-top: 10px"
+                             actionListener="#{indexMB.search()}" update=":#{form}"/>
 
-            </h:panelGrid>
         </p:panel>
     </h:form>
 </ui:composition>

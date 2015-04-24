@@ -9,10 +9,8 @@ import ro.agitman.model.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * Created by edi on 2/11/2015.
@@ -41,6 +39,7 @@ public class AdvertServiceImpl implements AdvertService {
     public void save(Advert advert, List<UploadedImage> images) {
 
         if (advert.getId() == null) {
+            advert.setDateCreated(new Date());
             service.create(advert);
             imageService.uploadImages(advert, images);
             mailService.sendAdvertAdded(advert);
@@ -51,6 +50,11 @@ public class AdvertServiceImpl implements AdvertService {
 
     public List<Advert> findAll() {
         return service.findAll(Advert.class);
+    }
+
+    @Override
+    public Advert findForId(Long id) {
+        return service.find(Advert.class, id);
     }
 
     public List<Advert> findForUser(User user) {
@@ -67,5 +71,39 @@ public class AdvertServiceImpl implements AdvertService {
         return new ArrayList<>();
     }
 
+    public List<Advert> findSearch(MdCity city, Integer minPrice, Integer maxPrice, Boolean onlyImages) {
+        Map<String, Object> map = new HashMap<>();
+        if (minPrice == null) {
+            minPrice = 10;
+        }
+        if (maxPrice == null) {
+            maxPrice = 1000;
+        }
+        map.put("city", city);
+        map.put("minPrice", new BigDecimal(minPrice));
+        map.put("maxPrice", new BigDecimal(maxPrice));
+        map.put("img", onlyImages ? 1 : 0);
 
+        return service.findWithNamedQuery(Advert.FIND_SEARCH, map);
+    }
+
+    public void markFav(User user, Advert advert, boolean active){
+        if(active){
+
+        }
+        RentFavorite favorite = new RentFavorite();
+        favorite.setAdvert(advert);
+        favorite.setUser(user);
+        favorite.setDateCreated(new Date());
+        service.create(favorite);
+    }
+
+    public int isFav(User user, Advert selected){
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("advert", selected);
+
+        List<RentFavorite> list = service.findWithNamedQuery(RentFavorite.FIND_ONE, map);
+        return list.size();
+    }
 }

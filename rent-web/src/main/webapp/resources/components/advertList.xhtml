@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces">
 
 <composite:interface>
     <composite:attribute name="adverts" required="true"/>
@@ -19,12 +20,11 @@
                  rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
 
         <p:column headerText="" style="width: 95px;">
-            <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
-
-            <p:commandButton actionListener="#{detailsMB.onRowSelect()}" icon="fa fa-search"
-                             title="Detalii">
-                <f:setPropertyActionListener value="#{ad}" target="#{detailsMB.selected}"/>
-            </p:commandButton>
+            <pretty:link mappingId="details">
+                <f:param value="#{ad.id}"/>
+                <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
+                <p:graphicImage value="/resources/images/home168.png" rendered="#{empty ad.imageList}"/>
+            </pretty:link>
         </p:column>
 
         <p:column headerText="">

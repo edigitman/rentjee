@@ -30,4 +30,12 @@ public class MailServiceImpl implements MailService {
     public void sendNewPwd(User user){
         mailSender.sendEmail(user.getEmail(), "Schima parola", user.getRegToken());
     }
+
+    private String buildConfirm(String token){
+        StringBuilder sb = new StringBuilder("Bine ai venit La chirie \n\n");
+        sb.append("\t Pentru a confirma inregistrarea acceseaza linkul: ");
+        sb.append("<a href='http://lachirie.ro/registerConfirm/" + token + "'>link</a>");
+        sb.append("\n\nMultumim pentru inregistrare");
+        return sb.toString();
+    }
 }
