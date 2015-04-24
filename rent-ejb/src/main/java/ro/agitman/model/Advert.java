@@ -1,6 +1,7 @@
 package ro.agitman.model;
 
 import ro.agitman.dto.AdTypeEnum;
+import ro.agitman.dto.AdvertStatusEnum;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ public class Advert extends AbstractModel {
     private RentValue value;
     private RentInfo info;
     private List<EstimationUnit> estimationUnits;
-    private Date dateCreated;
-    private Date dateExpires;
     private List<Image> imageList = new ArrayList<>();
     private AdTypeEnum adType;
     private long dotari;
     private Boolean privateOwner;
     private List<RentFavorite> favorites;
+    private AdvertStatusEnum status;
+    private Date statusUpdate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -143,22 +144,12 @@ public class Advert extends AbstractModel {
 
     @Basic()
     @Temporal(TemporalType.DATE)
-    public Date getDateCreated() {
-        return dateCreated;
+    public Date getStatusUpdate() {
+        return statusUpdate;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    @Basic()
-    @Temporal(TemporalType.DATE)
-    public Date getDateExpires() {
-        return dateExpires;
-    }
-
-    public void setDateExpires(Date dateExpires) {
-        this.dateExpires = dateExpires;
+    public void setStatusUpdate(Date statusUpdate) {
+        this.statusUpdate = statusUpdate;
     }
 
     @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -197,5 +188,14 @@ public class Advert extends AbstractModel {
 
     public void setFavorites(List<RentFavorite> favorites) {
         this.favorites = favorites;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public AdvertStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(AdvertStatusEnum status) {
+        this.status = status;
     }
 }

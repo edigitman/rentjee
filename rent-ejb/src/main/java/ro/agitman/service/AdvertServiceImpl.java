@@ -1,6 +1,7 @@
 package ro.agitman.service;
 
 import ro.agitman.dba.DataAccessService;
+import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.UploadedImage;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.facade.ImageService;
@@ -39,7 +40,8 @@ public class AdvertServiceImpl implements AdvertService {
     public void save(Advert advert, List<UploadedImage> images) {
 
         if (advert.getId() == null) {
-            advert.setDateCreated(new Date());
+            advert.setCreateDate(new Date());
+            advert.setStatus(AdvertStatusEnum.ACTIVE);
             service.create(advert);
             imageService.uploadImages(advert, images);
             mailService.sendAdvertAdded(advert);

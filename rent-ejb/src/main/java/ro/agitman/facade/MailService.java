@@ -15,6 +15,8 @@ public interface MailService {
 
     void sendAdvertAdded(Advert advert);
 
+    void sendAdvertStatus(Advert advert);
+
     void sendNewPwd(User advert);
 
 }

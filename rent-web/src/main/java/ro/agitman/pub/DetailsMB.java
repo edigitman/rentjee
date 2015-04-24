@@ -5,6 +5,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import ro.agitman.AbstractMB;
 import ro.agitman.account.UserMB;
+import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.DotariEnum;
 import ro.agitman.dto.DotariEnumCmp;
 import ro.agitman.facade.AdvertService;
@@ -17,6 +18,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,6 +62,18 @@ public class DetailsMB extends AbstractMB {
         }
     }
 
+    public void makeActive() {
+        selected.setStatus(AdvertStatusEnum.ACTIVE);
+        selected.setStatusUpdate(new Date());
+        advertService.save(selected, null);
+    }
+
+    public void makeRetired() {
+        selected.setStatus(AdvertStatusEnum.RETIRED);
+        selected.setStatusUpdate(new Date());
+        advertService.save(selected, null);
+    }
+
     private void buildDotari() {
         dotari = new LinkedList<>();
         long dot = selected.getDotari();
@@ -74,12 +88,16 @@ public class DetailsMB extends AbstractMB {
         Collections.sort(dotari, new DotariEnumCmp());
     }
 
-    public List<DotariEnum> dotari() {
-        return dotari;
-    }
-
     public boolean hasDeposit() {
         return selected != null && !new BigDecimal("0.00").equals(selected.getValue().getDeposit());
+    }
+
+    public boolean isMine() {
+        return selected.getUser().equals(user);
+    }
+
+    public List<DotariEnum> dotari() {
+        return dotari;
     }
 
     public Advert getSelected() {

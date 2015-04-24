@@ -15,14 +15,29 @@
         <h:form id="details">
             <p:growl id="growl" showDetail="true" sticky="true"/>
 
-            <h2>Detalii anunt -
-                <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/> -
+            <h2>Anunt -
                 <h:outputText id="type" value="#{detailsMB.selected.adType}"/>
+                <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/> -
                 <p:rating value="#{detailsMB.favNr}" stars="1" cancel="false"
                           rendered="#{userMB.userLogged}">
                     <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="@this" />
                 </p:rating>
             </h2>
+
+            <p:outputPanel class="ui-grid-row" style="margin-top: 10px" rendered="#{detailsMB.isMine()}">
+                <div class="ui-grid-col-3">
+                    <p:outputLabel value="Status: #{detailsMB.selected.status}"/>
+                </div>
+                <div class="ui-grid-col-3">
+                    <p:commandButton value="Activeaza"
+                                     actionListener="#{detailsMB.makeActive()}"
+                                     rendered="#{detailsMB.selected.status eq 'EXPIRED'
+                                                or detailsMB.selected.status eq 'RETIRED'}"/>
+                    <p:commandButton value="Dezactiveaza"
+                                     actionListener="#{detailsMB.makeRetired()}"
+                                     rendered="#{detailsMB.selected.status eq 'ACTIVE'}"/>
+                </div>
+            </p:outputPanel>
 
             <div class="ui-grid">
                 <div class="ui-grid-row">
@@ -71,6 +86,7 @@
                 </div>
 
                 <p:galleria value="#{detailsMB.selected.imageList}"
+                            style="margin-top: 15px"
                             rendered="#{not empty detailsMB.selected.imageList}"
                             var="image" panelWidth="500" panelHeight="313">
                     <img src="#{image.url}" alt="Image Description for #{image.url}"/>
@@ -87,10 +103,6 @@
                             </ui:repeat>
                         </ul>
                     </div>
-                </div>
-
-                <div class="ui-grid-row" style="margin-top: 10px">
-
                 </div>
             </div>
 
