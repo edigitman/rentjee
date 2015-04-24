@@ -1,5 +1,7 @@
 package ro.agitman.pub;
 
+import com.ocpsoft.pretty.PrettyContext;
+import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import ro.agitman.facade.AdvertService;
@@ -8,12 +10,8 @@ import ro.agitman.model.MdCity;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,7 +21,8 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "index", pattern = "/index", viewId = "/pages/index.jsf?faces-redirect=true")
+        @URLMapping(id = "index", pattern = "/index", viewId = "/pages/index.jsf?faces-redirect=true"),
+        @URLMapping(id = "search", pattern = "/index/#{indexMB.city}/#{indexMB.minPrice}/#{indexMB.maxPrice}/#{indexMB.onlyImages}", viewId = "/pages/index.jsf?faces-redirect=true")
 })
 public class IndexMB implements Serializable{
 
@@ -36,13 +35,19 @@ public class IndexMB implements Serializable{
     @EJB
     private AdvertService advertService;
 
-    @PostConstruct
+    @URLAction(onPostback = false)
     public void init(){
-        adverts = advertService.findAll();
+        String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
+
+        if ("search".equals(viewId)) {
+            adverts = advertService.findSearch(city, minPrice, maxPrice, onlyImages);
+        }
+
     }
 
-    public void search() {
-        adverts = advertService.findSearch(city, minPrice, maxPrice, onlyImages);
+    @PostConstruct
+    public void load() {
+        adverts = advertService.findAll();
     }
 
     public List<Advert> getAdverts() {

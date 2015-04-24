@@ -10,12 +10,15 @@ import java.util.Date;
 @Table(name = "rt_favorites")
 @NamedQueries({
         @NamedQuery(name = "RentFavorite.findOne",
-                query = "select r from RentFavorite r where r.advert = :advert and r.user = :user")
+                query = "select r from RentFavorite r where r.advert = :advert and r.user = :user"),
+        @NamedQuery(name = "RentFavorite.deleteOne",
+                query = "DELETE FROM RentFavorite r WHERE r.advert = :advert and r.user = :user")
 })
 
-public class RentFavorite extends AbstractModel{
+public class RentFavorite extends AbstractModel {
 
     public final static String FIND_ONE = "RentFavorite.findOne";
+    public final static String DELETE_ONE = "RentFavorite.deleteOne";
 
     private Long id;
     private User user;

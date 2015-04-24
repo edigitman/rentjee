@@ -19,14 +19,14 @@ public class DataAccessServiceImpl implements DataAccessService {
 
     protected EntityManager em;
 
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
     // Method used to inject the Entity Manager
     @PersistenceContext(unitName = "CrudPU")
     public void setEntityManager(EntityManager em) {
         this.em = em;
-    }
-
-    public EntityManager getEntityManager() {
-        return em;
     }
 
     /**
@@ -61,6 +61,20 @@ public class DataAccessServiceImpl implements DataAccessService {
     public <T extends AbstractModel> void delete(T t) {
         this.em.remove(t);
         this.em.flush();
+    }
+
+    /**
+     *
+
+     */
+    public void deleteWithQuery(String namedQueryName, Map<String, Object> parameters) {
+        Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
+        Query query = this.em.createNamedQuery(namedQueryName);
+
+        for (Map.Entry<String, Object> entry : rawParameters) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        query.executeUpdate();
     }
 
     /**

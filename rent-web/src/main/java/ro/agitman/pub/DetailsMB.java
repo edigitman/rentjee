@@ -3,7 +3,6 @@ package ro.agitman.pub;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
-import org.primefaces.context.RequestContext;
 import ro.agitman.AbstractMB;
 import ro.agitman.account.UserMB;
 import ro.agitman.dto.DotariEnum;
@@ -15,7 +14,6 @@ import ro.agitman.model.User;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -56,9 +54,9 @@ public class DetailsMB extends AbstractMB {
 
     public void makeFavorite() {
         if (favNr == 0) {
-            advertService.markFav(user, selected);
-        }else{
-            advertService.markFav(user, selected);
+            advertService.markFav(user, selected, true);
+        } else {
+            advertService.markFav(user, selected, false);
         }
     }
 

@@ -5,110 +5,110 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USERS")
 @NamedQueries({@NamedQuery(name = "User.findUserByEmail", query = "select u from User u where u.email = :email"),
-		@NamedQuery(name = "User.findUserByToken", query = "select u from User u where u.regToken = :token"),
-		@NamedQuery(name = "User.findUserByEmailAndToken", query = "select u from User u where u.regToken = :token and u.email = :email")
+        @NamedQuery(name = "User.findUserByToken", query = "select u from User u where u.regToken = :token"),
+        @NamedQuery(name = "User.findUserByEmailAndToken", query = "select u from User u where u.regToken = :token and u.email = :email")
 
 })
 
-public class User extends AbstractModel{
+public class User extends AbstractModel {
 
-	public static final String FIND_BY_EMAIL = "User.findUserByEmail";
-	public static final String FIND_BY_TOKEN = "User.findUserByToken";
-	public static final String FIND_BY_EMAIL_TOKEN = "User.findUserByEmailAndToken";
+    public static final String FIND_BY_EMAIL = "User.findUserByEmail";
+    public static final String FIND_BY_TOKEN = "User.findUserByToken";
+    public static final String FIND_BY_EMAIL_TOKEN = "User.findUserByEmailAndToken";
 
-	private Long id;
-	private String email;
-	private String password;
-	private String name;
-	private String role;
-	private String phone;
-	private String phone2;
-	private String phone3;
-	private String regToken;
-	private boolean confirmedBl;
+    private Long id;
+    private String email;
+    private String password;
+    private String name;
+    private String role;
+    private String phone;
+    private String phone2;
+    private String phone3;
+    private String regToken;
+    private boolean confirmedBl;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Column(unique = true)
-	public String getEmail() {
-		return email;
-	}
+    @Column(unique = true)
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getPhone2() {
-		return phone2;
-	}
+    public String getPhone2() {
+        return phone2;
+    }
 
-	public void setPhone2(String phone2) {
-		this.phone2 = phone2;
-	}
+    public void setPhone2(String phone2) {
+        this.phone2 = phone2;
+    }
 
-	public String getPhone3() {
-		return phone3;
-	}
+    public String getPhone3() {
+        return phone3;
+    }
 
-	public void setPhone3(String phone3) {
-		this.phone3 = phone3;
-	}
+    public void setPhone3(String phone3) {
+        this.phone3 = phone3;
+    }
 
-	public String getRegToken() {
-		return regToken;
-	}
+    public String getRegToken() {
+        return regToken;
+    }
 
-	public void setRegToken(String regToken) {
-		this.regToken = regToken;
-	}
+    public void setRegToken(String regToken) {
+        this.regToken = regToken;
+    }
 
-	@Basic
-	@Column(name = "confirmed_BL")
-	public boolean isConfirmedBl() {
-		return confirmedBl;
-	}
+    @Basic
+    @Column(name = "confirmed_BL")
+    public boolean isConfirmedBl() {
+        return confirmedBl;
+    }
 
-	public void setConfirmedBl(boolean confirmedBl) {
-		this.confirmedBl = confirmedBl;
-	}
+    public void setConfirmedBl(boolean confirmedBl) {
+        this.confirmedBl = confirmedBl;
+    }
 }

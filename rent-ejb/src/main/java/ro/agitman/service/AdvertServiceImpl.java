@@ -64,7 +64,9 @@ public class AdvertServiceImpl implements AdvertService {
     }
 
     public List<Advert> findFavoritesForUser(User user) {
-        return new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        return service.findWithNamedQuery(Advert.FIND_FAV_BY_USER, map);
     }
 
     public List<Advert> findDezByUser(User user) {
@@ -87,18 +89,22 @@ public class AdvertServiceImpl implements AdvertService {
         return service.findWithNamedQuery(Advert.FIND_SEARCH, map);
     }
 
-    public void markFav(User user, Advert advert, boolean active){
-        if(active){
-
+    public void markFav(User user, Advert advert, boolean active) {
+        if (active) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("advert", advert);
+            map.put("user", user);
+            service.deleteWithQuery(RentFavorite.DELETE_ONE, map);
+        } else {
+            RentFavorite favorite = new RentFavorite();
+            favorite.setAdvert(advert);
+            favorite.setUser(user);
+            favorite.setDateCreated(new Date());
+            service.create(favorite);
         }
-        RentFavorite favorite = new RentFavorite();
-        favorite.setAdvert(advert);
-        favorite.setUser(user);
-        favorite.setDateCreated(new Date());
-        service.create(favorite);
     }
 
-    public int isFav(User user, Advert selected){
+    public int isFav(User user, Advert selected) {
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
         map.put("advert", selected);

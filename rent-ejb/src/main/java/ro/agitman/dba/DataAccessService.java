@@ -13,9 +13,9 @@ import java.util.Map;
 @Local
 public interface DataAccessService {
 
-    void setEntityManager(EntityManager em);
-
     EntityManager getEntityManager();
+
+    void setEntityManager(EntityManager em);
 
     /**
      * This method will create the given object into the persistence system.
@@ -52,6 +52,14 @@ public interface DataAccessService {
      * @param <T> Any object extending AgcEntity
      */
     <T extends AbstractModel> void delete(T t);
+
+    /**
+     * This method will execute an update query in order to delete
+     *
+     * @param namedQueryName named query
+     * @param parameters     - parameters map
+     */
+    void deleteWithQuery(String namedQueryName, Map<String, Object> parameters);
 
     /**
      * This method will update the given object into the persistence system.
