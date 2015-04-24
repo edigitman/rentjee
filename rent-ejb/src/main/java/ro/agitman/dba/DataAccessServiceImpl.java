@@ -64,10 +64,10 @@ public class DataAccessServiceImpl implements DataAccessService {
     }
 
     /**
-     *
-
+     * {@inheritDoc}
      */
-    public void deleteWithQuery(String namedQueryName, Map<String, Object> parameters) {
+    @Override
+    public void executeUpdateWithQuery(String namedQueryName, Map<String, Object> parameters) {
         Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
         Query query = this.em.createNamedQuery(namedQueryName);
 

@@ -41,6 +41,7 @@ public class AdvertServiceImpl implements AdvertService {
 
         if (advert.getId() == null) {
             advert.setCreateDate(new Date());
+            advert.setStatusUpdate(new Date());
             advert.setStatus(AdvertStatusEnum.ACTIVE);
             service.create(advert);
             imageService.uploadImages(advert, images);
@@ -96,7 +97,7 @@ public class AdvertServiceImpl implements AdvertService {
             Map<String, Object> map = new HashMap<>();
             map.put("advert", advert);
             map.put("user", user);
-            service.deleteWithQuery(RentFavorite.DELETE_ONE, map);
+            service.executeUpdateWithQuery(RentFavorite.DELETE_ONE, map);
         } else {
             RentFavorite favorite = new RentFavorite();
             favorite.setAdvert(advert);

@@ -9,9 +9,9 @@ import java.util.Date;
 @Entity
 @Table(name = "rt_favorites")
 @NamedQueries({
-        @NamedQuery(name = "RentFavorite.findOne",
+        @NamedQuery(name = RentFavorite.FIND_ONE,
                 query = "select r from RentFavorite r where r.advert = :advert and r.user = :user"),
-        @NamedQuery(name = "RentFavorite.deleteOne",
+        @NamedQuery(name = RentFavorite.DELETE_ONE,
                 query = "DELETE FROM RentFavorite r WHERE r.advert = :advert and r.user = :user")
 })
 

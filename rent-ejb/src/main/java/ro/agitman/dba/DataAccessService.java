@@ -54,12 +54,10 @@ public interface DataAccessService {
     <T extends AbstractModel> void delete(T t);
 
     /**
-     * This method will execute an update query in order to delete
-     *
-     * @param namedQueryName named query
-     * @param parameters     - parameters map
+     * @param namedQueryName
+     * @param parameters
      */
-    void deleteWithQuery(String namedQueryName, Map<String, Object> parameters);
+    void executeUpdateWithQuery(String namedQueryName, Map<String, Object> parameters);
 
     /**
      * This method will update the given object into the persistence system.

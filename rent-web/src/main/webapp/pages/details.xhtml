@@ -19,8 +19,8 @@
                 <h:outputText id="type" value="#{detailsMB.selected.adType}"/>
                 <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/> -
                 <p:rating value="#{detailsMB.favNr}" stars="1" cancel="false"
-                          rendered="#{userMB.userLogged}">
-                    <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="@this" />
+                          rendered="#{userMB.userLogged and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.favNr eq 1)}">
+                <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="@this" />
                 </p:rating>
             </h2>
 

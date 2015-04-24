@@ -13,11 +13,18 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Advert.findAll", query = "select a from Advert a"),
+        @NamedQuery(name = "Advert.findAll", query = "select a from Advert a where a.status in ('ACTIVE', 'EXPIRED')"),
         @NamedQuery(name = Advert.FIND_FOR_USER, query = "select a from Advert a where a.user = :user"),
         @NamedQuery(name = Advert.FIND_FAV_BY_USER, query = "select a from Advert a JOIN a.favorites fs where fs.user = :user"),
+        @NamedQuery(name = Advert.UPDATE_STATUS_TO_EXPIRED, query = "update Advert a set a.status = 'EXPIRED' where a.status = 'ACTIVE' and a.statusUpdate <= :date"),
+        @NamedQuery(name = Advert.UPDATE_STATUS_TO_REMOVED, query = "update Advert a set a.status = 'REMOVED' where " +
+                "(a.status = 'EXPIRED' and a.statusUpdate <= :dateExp) or (a.status = 'RETIRED' and a.statusUpdate <= :dateRet)"),
         @NamedQuery(name = Advert.FIND_SEARCH, query =
-                "select a from Advert a where a.address.city = :city and a.value.value >= :minPrice and a.value.value <= :maxPrice and size(a.imageList) > :img")
+                "select a from Advert a where a.address.city = :city and " +
+                        "a.value.value >= :minPrice and " +
+                        "a.value.value <= :maxPrice and " +
+                        "size(a.imageList) > :img " +
+                        "and a.status in ('ACTIVE', 'EXPIRED')")
 // @NamedQuery(name = "findActive", query =
 // "select a from Advert a where a.state = 1")
 })
@@ -27,6 +34,8 @@ public class Advert extends AbstractModel {
     public static final String FIND_FOR_USER = "Advert.findForUser";
     public static final String FIND_SEARCH = "Advert.findSearch";
     public static final String FIND_FAV_BY_USER = "Advert.findFavForUser";
+    public static final String UPDATE_STATUS_TO_EXPIRED = "Advert.updateStatusToExpired";
+    public static final String UPDATE_STATUS_TO_REMOVED = "Advert.updateStatus";
 
     private Long id;
     private User user;
