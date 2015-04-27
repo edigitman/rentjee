@@ -42,23 +42,27 @@ public class DetailsMB extends AbstractMB {
     private Long id;
     private List<DotariEnum> dotari;
     private int favNr = 0;
+    private int oldFav = 0;
     private User user;
 
     @URLAction(onPostback = false)
     public void load() {
         selected = advertService.findForId(id);
         user = userMB.getUser();
-        favNr = advertService.isFav(user, selected);
+        oldFav = advertService.isFav(user, selected);
+        favNr = oldFav;
         if (selected != null) {
             buildDotari();
         }
     }
 
     public void makeFavorite() {
-        if (favNr == 1) {
+        if (oldFav == 1) {
             advertService.markFav(user, selected, true);
+            favNr = 0;
         } else {
             advertService.markFav(user, selected, false);
+            favNr = 1;
         }
     }
 

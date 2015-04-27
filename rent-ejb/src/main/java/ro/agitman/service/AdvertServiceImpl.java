@@ -91,28 +91,28 @@ public class AdvertServiceImpl implements AdvertService {
         CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
         Root<Advert> advert = cq.from(Advert.class);
         Join<Advert, RentValue> value = advert.join("value");
+        List<Predicate> predicates = new ArrayList<Predicate>();
 
         // filter price
-        BigDecimal minP = new BigDecimal(minPrice);
-        BigDecimal maxP = new BigDecimal(maxPrice);
-        cq.where(cb.between((Path) value.get("value"), minP, maxP));
+        predicates.add(cb.between(value.<BigDecimal>get("value"), new BigDecimal(minPrice), new BigDecimal(maxPrice)));
 
         //filter images
         if (onlyImages)
-            cq.where(cb.isNotEmpty((Path) advert.get("imageList")));
+            predicates.add(cb.isNotEmpty(advert.<List>get("imageList")));
 
         //filter status
         List<AdvertStatusEnum> list = new ArrayList<>();
         list.add(AdvertStatusEnum.ACTIVE);
         list.add(AdvertStatusEnum.EXPIRED);
-        cq.where(advert.get("status").in(list));
+        predicates.add(advert.<AdvertStatusEnum>get("status").in(list));
 
         //filter city if required
         if (cityId != 0) {
             Join<Advert, MdCity> city = advert.join("address").join("city");
-            cq.where(cb.equal(city.get("id"), cityId));
+            predicates.add(cb.equal(city.<Long>get("id"), cityId));
         }
 
+        cq.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
         cq.select(advert);
 
         TypedQuery<Advert> q = em.createQuery(cq);
