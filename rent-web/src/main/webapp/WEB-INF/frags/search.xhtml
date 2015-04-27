@@ -13,9 +13,9 @@
             <p:selectOneMenu id="city" value="#{indexMB.city}"
                              style="vertical-align:middle"
                              converter="omnifaces.SelectItemsConverter">
-                <f:selectItem itemValue="#{0}" itemLabel=""/>
+                <f:selectItem itemValue="#{null}" itemLabel=""/>
                 <f:selectItems value="#{mdSessionMB.cities}"/>
-                <p:ajax update="searchLink"/>
+                <p:ajax process="@this" update="searchLink"/>
             </p:selectOneMenu>
 
             <p:panelGrid columns="1" styleClass="tableNoPadding" style="margin-top: 10px">

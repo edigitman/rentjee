@@ -15,18 +15,22 @@
         <h:form id="details">
             <p:growl id="growl" showDetail="true" sticky="true"/>
 
-            <h2>Anunt -
-                <h:outputText id="type" value="#{detailsMB.selected.adType}"/> -
-                <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/>
-                <p:rating value="#{detailsMB.favNr}" stars="1" cancel="false"
-                          rendered="#{userMB.userLogged and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.favNr eq 1)}">
-                    <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="@this" />
-                </p:rating>
+            <h2>
+                <h:panelGrid columns="4" id="titleDiv" >
+                    <p:rating value="#{detailsMB.favNr}" stars="1" cancel="false"
+                              rendered="#{userMB.userLogged and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.favNr eq 1)}">
+                        <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="titleDiv" />
+                    </p:rating>
+                    <h:outputText value="Anunt"/>
+                    <h:outputText id="type" value="#{detailsMB.selected.adType}"/>
+                    <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/>
+                </h:panelGrid>
             </h2>
 
             <p:outputPanel styleClass="ui-grid-row" style="margin-top: 10px" rendered="#{detailsMB.isMine()}">
-                <p:outputPanel id="statusPanel" styleClass="ui-grid-col-3">
-                    <p:outputLabel value="Status: #{detailsMB.selected.status}"/>
+                <p:outputPanel id="statusPanel" styleClass="ui-grid-col-6">
+                    <p:outputLabel value="Status: #{detailsMB.selected.status}"
+                            style="margin-right: 10px;"/>
                     <p:commandButton value="Activeaza" update="statusPanel"
                                      actionListener="#{detailsMB.makeActive()}"
                                      rendered="#{detailsMB.selected.status eq 'EXPIRED'
@@ -105,10 +109,10 @@
 
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12">
-                        <p:gmap id="geoGmap" widgetVar="gMap" type="hybrid"
-                                center="#{detailsMB.centerGeoMap}" zoom="11"
-                                model="#{geocodeView.geoModel}"
-                                style="width:100%;height:300px"/>
+                        <!--<p:gmap id="geoGmap" widgetVar="gMap" type="hybrid"-->
+                                <!--center="#{detailsMB.centerGeoMap}" zoom="11"-->
+                                <!--model="#{geocodeView.geoModel}"-->
+                                <!--style="width:100%;height:300px"/>-->
                     </div>
                 </div>
             </div>

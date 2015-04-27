@@ -42,12 +42,12 @@ public class MdSessionMB implements Serializable {
     }
 
     public List<SelectItem> getNeighborhoods(MdCity city) {
-        if (neighborhoods == null) {
-            neighborhoods = new ArrayList<>();
-            for (MdNeighborhood neighborhood : mdService.findAllNeighborhood(city)) {
-                neighborhoods.add(new SelectItem(neighborhood, neighborhood.getName()));
-            }
+
+        neighborhoods = new ArrayList<>();
+        for (MdNeighborhood neighborhood : mdService.findAllNeighborhood(city)) {
+            neighborhoods.add(new SelectItem(neighborhood, neighborhood.getName()));
         }
+
         return neighborhoods;
     }
 

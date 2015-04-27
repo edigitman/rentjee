@@ -62,12 +62,12 @@ public class DetailsMB extends AbstractMB {
     }
 
     public void makeFavorite() {
-        if (oldFav == 1) {
+        if (oldFav == 0) {
             advertService.markFav(user, selected, true);
-            favNr = 0;
+            favNr = oldFav = 1;
         } else {
             advertService.markFav(user, selected, false);
-            favNr = 1;
+            favNr = oldFav = 0;
         }
     }
 
@@ -101,7 +101,7 @@ public class DetailsMB extends AbstractMB {
     }
 
     public boolean isMine() {
-        return selected.getUser().getId().equals(user.getId());
+        return user != null && selected.getUser().getId().equals(user.getId());
     }
 
     public List<DotariEnum> dotari() {

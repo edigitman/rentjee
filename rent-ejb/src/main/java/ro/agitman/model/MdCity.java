@@ -57,4 +57,32 @@ public class MdCity extends AbstractModel {
     public void setNeighborhoods(List<MdNeighborhood> neighborhoods) {
         this.neighborhoods = neighborhoods;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MdCity city = (MdCity) o;
+
+        if (!id.equals(city.id)) return false;
+        if (name != null ? !name.equals(city.name) : city.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MdCity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

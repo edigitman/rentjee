@@ -57,7 +57,7 @@ INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 48,'Văcărești', 1);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 49,'Victoriei', 1);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 50,'Vitan', 1);
 
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 50, 'Agronomie', 4);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 51, 'Agronomie', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 52, 'Alexandru cel Bun', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 53, 'Arcu', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 54, 'Aviației', 4);
@@ -164,16 +164,16 @@ INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 159,'Piața Chiliei', 3)
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 160,'Piața Griviței', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 161,'Portul Constanța', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 162,'Tăbăcărie', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 162,'Tomis I', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 163,'Tomis II', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 164,'Tomis III', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 165, 'Tomis IV', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 166,'Tomis Nord', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 167,'Trocadero', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 168,'Unirii', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 169,'Victoria', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 170,'Viile Noi', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 171,'Zona Industrială Constanța', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 163,'Tomis I', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 164,'Tomis II', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 165,'Tomis III', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 166, 'Tomis IV', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 167,'Tomis Nord', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 168,'Trocadero', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 169,'Unirii', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 170,'Victoria', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 171,'Viile Noi', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 172,'Zona Industrială Constanța', 3);
 
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 180,'Centru', 5);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 181,'Centrul Istoric (Orașul de Sus)', 5);
