@@ -102,6 +102,15 @@
                         </ul>
                     </div>
                 </div>
+
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <p:gmap id="geoGmap" widgetVar="gMap" type="hybrid"
+                                center="#{detailsMB.centerGeoMap}" zoom="11"
+                                model="#{geocodeView.geoModel}"
+                                style="width:100%;height:300px"/>
+                    </div>
+                </div>
             </div>
 
         </h:form>

@@ -1,7 +1,7 @@
 CREATE TABLE md_city
 (
   id bigint NOT NULL,
-  name character varying(255),
+  name character varying(15),
   ordering integer,
   CONSTRAINT md_city_pkey PRIMARY KEY (id)
 )
@@ -9,10 +9,10 @@ WITH (
   OIDS=FALSE
 );
 
-INSERT INTO md_city(id, name, ordering) VALUES (1,'Iasi',1);
-INSERT INTO md_city(id, name, ordering) VALUES (2,'Bucuresti',2);
-INSERT INTO md_city(id, name, ordering) VALUES (3,'Cluj',3);
-INSERT INTO md_city(id, name, ordering) VALUES (4,'Constanta',4);
+INSERT INTO md_city(id, name, ordering) VALUES (1,'Bucuresti',1);
+INSERT INTO md_city(id, name, ordering) VALUES (2,'Cluj',2);
+INSERT INTO md_city(id, name, ordering) VALUES (3,'Constanta',3);
+INSERT INTO md_city(id, name, ordering) VALUES (4,'Iasi',4);
 INSERT INTO md_city(id, name, ordering) VALUES (5,'Sibiu',5);
 
 

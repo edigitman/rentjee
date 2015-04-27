@@ -3,6 +3,8 @@ package ro.agitman.pub;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.MapModel;
 import ro.agitman.AbstractMB;
 import ro.agitman.account.UserMB;
 import ro.agitman.dto.AdvertStatusEnum;
@@ -37,6 +39,9 @@ public class DetailsMB extends AbstractMB {
 
     @ManagedProperty(value = "#{userMB}")
     private UserMB userMB;
+
+    private MapModel geoModel = new DefaultMapModel();
+    private String centerGeoMap = "41.850033, -87.6500523";
 
     private Advert selected;
     private Long id;

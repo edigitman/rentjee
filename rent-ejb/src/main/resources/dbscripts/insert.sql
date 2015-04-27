@@ -1,18 +1,9 @@
--- Table: md_neighborhood
+INSERT INTO md_city(id, name, ordering) VALUES (1,'Bucuresti',1);
+INSERT INTO md_city(id, name, ordering) VALUES (2,'Cluj',2);
+INSERT INTO md_city(id, name, ordering) VALUES (3,'Constanta',3);
+INSERT INTO md_city(id, name, ordering) VALUES (4,'Iasi',4);
+INSERT INTO md_city(id, name, ordering) VALUES (5,'Sibiu',5);
 
--- DROP TABLE md_neighborhood;
-
-CREATE TABLE md_neighborhood
-(
-  id bigint NOT NULL,
-  name character varying(60),
-  city_id bigint,
-  CONSTRAINT md_neighborhood_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_nghb_city FOREIGN KEY (city_id) REFERENCES md_city (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
 
 
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 1,'13 Septembrie', 1);
@@ -84,7 +75,7 @@ INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 65, 'Dacia', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 66, 'Dimitrie Cantemir', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 67, 'Dispecer', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 68, 'Frumoasa', 4);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 69, 'Galata '1 4);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 69, 'Galata 1', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 70, 'Galata 2', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 71, 'Gară', 4);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 72, 'Grădinari', 4);
@@ -176,7 +167,7 @@ INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 162,'Tăbăcărie', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 162,'Tomis I', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 163,'Tomis II', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 164,'Tomis III', 3);
-INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 165'Tomis IV', 3);
+INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 165, 'Tomis IV', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 166,'Tomis Nord', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 167,'Trocadero', 3);
 INSERT INTO md_neighborhood(id, name, city_id) VALUES ( 168,'Unirii', 3);
