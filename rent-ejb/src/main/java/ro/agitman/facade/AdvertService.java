@@ -28,7 +28,7 @@ public interface AdvertService {
 
     List<Advert> findDezByUser(User user);
 
-    List<Advert> findSearch(MdCity city, Integer minPrice, Integer maxPrice, Boolean onlyImages);
+    List<Advert> findSearch(Long cityId, Integer minPrice, Integer maxPrice, Boolean onlyImages);
 
     void markFav(User user, Advert advert, boolean active);
 

@@ -10,6 +10,9 @@ import ro.agitman.model.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -52,7 +55,12 @@ public class AdvertServiceImpl implements AdvertService {
     }
 
     public List<Advert> findAll() {
-        return service.findAll(Advert.class);
+        List<AdvertStatusEnum> list = new ArrayList<>();
+        list.add(AdvertStatusEnum.ACTIVE);
+        list.add(AdvertStatusEnum.EXPIRED);
+        Map<String, Object> map = new HashMap<>();
+        map.put("stats", list);
+        return service.findWithNamedQuery(Advert.FIND_ALL, map);
     }
 
     @Override
@@ -76,34 +84,55 @@ public class AdvertServiceImpl implements AdvertService {
         return new ArrayList<>();
     }
 
-    public List<Advert> findSearch(MdCity city, Integer minPrice, Integer maxPrice, Boolean onlyImages) {
-        Map<String, Object> map = new HashMap<>();
-        if (minPrice == null) {
-            minPrice = 10;
-        }
-        if (maxPrice == null) {
-            maxPrice = 1000;
-        }
-        map.put("city", city);
-        map.put("minPrice", new BigDecimal(minPrice));
-        map.put("maxPrice", new BigDecimal(maxPrice));
-        map.put("img", onlyImages ? 1 : 0);
+    public List<Advert> findSearch(Long cityId, Integer minPrice, Integer maxPrice, Boolean onlyImages) {
 
-        return service.findWithNamedQuery(Advert.FIND_SEARCH, map);
+        EntityManager em = service.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
+        Root<Advert> advert = cq.from(Advert.class);
+        Join<Advert, RentValue> value = advert.join("value");
+
+        // filter price
+        BigDecimal minP = new BigDecimal(minPrice);
+        BigDecimal maxP = new BigDecimal(maxPrice);
+        cq.where(cb.between((Path) value.get("value"), minP, maxP));
+
+        //filter images
+        if (onlyImages)
+            cq.where(cb.isNotEmpty((Path) advert.get("imageList")));
+
+        //filter status
+        List<AdvertStatusEnum> list = new ArrayList<>();
+        list.add(AdvertStatusEnum.ACTIVE);
+        list.add(AdvertStatusEnum.EXPIRED);
+        cq.where(advert.get("status").in(list));
+
+        //filter city if required
+        if (cityId != 0) {
+            Join<Advert, MdCity> city = advert.join("address").join("city");
+            cq.where(cb.equal(city.get("id"), cityId));
+        }
+
+        cq.select(advert);
+
+        TypedQuery<Advert> q = em.createQuery(cq);
+        List<Advert> allAdverts = q.getResultList();
+
+        return allAdverts;
     }
 
-    public void markFav(User user, Advert advert, boolean active) {
-        if (active) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("advert", advert);
-            map.put("user", user);
-            service.executeUpdateWithQuery(RentFavorite.DELETE_ONE, map);
-        } else {
+    public void markFav(User user, Advert advert, boolean makeActive) {
+        if (makeActive) {
             RentFavorite favorite = new RentFavorite();
             favorite.setAdvert(advert);
             favorite.setUser(user);
             favorite.setDateCreated(new Date());
             service.create(favorite);
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            map.put("advert", advert);
+            map.put("user", user);
+            service.executeUpdateWithQuery(RentFavorite.DELETE_ONE, map);
         }
     }
 

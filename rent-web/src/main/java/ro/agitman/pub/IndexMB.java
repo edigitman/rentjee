@@ -22,12 +22,13 @@ import java.util.List;
 @SessionScoped
 @URLMappings(mappings = {
         @URLMapping(id = "index", pattern = "/index", viewId = "/pages/index.jsf?faces-redirect=true"),
-        @URLMapping(id = "search", pattern = "/index/#{indexMB.city}/#{indexMB.minPrice}/#{indexMB.maxPrice}/#{indexMB.onlyImages}", viewId = "/pages/index.jsf?faces-redirect=true")
+        @URLMapping(id = "search", pattern = "/index/#{indexMB.cityId}/#{indexMB.minPrice}/#{indexMB.maxPrice}/#{indexMB.onlyImages}", viewId = "/pages/index.jsf?faces-redirect=true")
 })
 public class IndexMB implements Serializable{
 
     private List<Advert> adverts;
-    private MdCity city;
+    private MdCity city = new MdCity(0L);
+    private Long cityId = 0L;
     private Integer minPrice = 100;
     private Integer maxPrice = 400;
     private Boolean onlyImages;
@@ -40,7 +41,7 @@ public class IndexMB implements Serializable{
         String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
 
         if ("search".equals(viewId)) {
-            adverts = advertService.findSearch(city, minPrice, maxPrice, onlyImages);
+            adverts = advertService.findSearch(cityId, minPrice, maxPrice, onlyImages);
         }
 
     }
@@ -88,5 +89,13 @@ public class IndexMB implements Serializable{
 
     public void setOnlyImages(Boolean onlyImages) {
         this.onlyImages = onlyImages;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 }

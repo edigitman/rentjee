@@ -20,8 +20,9 @@ public class UpdateAdvertStatusScheduler {
     @EJB
     private DataAccessService service;
 
-    @Schedule(second = "*/1", minute = "*", hour = "*", persistent = false)
+    @Schedule(second = "*", minute = "*", hour = "5", persistent = false)
     public void executeUpdate() {
+        System.out.println("Execute batch...");
         MutableDateTime date = new MutableDateTime();
         date.addDays(-20);
         Date dateExp = date.toDate();

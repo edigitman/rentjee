@@ -6,13 +6,16 @@
 
 
     <h:form>
+        <p:messages/>
         <p:panel id="search" header="cautare">
 
             <p:outputLabel for="city" value="Oras "/>
             <p:selectOneMenu id="city" value="#{indexMB.city}"
-                             style="vertical-align:middle" required="true"
+                             style="vertical-align:middle"
                              converter="omnifaces.SelectItemsConverter">
+                <f:selectItem itemValue="#{0}" itemLabel=""/>
                 <f:selectItems value="#{mdSessionMB.cities}"/>
+                <p:ajax update="searchLink"/>
             </p:selectOneMenu>
 
             <p:panelGrid columns="1" styleClass="tableNoPadding" style="margin-top: 10px">
@@ -21,7 +24,9 @@
                 <p:slider for="txt6,txt7" display="displayRange"
                           style="width: 140px; margin-top: 5px" range="true"
                           minValue="50" maxValue="1000" step="10"
-                          displayTemplate="Pret intre {min} si {max} EURO"/>
+                          displayTemplate="Pret intre {min} si {max} EURO">
+                    <p:ajax process="txt6, txt7" update="searchLink"/>
+                </p:slider>
                 <h:inputHidden id="txt6" value="#{indexMB.minPrice}"/>
                 <h:inputHidden id="txt7" value="#{indexMB.maxPrice}"/>
             </p:panelGrid>
@@ -29,11 +34,15 @@
             <p:panelGrid columns="2" styleClass="tableNoPadding" style="margin-top: 10px">
                 <h:outputText value="Doar cu poze:"/>
                 <p:selectBooleanCheckbox value="#{indexMB.onlyImages}"
-                                         style="vertical-align:middle; margin-left: 10px"/>
+                                         style="vertical-align:middle; margin-left: 10px">
+                    <p:ajax update="searchLink"/>
+                </p:selectBooleanCheckbox>
             </p:panelGrid>
 
-            <p:commandButton value="cauta" style="width: 100%; margin-top: 10px" action="pretty:search">
-                <f:param value="#{indexMB.city}"/>
+            <p:commandButton id="searchLink" value="cauta"
+                             style="width: 100%; margin-top: 10px"
+                             action="pretty:search">
+                <f:param value="#{indexMB.city.id}"/>
                 <f:param value="#{indexMB.minPrice}"/>
                 <f:param value="#{indexMB.maxPrice}"/>
                 <f:param value="#{indexMB.onlyImages}"/>

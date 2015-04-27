@@ -55,7 +55,7 @@ public class DetailsMB extends AbstractMB {
     }
 
     public void makeFavorite() {
-        if (favNr == 0) {
+        if (favNr == 1) {
             advertService.markFav(user, selected, true);
         } else {
             advertService.markFav(user, selected, false);
@@ -77,7 +77,6 @@ public class DetailsMB extends AbstractMB {
     private void buildDotari() {
         dotari = new LinkedList<>();
         long dot = selected.getDotari();
-        System.out.println(Long.toBinaryString(dot));
         if (dot != 0) {
             for (DotariEnum d : DotariEnum.values()) {
                 if ((dot & d.getVal()) != 0) {
@@ -93,7 +92,7 @@ public class DetailsMB extends AbstractMB {
     }
 
     public boolean isMine() {
-        return selected.getUser().equals(user);
+        return selected.getUser().getId().equals(user.getId());
     }
 
     public List<DotariEnum> dotari() {
