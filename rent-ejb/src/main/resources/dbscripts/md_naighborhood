@@ -1,0 +1,24 @@
+-- Table: md_neighborhood
+
+-- DROP TABLE md_neighborhood;
+
+CREATE TABLE md_neighborhood
+(
+  id bigint NOT NULL,
+  name character varying(255),
+  city_id bigint,
+  CONSTRAINT md_neighborhood_pkey PRIMARY KEY (id),
+  CONSTRAINT fk1d6450b620046f8c FOREIGN KEY (city_id)
+      REFERENCES md_city (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE md_neighborhood
+  OWNER TO postgres;
+
+
+INSERT INTO md_neighborhood(
+            id, name, city_id)
+    VALUES (?, ?, ?);
