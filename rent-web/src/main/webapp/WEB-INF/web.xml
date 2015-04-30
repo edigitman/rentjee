@@ -51,8 +51,9 @@
     </context-param>
     <context-param>
         <param-name>primefaces.UPLOADER</param-name>
-        <param-value>commons</param-value>
+        <param-value>native</param-value>
     </context-param>
+    <!--http://stackoverflow.com/questions/22455975/primefaces-fileupload-on-wildfly-->
 
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
