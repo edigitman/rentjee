@@ -9,11 +9,10 @@
         <p:messages/>
         <p:panel id="search" header="cautare">
 
-            <p:outputLabel for="city" value="Oras "/>
             <p:selectOneMenu id="city" value="#{indexMB.city}"
                              style="vertical-align:middle"
                              converter="omnifaces.SelectItemsConverter">
-                <f:selectItem itemValue="#{null}" itemLabel=""/>
+                <f:selectItem itemValue="#{null}" itemLabel="Alege oras"/>
                 <f:selectItems value="#{mdSessionMB.cities}"/>
                 <p:ajax process="@this" update="searchLink"/>
             </p:selectOneMenu>

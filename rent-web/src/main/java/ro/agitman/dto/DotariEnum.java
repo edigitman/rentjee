@@ -47,18 +47,14 @@ public enum DotariEnum {
     ALARMA(1 << 2),
     ANIMALE(1 << 1),
     FUMATORI(1);
+    private long val;
 
     private DotariEnum(long value) {
         this.val = value;
     }
 
-    private long val;
-
     public long getVal() {
         return val;
     }
 
-    public void setVal(long val) {
-        this.val = val;
-    }
 }

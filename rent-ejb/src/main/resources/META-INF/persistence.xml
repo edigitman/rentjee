@@ -1,12 +1,43 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<persistence version='1.0' xmlns='http://java.sun.com/xml/ns/persistence' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd'>
+<persistence xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' version='1.0'
+             xmlns='http://java.sun.com/xml/ns/persistence'
+             xsi:schemaLocation='http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd'>
     <persistence-unit name='CrudPU' transaction-type='JTA'>
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:/CrudDS</jta-data-source>
-        <properties>
-            <property name='hibernate.hbm2ddl.auto' value='update'/>
 
-            <property name="hibernate.show_sql" value="false" />
+        <class>ro.agitman.model.MdCity</class>
+        <class>ro.agitman.model.MdBuildingType</class>
+        <class>ro.agitman.model.MdHeatSource</class>
+        <class>ro.agitman.model.MdNeighborhood</class>
+        <class>ro.agitman.model.Address</class>
+        <class>ro.agitman.model.Advert</class>
+        <class>ro.agitman.model.EstimationUnit</class>
+        <class>ro.agitman.model.Image</class>
+        <class>ro.agitman.model.RentFavorite</class>
+        <class>ro.agitman.model.RentInfo</class>
+        <class>ro.agitman.model.RentInterval</class>
+        <class>ro.agitman.model.RentValue</class>
+        <class>ro.agitman.model.User</class>
+
+        <properties>
+            <!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->
+            <!--<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>-->
+            <!--<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>-->
+            <!--<property name="eclipselink.ddl-generation.output-mode" value="both"/>-->
+
+            <property name="eclipselink.target-database" value="MySQL"/>
+            <property name="eclipselink.target-server" value="JBoss"/>
+
+            <!-- Enable this for limited logging -->
+            <property name="eclipselink.logging.level" value="INFO"/>
+            <property name="eclipselink.logging.thread" value="true"/>
+            <property name="eclipselink.logging.logger" value="ServerLogger"/>
+
+            <!-- Enable this for full logging -->
+            <property name="eclipselink.logging.level.sql" value="INFO"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
         </properties>
+
     </persistence-unit>
 </persistence>

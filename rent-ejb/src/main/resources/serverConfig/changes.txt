@@ -1,0 +1,3 @@
+add eclipselink-2.5.1.jar
+ ~modules\system\layers\base\org\eclipse\persistence\main
+edit module.xml and add <resource-root path="eclipselink-2.5.1.jar"/>

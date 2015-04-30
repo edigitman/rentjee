@@ -59,7 +59,7 @@ public class RegisterMB extends AbstractMB {
         //TODO call captcha validate
         userService.register(user);
         info("Cont create cu succes");
-        return "index?faces-redirect=true";
+        return "pretty:index";
     }
 
     public String recover() {

@@ -1,13 +1,11 @@
 package ro.agitman.service;
 
-import com.cloudinary.Cloudinary;
 import org.imgscalr.Scalr;
 import ro.agitman.dba.DataAccessService;
 import ro.agitman.dto.UploadedImage;
 import ro.agitman.facade.ImageService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.Image;
-import ro.agitman.model.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,7 +16,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -36,7 +37,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public Boolean delete(List<UploadedImage> image) {
-        List<String> ids = new ArrayList<>();
+        //List<String> ids = new ArrayList<>();
 //        try {
 //            Api.ApiResponse response = claudinary.api().deleteResources(ids, Cloudinary.emptyMap());
 //            return true;
@@ -51,22 +52,22 @@ public class ImageServiceImpl implements ImageService {
         Image image = new Image();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        if(map.containsKey("public_id"))
+        if (map.containsKey("public_id"))
             image.setPublicId(map.get("public_id").toString());
-        if(map.containsKey("version"))
+        if (map.containsKey("version"))
             image.setVersion(new BigDecimal(map.get("version").toString()).longValue());
-        if(map.containsKey("signature"))
+        if (map.containsKey("signature"))
             image.setSignature(map.get("signature").toString());
-        if(map.containsKey("width"))
+        if (map.containsKey("width"))
             image.setWidth(new BigDecimal(map.get("width").toString()).longValue());
-        if(map.containsKey("height"))
+        if (map.containsKey("height"))
             image.setHeight(new BigDecimal(map.get("height").toString()).longValue());
-        if(map.containsKey("format"))
+        if (map.containsKey("format"))
             image.setFormat(map.get("format").toString());
-        if(map.containsKey("resource_type"))
+        if (map.containsKey("resource_type"))
             image.setResourceType(map.get("resource_type").toString());
         try {
-            if(map.containsKey("created_at")) {
+            if (map.containsKey("created_at")) {
                 String dateStr = map.get("created_at").toString();
                 dateStr = dateStr.replace("T", " ");
                 dateStr = dateStr.replace("Z", "");
@@ -74,17 +75,17 @@ public class ImageServiceImpl implements ImageService {
             }
         } catch (ParseException e) {
         }
-        if(map.containsKey("bytes"))
+        if (map.containsKey("bytes"))
             image.setBytes(new BigDecimal(map.get("bytes").toString()).longValue());
-        if(map.containsKey("type"))
+        if (map.containsKey("type"))
             image.setType(map.get("type").toString());
-        if(map.containsKey("url"))
+        if (map.containsKey("url"))
             image.setUrl(map.get("url").toString());
-        if(map.containsKey("url"))
+        if (map.containsKey("url"))
             image.setUrlSmall(map.get("url").toString().replace("upload/", "upload/w_100/"));
-        if(map.containsKey("secure_url"))
+        if (map.containsKey("secure_url"))
             image.setSecureUrl(map.get("secure_url").toString());
-        if(map.containsKey("etag"))
+        if (map.containsKey("etag"))
             image.setEtag(map.get("etag").toString());
 
         return image;
@@ -92,7 +93,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void uploadImages(Advert advert, List<UploadedImage> images) {
-        for(UploadedImage image: images){
+        for (UploadedImage image : images) {
             try {
                 Map<String, Objects> map = new HashMap<>();
                 BufferedImage img = ImageIO.read(image.getInputStream());

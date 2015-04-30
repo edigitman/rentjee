@@ -4,5 +4,5 @@
     <context-root>/rent-web</context-root>
 
     <!-- Realm that will be used -->
-    <security-domain>java:/jaas/CrudJSFRealm</security-domain>
+    <security-domain>CrudJSFRealm</security-domain>
 </jboss-web>

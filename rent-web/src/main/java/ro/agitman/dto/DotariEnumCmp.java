@@ -1,11 +1,12 @@
 package ro.agitman.dto;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Created by AlexandruG on 4/22/2015.
  */
-public class DotariEnumCmp implements Comparator<DotariEnum> {
+public class DotariEnumCmp implements Comparator<DotariEnum>, Serializable {
     @Override
     public int compare(DotariEnum o1, DotariEnum o2) {
         if (o1.ordinal() < o2.ordinal()) {

@@ -2,6 +2,8 @@ package ro.agitman.account;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ro.agitman.AbstractMB;
 import ro.agitman.facade.UserService;
 import ro.agitman.model.User;
@@ -22,6 +24,8 @@ import java.security.Principal;
 })
 public class UserMB extends AbstractMB {
 
+    private static Logger log = LoggerFactory.getLogger(UserMB.class);
+
     private User user;
     private String username;
     private String password;
@@ -39,6 +43,7 @@ public class UserMB extends AbstractMB {
 
         } catch (ServletException e) {
             error("Email sau parola gresita");
+            log.error("Error on login for user [{}] and pwd [{}], error [{}]", new Object[]{username, password, e.getMessage()});
             e.printStackTrace();
         }
     }

@@ -17,14 +17,15 @@ public class MdCity extends AbstractModel {
     private Integer ordering;
     private List<MdNeighborhood> neighborhoods;
 
-    public MdCity() {}
+    public MdCity() {
+    }
 
     public MdCity(Long id) {
         this.id = id;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

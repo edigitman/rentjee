@@ -26,7 +26,7 @@ public class RentFavorite extends AbstractModel {
     private Date dateCreated;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

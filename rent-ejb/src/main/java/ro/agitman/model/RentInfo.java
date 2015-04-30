@@ -1,68 +1,67 @@
 package ro.agitman.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "rt_info")
 public class RentInfo extends AbstractModel {
 
-	private Long id;
-	private BigDecimal sqrm;
-	private Integer noRooms;
-	private Integer noBaths;
-	private Integer maxPersons;
-	private Boolean furnished;
+    private Long id;
+    private BigDecimal sqrm;
+    private Integer noRooms;
+    private Integer noBaths;
+    private Integer maxPersons;
+    private Boolean furnished;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public BigDecimal getSqrm() {
-		return sqrm;
-	}
+    public BigDecimal getSqrm() {
+        return sqrm;
+    }
 
-	public void setSqrm(BigDecimal sqrm) {
-		this.sqrm = sqrm;
-	}
-	
-	public Integer getNoRooms() {
-		return noRooms;
-	}
+    public void setSqrm(BigDecimal sqrm) {
+        this.sqrm = sqrm;
+    }
 
-	public void setNoRooms(Integer noRooms) {
-		this.noRooms = noRooms;
-	}
+    public Integer getNoRooms() {
+        return noRooms;
+    }
 
-	public Integer getNoBaths() {
-		return noBaths;
-	}
+    public void setNoRooms(Integer noRooms) {
+        this.noRooms = noRooms;
+    }
 
-	public void setNoBaths(Integer noBaths) {
-		this.noBaths = noBaths;
-	}
+    public Integer getNoBaths() {
+        return noBaths;
+    }
 
-	public Integer getMaxPersons() {
-		return maxPersons;
-	}
+    public void setNoBaths(Integer noBaths) {
+        this.noBaths = noBaths;
+    }
 
-	public void setMaxPersons(Integer maxPersons) {
-		this.maxPersons = maxPersons;
-	}
+    public Integer getMaxPersons() {
+        return maxPersons;
+    }
 
-	public Boolean getFurnished() {
-		return furnished;
-	}
+    public void setMaxPersons(Integer maxPersons) {
+        this.maxPersons = maxPersons;
+    }
 
-	public void setFurnished(Boolean furnished) {
-		this.furnished = furnished;
-	}
+    public Boolean getFurnished() {
+        return furnished;
+    }
+
+    public void setFurnished(Boolean furnished) {
+        this.furnished = furnished;
+    }
 
 }

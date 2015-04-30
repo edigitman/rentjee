@@ -23,15 +23,23 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>6.0</version>
+            <version>7.0</version>
             <scope>provided</scope>
         </dependency>
 
         <!-- JPA API and Hibernate -->
+        <!-- JPA for Java EE application servers  -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.5.1-Final</version>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>2.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Logging -->
@@ -55,6 +63,7 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--Image processing-->
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http42</artifactId>
@@ -69,6 +78,7 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--Time manipulation-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -116,7 +126,7 @@
                                 <artifactItem>
                                     <groupId>javax</groupId>
                                     <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
+                                    <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
