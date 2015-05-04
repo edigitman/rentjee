@@ -27,7 +27,6 @@ public class TracersFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        long t0 = System.currentTimeMillis();
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         String path = req.getServletPath();
@@ -46,7 +45,6 @@ public class TracersFilter implements Filter {
 
             service.create(t);
         }
-        System.out.println("TracersFilter time: " + (System.currentTimeMillis() - t0));
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
