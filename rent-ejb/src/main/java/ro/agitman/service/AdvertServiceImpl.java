@@ -4,6 +4,7 @@ import ro.agitman.dba.DataAccessService;
 import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.UploadedImage;
 import ro.agitman.facade.AdvertService;
+import ro.agitman.facade.GMapService;
 import ro.agitman.facade.ImageService;
 import ro.agitman.facade.MailService;
 import ro.agitman.model.*;
@@ -29,7 +30,7 @@ public class AdvertServiceImpl implements AdvertService {
     @EJB
     private MailService mailService;
     @EJB
-    private GMapServiceImpl mapService;
+    private GMapService mapService;
 
     @Override
     public Advert init() {

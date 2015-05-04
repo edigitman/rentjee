@@ -18,6 +18,7 @@
         <class>ro.agitman.model.RentInfo</class>
         <class>ro.agitman.model.RentInterval</class>
         <class>ro.agitman.model.RentValue</class>
+        <class>ro.agitman.model.Tracers</class>
         <class>ro.agitman.model.User</class>
 
         <properties>
