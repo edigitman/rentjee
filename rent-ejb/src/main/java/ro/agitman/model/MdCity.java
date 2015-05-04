@@ -81,9 +81,6 @@ public class MdCity extends AbstractModel {
 
     @Override
     public String toString() {
-        return "MdCity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return String.format("%s[id=%d]", getClass().getSimpleName(), getId());
     }
 }

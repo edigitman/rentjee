@@ -2,8 +2,11 @@ package ro.agitman.account;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ro.agitman.AbstractMB;
 import ro.agitman.dto.DotariEnum;
 import ro.agitman.dto.UploadedImage;
@@ -18,6 +21,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,8 @@ import java.util.List;
         @URLMapping(id = "home", pattern = "/u/home", viewId = "/pages/user/home.xhtml?faces-redirect=true")
 })
 public class AddMB extends AbstractMB implements Serializable {
+
+    private static Logger log = LoggerFactory.getLogger(AddMB.class);
 
     @EJB
     private AdvertService advertService;
@@ -69,9 +75,18 @@ public class AddMB extends AbstractMB implements Serializable {
         return result;
     }
 
-    public void handleFileUpload(FileUploadEvent event) throws IOException {
-        UploadedFile f = event.getFile();
-        files.add(new UploadedImage(f.getContents(), f.getContentType(), f.getFileName(), f.getInputstream(), f.getSize()));
+    public void handleFileUpload(FileUploadEvent event) {
+
+        try{
+            UploadedFile f = event.getFile();
+            byte[] bytes = IOUtils.toByteArray(f.getInputstream());
+
+            files.add(new UploadedImage(bytes, f.getContentType(), f.getFileName(), f.getSize()));
+            f.getInputstream().close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
         filesUploaded = true;
     }
 

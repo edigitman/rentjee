@@ -11,8 +11,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -94,9 +96,9 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void uploadImages(Advert advert, List<UploadedImage> images) {
         for (UploadedImage image : images) {
-            try {
+            try(InputStream is = new ByteArrayInputStream(image.getContents())) {
                 Map<String, Objects> map = new HashMap<>();
-                BufferedImage img = ImageIO.read(image.getInputStream());
+                BufferedImage img = ImageIO.read(is);
                 BufferedImage thumbnail = Scalr.resize(img, 640);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(thumbnail, "jpg", baos);

@@ -1,23 +1,30 @@
 package ro.agitman.dto;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  * Created by edi on 4/18/2015.
  */
-public class UploadedImage {
+public class UploadedImage implements Serializable{
+
+    private static Logger log = LoggerFactory.getLogger(UploadedImage.class);
 
     private byte[] contents;
     private String contentType;
     private String fileName;
-    private InputStream inputStream;
     private Long size;
 
-    public UploadedImage(byte[] contents, String contentType, String fileName, InputStream inputStream, Long size) {
+    public UploadedImage(byte[] contents, String contentType, String fileName, Long size) {
+        log.debug("new UploadedImage: contents [{}], type [{}], fileName [{}], size [{}]",
+                new Object[]{contents, contentType, fileName, size});
+
         this.contents = contents;
         this.contentType = contentType;
         this.fileName = fileName;
-        this.inputStream = inputStream;
         this.size = size;
     }
 
@@ -43,14 +50,6 @@ public class UploadedImage {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
     }
 
     public Long getSize() {
