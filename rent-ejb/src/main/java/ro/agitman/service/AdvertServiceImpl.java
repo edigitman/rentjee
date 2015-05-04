@@ -4,6 +4,7 @@ import ro.agitman.dba.DataAccessService;
 import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.UploadedImage;
 import ro.agitman.facade.AdvertService;
+import ro.agitman.facade.GMapService;
 import ro.agitman.facade.ImageService;
 import ro.agitman.facade.MailService;
 import ro.agitman.model.*;
@@ -28,6 +29,8 @@ public class AdvertServiceImpl implements AdvertService {
     private ImageService imageService;
     @EJB
     private MailService mailService;
+    @EJB
+    private GMapService mapService;
 
     @Override
     public Advert init() {
@@ -42,6 +45,7 @@ public class AdvertServiceImpl implements AdvertService {
     @Override
     public void save(Advert advert, List<UploadedImage> images) {
 
+        mapService.findForAddress(advert.getAddress());
         if (advert.getId() == null) {
             advert.setCreateDate(new Date());
             advert.setStatusUpdate(new Date());

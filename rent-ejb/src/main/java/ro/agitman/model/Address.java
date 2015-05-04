@@ -1,6 +1,7 @@
 package ro.agitman.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "rt_address")
@@ -16,6 +17,8 @@ public class Address extends AbstractModel {
     private String et;
     private String ap;
     private String cp;
+    private BigDecimal lat;
+    private BigDecimal lng;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,4 +106,19 @@ public class Address extends AbstractModel {
         this.cp = cp;
     }
 
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
+    }
 }

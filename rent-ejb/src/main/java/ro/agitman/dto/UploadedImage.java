@@ -19,9 +19,6 @@ public class UploadedImage implements Serializable{
     private Long size;
 
     public UploadedImage(byte[] contents, String contentType, String fileName, Long size) {
-        log.debug("new UploadedImage: contents [{}], type [{}], fileName [{}], size [{}]",
-                new Object[]{contents, contentType, fileName, size});
-
         this.contents = contents;
         this.contentType = contentType;
         this.fileName = fileName;

@@ -17,7 +17,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import java.io.IOException;
@@ -75,17 +74,13 @@ public class AddMB extends AbstractMB implements Serializable {
         return result;
     }
 
-    public void handleFileUpload(FileUploadEvent event) {
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+        UploadedFile f = event.getFile();
 
-        try{
-            UploadedFile f = event.getFile();
-            byte[] bytes = IOUtils.toByteArray(f.getInputstream());
+        byte[] c = IOUtils.toByteArray(f.getInputstream());
 
-            files.add(new UploadedImage(bytes, f.getContentType(), f.getFileName(), f.getSize()));
-            f.getInputstream().close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        files.add(new UploadedImage(c, f.getContentType(), f.getFileName(), f.getSize()));
+        f.getInputstream().close();
 
         filesUploaded = true;
     }

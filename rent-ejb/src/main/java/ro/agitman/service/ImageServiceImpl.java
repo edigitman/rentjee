@@ -98,6 +98,7 @@ public class ImageServiceImpl implements ImageService {
         for (UploadedImage image : images) {
             try(InputStream is = new ByteArrayInputStream(image.getContents())) {
                 Map<String, Objects> map = new HashMap<>();
+                InputStream is = new ByteArrayInputStream(image.getContents());
                 BufferedImage img = ImageIO.read(is);
                 BufferedImage thumbnail = Scalr.resize(img, 640);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -107,6 +108,7 @@ public class ImageServiceImpl implements ImageService {
                 baos.close();
                 imageResult.setAdvert(advert);
                 service.create(imageResult);
+                is.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
