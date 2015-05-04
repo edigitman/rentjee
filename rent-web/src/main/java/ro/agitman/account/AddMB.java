@@ -2,6 +2,7 @@ package ro.agitman.account;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import ro.agitman.AbstractMB;
@@ -14,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import java.io.IOException;
@@ -71,7 +71,12 @@ public class AddMB extends AbstractMB implements Serializable {
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         UploadedFile f = event.getFile();
-        files.add(new UploadedImage(f.getContents(), f.getContentType(), f.getFileName(), f.getInputstream(), f.getSize()));
+
+        byte[] c = IOUtils.toByteArray(f.getInputstream());
+
+        files.add(new UploadedImage(c, f.getContentType(), f.getFileName(), f.getSize()));
+        f.getInputstream().close();
+
         filesUploaded = true;
     }
 
