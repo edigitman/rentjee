@@ -28,6 +28,8 @@ public class AdvertServiceImpl implements AdvertService {
     private ImageService imageService;
     @EJB
     private MailService mailService;
+    @EJB
+    private GMapServiceImpl mapService;
 
     @Override
     public Advert init() {
@@ -42,6 +44,7 @@ public class AdvertServiceImpl implements AdvertService {
     @Override
     public void save(Advert advert, List<UploadedImage> images) {
 
+        mapService.findForAddress(advert.getAddress());
         if (advert.getId() == null) {
             advert.setCreateDate(new Date());
             advert.setStatusUpdate(new Date());
