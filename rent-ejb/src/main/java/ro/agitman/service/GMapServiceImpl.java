@@ -41,7 +41,6 @@ public class GMapServiceImpl implements GMapService {
         }
 
         if (!"".equals(jsonResult)) {
-            Double[] result = new Double[2];
             GoogleGeoCodeResponse response = gson.fromJson(jsonResult, GoogleGeoCodeResponse.class);
             double lat = Double.parseDouble(response.results[0].geometry.location.lat);
             double lng = Double.parseDouble(response.results[0].geometry.location.lng);
