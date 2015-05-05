@@ -39,12 +39,16 @@ public class IndexMB implements Serializable{
     private AdvertService advertService;
 
     @URLAction(onPostback = false)
-    public void init(){
+    public void init() {
         String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
 
         if ("search".equals(viewId)) {
-            long cityid = city == null ? 0 : city.getId();
-            adverts = advertService.findSearch(cityid, minPrice, maxPrice, onlyImages);
+            long id = cityId == 0 ? city.getId() == 0 ? 0 : city.getId() : cityId;
+            adverts = advertService.findSearch(id, minPrice, maxPrice, onlyImages);
+        }
+
+        if ("index".equals(viewId)) {
+            adverts = advertService.findAll();
         }
 
     }

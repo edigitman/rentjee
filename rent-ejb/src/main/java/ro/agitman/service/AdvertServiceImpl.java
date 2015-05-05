@@ -50,9 +50,10 @@ public class AdvertServiceImpl implements AdvertService {
             advert.setCreateDate(new Date());
             advert.setStatusUpdate(new Date());
             advert.setStatus(AdvertStatusEnum.ACTIVE);
-            service.create(advert);
+            advert = service.create(advert);
             imageService.uploadImages(advert, images);
             mailService.sendAdvertAdded(advert);
+            service.reload(advert);
         } else {
             service.update(advert);
         }

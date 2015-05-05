@@ -54,11 +54,13 @@ public class GMapServiceImpl implements GMapService {
         // optional default is GET
         con.setRequestMethod("GET");
 
-        int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
+        if(con.getResponseCode() != 200){
+            return null;
+        }
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        InputStreamReader isr = new InputStreamReader(con.getInputStream());
+
+        BufferedReader in = new BufferedReader(isr);
         String inputLine;
         StringBuilder response = new StringBuilder();
 
@@ -66,6 +68,7 @@ public class GMapServiceImpl implements GMapService {
             response.append(inputLine);
         }
         in.close();
+        isr.close();
 
         return response.toString();
     }

@@ -1,3 +1,6 @@
+INSERT INTO `users` (`ID`,`confirmed_BL`,`EMAIL`,`NAME`,`PASSWORD`,`PHONE`,`PHONE2`,`PHONE3`,`REGTOKEN`,`ROLE`)
+  VALUES (1,1,'edi.gitman@gmail.com',NULL,'1234',NULL,NULL,NULL,'','USER');
+
 INSERT INTO md_city (id, name, ordering) VALUES (1, 'Bucuresti', 1);
 INSERT INTO md_city (id, name, ordering) VALUES (2, 'Cluj', 2);
 INSERT INTO md_city (id, name, ordering) VALUES (3, 'Constanta', 3);

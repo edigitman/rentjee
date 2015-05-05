@@ -77,10 +77,21 @@ public class AddMB extends AbstractMB implements Serializable {
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         UploadedFile f = event.getFile();
 
-        byte[] c = IOUtils.toByteArray(f.getInputstream());
+        byte[] bytes;
+        try {
+            InputStream is = f.getInputstream();
+            if (is != null) {
+                bytes  = IOUtils.toByteArray(is);
+                is.close();
+            } else {
+                bytes = new byte[0];
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            bytes = new byte[0];
+        }
 
-        files.add(new UploadedImage(c, f.getContentType(), f.getFileName(), f.getSize()));
-        f.getInputstream().close();
+        files.add(new UploadedImage(bytes, f.getContentType(), f.getFileName(), f.getSize()));
 
         filesUploaded = true;
     }
