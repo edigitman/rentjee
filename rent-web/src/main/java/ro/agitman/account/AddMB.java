@@ -2,16 +2,13 @@ package ro.agitman.account;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
-import org.apache.commons.io.IOUtils;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ro.agitman.AbstractMB;
 import ro.agitman.dto.DotariEnum;
-import ro.agitman.dto.UploadedImage;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
+import ro.agitman.pub.FileUploadBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,8 +16,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +39,10 @@ public class AddMB extends AbstractMB implements Serializable {
     @ManagedProperty(value = "#{userMB}")
     private UserMB userMB;
 
+    @ManagedProperty(value = "#{fileUploadBean}")
+    private FileUploadBean fileUploadBean;
+
     private List<DotariEnum> dotariSelected = new ArrayList<>();
-    private List<UploadedImage> files = new ArrayList<>();
-    private Boolean filesUploaded = false;
     private Advert advert;
 
     private List<Advert> myAds = null;
@@ -61,8 +57,8 @@ public class AddMB extends AbstractMB implements Serializable {
     public void save() {
         advert.setUser(userMB.getUser());
         advert.setDotari(mapDotari());
-        advertService.save(advert, files);
-
+        advertService.save(advert, fileUploadBean.getImages());
+        fileUploadBean.clearAll();
         redirectPretty("home");
     }
 
@@ -72,28 +68,6 @@ public class AddMB extends AbstractMB implements Serializable {
             result = (result << 1) | (dotariSelected.contains(d) ? 1 : 0);
         }
         return result;
-    }
-
-    public void handleFileUpload(FileUploadEvent event) throws IOException {
-        UploadedFile f = event.getFile();
-        System.out.println("handleFileUpload " + f.getFileName());
-        byte[] bytes;
-        try {
-            InputStream is = f.getInputstream();
-            if (is != null) {
-                bytes = IOUtils.toByteArray(is);
-                is.close();
-            } else {
-                bytes = new byte[0];
-            }
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            bytes = new byte[0];
-        }
-
-        files.add(new UploadedImage(bytes, f.getContentType(), f.getFileName(), f.getSize()));
-
-        filesUploaded = true;
     }
 
     private void loadAds(int type) {
@@ -167,19 +141,19 @@ public class AddMB extends AbstractMB implements Serializable {
         return result;
     }
 
-    public Boolean getFilesUploaded() {
-        return filesUploaded;
-    }
-
-    public void setFilesUploaded(Boolean filesUploaded) {
-        this.filesUploaded = filesUploaded;
-    }
-
     public List<DotariEnum> getDotariSelected() {
         return dotariSelected;
     }
 
     public void setDotariSelected(List<DotariEnum> dotariSelected) {
         this.dotariSelected = dotariSelected;
+    }
+
+    public FileUploadBean getFileUploadBean() {
+        return fileUploadBean;
+    }
+
+    public void setFileUploadBean(FileUploadBean fileUploadBean) {
+        this.fileUploadBean = fileUploadBean;
     }
 }

@@ -44,10 +44,13 @@ public class FileUploadBean implements Serializable {
         images.add(new UploadedImage(bytes, file.getContentType(), file.getFileName(), file.getSize()));
     }
 
+    public void clearAll(){
+        images.clear();
+    }
+
     public void remove(UploadedImage image) {
         images.remove(image);
     }
-
 
     public List<UploadedImage> getImages() {
         return images;

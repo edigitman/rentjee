@@ -13,7 +13,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="uploadFormId" enctype="multipart/form-data">
+        <h:form id="uploadFormId">
             <h3><h:outputText value="Adauga anunt"/></h3>
 
             <p:messages />
@@ -168,27 +168,43 @@
                 </div>
 
                 <p:outputPanel id="uploadPanel" styleClass="ui-grid-row" style="margin-top: 10px">
-                    <p:fileUpload fileUploadListener="#{addMB.handleFileUpload}"
-                                  rendered="#{!addMB.filesUploaded}"
-                                  update="uploadPanel"
-                                  mode="advanced"
-                                  dragDropSupport="false"
-                                  multiple="true"
-                                  sizeLimit="2097152"
-                                  fileLimit="5"
-                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                  uploadLabel="Incarca"
-                                  cancelLabel="Anuleaza"
-                                  label="Alege poze"
-                                  fileLimitMessage="Maxim 5 poze"
-                                  invalidFileMessage="Fisier invalid"
-                                  invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
-                    <h:outputText id="uploadOk" value="Pozele incarcate cu succes" rendered="#{addMB.filesUploaded}"/>
+                    <p:panelGrid id="table" columns="1">
+                        <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUpload}"
+                                      update="@form"
+                                      mode="advanced"
+                                      auto="true"
+                                      dragDropSupport="false"
+                                      multiple="true"
+                                      sizeLimit="2097152"
+                                      fileLimit="5"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                      uploadLabel="Incarca"
+                                      cancelLabel="Anuleaza"
+                                      label="Alege poze"
+                                      fileLimitMessage="Maxim 5 poze"
+                                      invalidFileMessage="Fisier invalid"
+                                      invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
+
+                            <p:commandButton value="Sterge toate pozele"
+                                             update="@form" immediate="true"
+                                             rendered="#{not empty fileUploadBean.images}"
+                                             actionListener="#{fileUploadBean.clearAll()}"/>
+
+                        <ui:repeat value="#{fileUploadBean.images}" var="img">
+                            <p:panelGrid columns="1" style="display: inline-block">
+                                <o:graphicImage height="70" value="#{img.contents}" dataURI="true"/>
+                                <p:commandLink actionListener="#{fileUploadBean.remove(img)}" immediate="true"
+                                               value="sterge" update="@form"/>
+                            </p:panelGrid>
+
+                        </ui:repeat>
+
+                    </p:panelGrid>
                 </p:outputPanel>
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-12">
-                        <p:commandButton id="saveBtn" value="Adauga anunt" ajax="false" action="#{addMB.save()}"/>
+                        <p:commandButton id="saveBtn" value="Adauga anunt" ajax="false" actionListener="#{addMB.save()}"/>
                     </div>
                 </div>
             </p:outputPanel>
