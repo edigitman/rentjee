@@ -13,7 +13,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form enctype="multipart/form-data">
+        <h:form id="uploadFormId" enctype="multipart/form-data">
             <h3><h:outputText value="Adauga anunt"/></h3>
 
             <p:messages />
@@ -188,9 +188,7 @@
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-12">
-                        <p:commandButton id="saveBtn" value="Adauga anunt"
-                                         update="@form"
-                                         actionListener="#{addMB.save()}"/>
+                        <p:commandButton id="saveBtn" value="Adauga anunt" ajax="false" action="#{addMB.save()}"/>
                     </div>
                 </div>
             </p:outputPanel>
