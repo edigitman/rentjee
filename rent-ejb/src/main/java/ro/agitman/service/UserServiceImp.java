@@ -1,13 +1,16 @@
 package ro.agitman.service;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-
+import org.apache.commons.codec.binary.Base64;
 import ro.agitman.dba.DataAccessService;
 import ro.agitman.facade.MailService;
 import ro.agitman.facade.UserService;
 import ro.agitman.model.User;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Stateless
@@ -27,6 +30,12 @@ public class UserServiceImp implements UserService {
     }
 
     public User register(User u) {
+
+        String encripted = sha256(u.getPassword());
+        if (encripted != null) {
+            u.setPassword(encripted);
+        }
+
         u.setConfirmedBl(Boolean.FALSE);
         u.setRegToken(UUID.randomUUID().toString());
         u.setCreateDate(new Date());
@@ -35,6 +44,7 @@ public class UserServiceImp implements UserService {
         mailService.sendConfirmMail(u);
         return u;
     }
+
 
     public User create(User u) {
         return service.create(u);
@@ -54,7 +64,7 @@ public class UserServiceImp implements UserService {
         return false;
     }
 
-    public void update(User user){
+    public void update(User user) {
         service.update(user);
     }
 
@@ -91,5 +101,21 @@ public class UserServiceImp implements UserService {
 
         service.update(user);
         return true;
+    }
+
+    private String sha256(String string) {
+        MessageDigest digest = null;
+        byte[] hash = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            byte[] digested = digest.digest(string.getBytes("UTF-8"));
+
+            Base64 base64 = new Base64();
+            hash = base64.encode(digested);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new String(hash);
     }
 }

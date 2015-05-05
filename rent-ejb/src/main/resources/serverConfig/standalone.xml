@@ -356,6 +356,8 @@
                             <module-option name="dsJndiName" value="java:/CrudDS"/>
                             <module-option name="principalsQuery" value="select password from users where email = ?"/>
                             <module-option name="rolesQuery" value="select role, 'Roles' from users where email = ?"/>
+                            <module-option name="hashAlgorithm" value="SHA-256"/>
+                            <module-option name="hashEncoding" value="base64"/>
                         </login-module>
                     </authentication>
                 </security-domain>

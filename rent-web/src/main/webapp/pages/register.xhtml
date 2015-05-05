@@ -19,8 +19,9 @@
     <ui:define name="content">
 
         <p>Inregistreaza-te:</p>
-        <h:form>
-            <h:panelGrid columns="2" id="registerForm">
+        <h:form id="registerForm">
+            <p:messages/>
+            <h:panelGrid columns="2" id="registerPanel">
                 <p:outputLabel for="email" value="Email: "/>
                 <p:inputText id="email" value="#{registerMB.user.email}"/>
 
@@ -39,8 +40,13 @@
                 </p:row>
 
                 <h:outputText/>
-                <p:commandButton value="Inregistrare" action="#{registerMB.register}" update="registerForm"/>
+                <p:commandButton id="registerBtn" value="Inregistrare" action="#{registerMB.register}" update="@form"/>
             </h:panelGrid>
+
+            <p:blockUI block="registerPanel" trigger="registerBtn">
+                se creeaza cont
+                <p:graphicImage value="/resources/images/loading.gif" width="15px" height="15px"/>
+            </p:blockUI>
         </h:form>
     </ui:define>
 

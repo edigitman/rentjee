@@ -38,40 +38,40 @@ public class MailServiceImpl implements MailService {
 
     private String buildConfirm(String token) {
         StringBuilder sb = new StringBuilder("Bine ai venit La chirie, <br/><br/>");
-        sb.append("\t Pentru a confirma inregistrarea acceseaza linkul: ");
-        sb.append("<a href='http://lachirie.ro/registerConfirm/" + token + "'>link</a>.");
+        sb.append("<p style='margin-left: 10px;'>Pentru a confirma inregistrarea acceseaza linkul: ");
+        sb.append("<a href='http://lachirie.ro/confirm/" + token + "'>http://lachirie.ro/confirm/" + token + "</a>.</p>");
         sb.append("<br/><br/>Multumim pentru inregistrare.");
         return sb.toString();
     }
 
     private String buildAdvertAdded(Long id) {
         StringBuilder sb = new StringBuilder("Felicitari, <br/><br/>");
-        sb.append("\t Anuntul tau a fost adaugat si este accesibil ");
-        sb.append("<a href='http://lachirie.ro/details/" + id + "'>aici</a>.");
+        sb.append("<p style='margin-left: 10px;'>Anuntul tau a fost adaugat si este accesibil ");
+        sb.append("<a href='http://lachirie.ro/details/" + id + "'>http://lachirie.ro/details/" + id + "</a>.</p>");
         sb.append("<br/><br/>Multumim pentru ca folositi aplicatioa noastra.");
         return sb.toString();
     }
 
     private String buildNewPwd(String token) {
         StringBuilder sb = new StringBuilder("Salut, <br/><br/>");
-        sb.append("\t Recent ai facut o cerere pentru a-ti recupara parola, pentru a continua te rog acceseaza urmatorul link: <br/><br/>");
-        sb.append("<a href='http://lachirie.ro/recoverConfirm/" + token + "'>http://lachirie.ro/recoverConfirm/" + token + "</a>.");
+        sb.append("<p style='margin-left: 10px;'>Recent ai facut o cerere pentru a-ti recupara parola, pentru a continua te rog acceseaza urmatorul link: <br/><br/>");
+        sb.append("<a href='http://lachirie.ro/recoverConfirm/" + token + "'>http://lachirie.ro/recoverConfirm/" + token + "</a>.</p>");
         sb.append("<br/><br/>Multumim pentru ca folosesti aplicatioa noastra.");
         return sb.toString();
     }
 
     private String buildAdvertStatus(Advert advert) {
         StringBuilder sb = new StringBuilder("Salut, <br/><br/>");
-        sb.append("\t Anuntul tau pentru imobilul din ");
+        sb.append("<p style='margin-left: 10px;'>Anuntul tau pentru imobilul din ");
         sb.append(advert.getAddress().getCity().getName()).append(", ");
         sb.append("Str. ");
         sb.append(advert.getAddress().getStreet()).append(", ");
         sb.append("Nr. ");
         sb.append(advert.getAddress().getNr());
-        sb.append("<br/>a fost modificat automat.");
-        sb.append("<br/><br/>\t Acum are statusul: " + advert.getStatus() + ".");
-        sb.append("<br/><br/>\t Mai multe detalii despre status si cum poate fi modificat gasesti ");
-        sb.append("<a href='http://lachirie.ro/help'>aici</a>.");
+        sb.append("<br/>a fost modificat automat.</p>");
+        sb.append("<br/><br/><p style='margin-left: 10px;'> Acum are statusul: " + advert.getStatus() + ".</p>");
+        sb.append("<br/><br/><p style='margin-left: 10px;'> Mai multe detalii despre status si cum poate fi modificat gasesti ");
+        sb.append("<a href='http://lachirie.ro/help'>http://lachirie.ro/help</a>.</p>");
 
         sb.append("<br/><br/>Multumim pentru ca folosesti aplicatioa noastra.");
         return sb.toString();

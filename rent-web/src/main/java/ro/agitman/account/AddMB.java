@@ -69,19 +69,19 @@ public class AddMB extends AbstractMB implements Serializable {
     private long mapDotari() {
         long result = 1 << 30;
         for (DotariEnum d : DotariEnum.values()) {
-            result = (result << 1) | (dotariSelected.contains(d)? 1 : 0);
+            result = (result << 1) | (dotariSelected.contains(d) ? 1 : 0);
         }
         return result;
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         UploadedFile f = event.getFile();
-
+        System.out.println("handleFileUpload " + f.getFileName());
         byte[] bytes;
         try {
             InputStream is = f.getInputstream();
             if (is != null) {
-                bytes  = IOUtils.toByteArray(is);
+                bytes = IOUtils.toByteArray(is);
                 is.close();
             } else {
                 bytes = new byte[0];
