@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:r="http://java.sun.com/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:r="http://java.sun.com/jsf/composite/components">
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -12,11 +12,11 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form id="details">
+        <h:form id="details" styleClass="margin_top_15">
             <p:growl id="growl" showDetail="true" sticky="true"/>
 
-            <h2>
-                <h:panelGrid columns="4" id="titleDiv" >
+            <p:outputPanel layout="block">
+                <h:panelGrid columns="5" id="titleDiv" styleClass="displayInlineBlock">
                     <p:rating value="#{detailsMB.favNr}" stars="1" cancel="false"
                               rendered="#{userMB.userLogged and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.favNr eq 1)}">
                         <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="titleDiv" />
@@ -25,21 +25,19 @@
                     <h:outputText id="type" value="#{detailsMB.selected.adType}"/>
                     <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/>
                 </h:panelGrid>
-            </h2>
 
-            <p:outputPanel styleClass="ui-grid-row margin_top_10" rendered="#{detailsMB.isMine()}">
-                <p:outputPanel id="statusPanel" styleClass="ui-grid-col-6">
-                    <p:outputLabel value="Status: #{detailsMB.selected.status}" styleClass="margin_right_10"/>
-                    <p:commandButton value="Activeaza" update="statusPanel"
-                                     actionListener="#{detailsMB.makeActive()}"
-                                     rendered="#{detailsMB.selected.status eq 'EXPIRED'
-                                                or detailsMB.selected.status eq 'RETIRED'}"/>
-                    <p:commandButton value="Dezactiveaza" update="statusPanel"
-                                     actionListener="#{detailsMB.makeRetired()}"
-                                     rendered="#{detailsMB.selected.status == 'ACTIVE'}"/>
-                </p:outputPanel>
+                <h:panelGrid columns="2" style="float: right" styleClass="displayInlineBlock">
+                    Status:
+                    <h:outputText value="#{detailsMB.selected.status}"
+                                  rendered="#{detailsMB.isMine() and (detailsMB.selected.status ne 'ACTIVE' and detailsMB.selected.status ne 'RETIRED')}"/>
+                    <p:inputSwitch id="statusSwitch" value="#{detailsMB.active}"
+                                   onLabel="activ" offLabel="inactiv" label="Status: "
+
+                                   rendered="#{detailsMB.isMine() and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.selected.status eq 'RETIRED')}">
+                        <p:ajax listener="#{detailsMB.updateActive()}" update=":details:statusSwitch"/>
+                    </p:inputSwitch>
+                </h:panelGrid>
             </p:outputPanel>
-
 
 
             <div class="ui-grid">

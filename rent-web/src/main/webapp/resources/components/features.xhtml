@@ -33,6 +33,9 @@
                 <f:selectItems value="#{cc.attrs.ftClean}"/>
             </p:selectManyCheckbox>
         </div>
+    </p:outputPanel>
+    <p:outputPanel styleClass="ui-grid-row width_98_pc"
+                   rendered="#{not empty cc.attrs.ftClean}">
         <hr/>
     </p:outputPanel>
 

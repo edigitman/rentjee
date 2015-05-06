@@ -42,6 +42,14 @@ input.error, select.error, textarea.error {
     background-color: #fee;
 }
 
+.ui-inputswitch-off{
+    background-color: #b94a48;
+}
+
+.ui-inputswitch-on{
+    background-color: lightblue;
+}
+
 /* commons cs classes*/
 
 .width_98_pc{

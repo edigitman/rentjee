@@ -9,7 +9,6 @@ import ro.agitman.AbstractMB;
 import ro.agitman.account.UserMB;
 import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.DotariEnum;
-import ro.agitman.dto.DotariEnumCmp;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.User;
@@ -21,7 +20,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 /**
  * Created by edi on 4/20/2015.
@@ -39,6 +40,7 @@ public class DetailsMB extends AbstractMB {
     @ManagedProperty(value = "#{userMB}")
     private UserMB userMB;
     private boolean confirmHumanReq = false;
+    private boolean active;
 
     private MapModel geoModel = new DefaultMapModel();
     private String centerGeoMap = "41.850033, -87.6500523";
@@ -58,6 +60,7 @@ public class DetailsMB extends AbstractMB {
         favNr = oldFav;
         if (selected != null) {
             buildDotari();
+            active = AdvertStatusEnum.ACTIVE.equals(selected.getStatus());
         }
     }
 
@@ -69,18 +72,6 @@ public class DetailsMB extends AbstractMB {
             advertService.markFav(user, selected, false);
             favNr = oldFav = 0;
         }
-    }
-
-    public void makeActive() {
-        selected.setStatus(AdvertStatusEnum.ACTIVE);
-        selected.setStatusUpdate(new Date());
-        advertService.save(selected, null);
-    }
-
-    public void makeRetired() {
-        selected.setStatus(AdvertStatusEnum.RETIRED);
-        selected.setStatusUpdate(new Date());
-        advertService.save(selected, null);
     }
 
     private void buildDotari() {
@@ -101,6 +92,15 @@ public class DetailsMB extends AbstractMB {
                 result.add(new SelectItem(dotare, dotare.gethName()));
         }
         return result;
+    }
+
+    public void updateActive() {
+        if(active){
+            selected.setStatus(AdvertStatusEnum.ACTIVE);
+        }else {
+            selected.setStatus(AdvertStatusEnum.RETIRED);
+        }
+        advertService.save(selected, null);
     }
 
     public void confirmHuman(ActionEvent actionEvent){
@@ -153,5 +153,13 @@ public class DetailsMB extends AbstractMB {
 
     public void setConfirmHumanReq(boolean confirmHumanReq) {
         this.confirmHumanReq = confirmHumanReq;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
