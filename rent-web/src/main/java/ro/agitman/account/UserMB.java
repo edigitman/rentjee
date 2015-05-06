@@ -49,14 +49,19 @@ public class UserMB extends AbstractMB {
     }
 
     public void update() {
-        if (password != null && !password.isEmpty() && password.equals(user.getPassword())) {
+        if (password != null && !password.isEmpty()) {
             if (newPassword != null) {
-                user.setPassword(newPassword);
+                user.setRegToken(newPassword);
             }
-            userService.update(user);
-            info("Informatii modificate cu succes");
+            boolean ok = userService.update(user, password, newPassword != null);
+
+            if(ok){
+                info("Informatii modificate cu succes");
+            }else {
+                error("Parola incorecta");
+            }
         } else {
-            error("Parola incorecta");
+            error("Parola veche obligatorie pentru a salva modificarile");
         }
         user = userService.findUserByEmail(user.getEmail());
     }

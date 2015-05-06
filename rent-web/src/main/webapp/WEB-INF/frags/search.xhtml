@@ -10,18 +10,17 @@
         <p:messages/>
         <p:panel id="search" header="cautare">
 
-            <p:selectOneMenu id="city" value="#{indexMB.cityName}"
-                             style="vertical-align:middle">
+            <p:selectOneMenu id="city" value="#{indexMB.cityName}" styleClass="valign_middle">
                 <f:selectItem itemValue="-" itemLabel="Alege oras"/>
                 <f:selectItems value="#{mdSessionMB.cityNames}"/>
                 <p:ajax process="@this" update="searchLink"/>
             </p:selectOneMenu>
 
-            <p:panelGrid columns="1" styleClass="tableNoPadding" style="margin-top: 10px">
+            <p:panelGrid columns="1" styleClass="tableNoPadding margin_top_10" >
                 <h:outputText id="displayRange"
                               value="Pret intre #{indexMB.minPrice} si #{indexMB.maxPrice} EURO"/>
-                <p:slider for="txt6,txt7" display="displayRange"
-                          style="width: 140px; margin-top: 5px" range="true"
+                <p:slider for="txt6,txt7" display="displayRange" styleClass="margin_top_5"
+                          style="width: 140px" range="true"
                           minValue="50" maxValue="1000" step="10"
                           displayTemplate="Pret intre {min} si {max} EURO">
                     <p:ajax process="txt6, txt7" update="searchLink"/>
@@ -30,16 +29,15 @@
                 <h:inputHidden id="txt7" value="#{indexMB.maxPrice}"/>
             </p:panelGrid>
 
-            <p:panelGrid columns="2" styleClass="tableNoPadding" style="margin-top: 10px">
+            <p:panelGrid columns="2" styleClass="tableNoPadding margin_top_10">
                 <h:outputText value="Doar cu poze:"/>
-                <p:selectBooleanCheckbox value="#{indexMB.onlyImages}"
-                                         style="vertical-align:middle; margin-left: 10px">
+                <p:selectBooleanCheckbox value="#{indexMB.onlyImages}" styleClass="valign_middle margin_left_10">
                     <p:ajax update="searchLink"/>
                 </p:selectBooleanCheckbox>
             </p:panelGrid>
 
             <p:commandButton id="searchLink" value="cauta"
-                             style="width: 100%; margin-top: 10px"
+                             styleClass="margin_top_10 width_100_pc"
                              action="pretty:search">
                 <f:param value="#{indexMB.cityName}"/>
                 <f:param value="#{indexMB.minPrice}"/>

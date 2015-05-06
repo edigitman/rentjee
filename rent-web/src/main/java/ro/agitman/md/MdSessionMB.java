@@ -8,6 +8,7 @@ import ro.agitman.model.MdCity;
 import ro.agitman.model.MdNeighborhood;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by edi on 2/10/2015.
  */
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class MdSessionMB implements Serializable {
 
     @EJB

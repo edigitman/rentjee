@@ -18,11 +18,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by edi on 4/20/2015.
@@ -39,13 +38,14 @@ public class DetailsMB extends AbstractMB {
 
     @ManagedProperty(value = "#{userMB}")
     private UserMB userMB;
+    private boolean confirmHumanReq = false;
 
     private MapModel geoModel = new DefaultMapModel();
     private String centerGeoMap = "41.850033, -87.6500523";
 
     private Advert selected;
     private Long id;
-    private List<DotariEnum> dotari;
+    private EnumSet<DotariEnum> dotari = EnumSet.noneOf(DotariEnum.class);
     private int favNr = 0;
     private int oldFav = 0;
     private User user;
@@ -84,7 +84,6 @@ public class DetailsMB extends AbstractMB {
     }
 
     private void buildDotari() {
-        dotari = new LinkedList<>();
         long dot = selected.getDotari();
         if (dot != 0) {
             for (DotariEnum d : DotariEnum.values()) {
@@ -93,7 +92,19 @@ public class DetailsMB extends AbstractMB {
                 }
             }
         }
-        Collections.sort(dotari, new DotariEnumCmp());
+    }
+
+    public List<SelectItem> getDotari(Integer cat) {
+        List<SelectItem> result = new ArrayList<>();
+        for (DotariEnum dotare : dotari) {
+            if(dotare.getCat() == cat)
+                result.add(new SelectItem(dotare, dotare.gethName()));
+        }
+        return result;
+    }
+
+    public void confirmHuman(ActionEvent actionEvent){
+        confirmHumanReq = true;
     }
 
     public boolean hasDeposit() {
@@ -102,10 +113,6 @@ public class DetailsMB extends AbstractMB {
 
     public boolean isMine() {
         return user != null && selected.getUser().getId().equals(user.getId());
-    }
-
-    public List<DotariEnum> dotari() {
-        return dotari;
     }
 
     public Advert getSelected() {
@@ -140,4 +147,11 @@ public class DetailsMB extends AbstractMB {
         this.favNr = favNr;
     }
 
+    public boolean isConfirmHumanReq() {
+        return confirmHumanReq;
+    }
+
+    public void setConfirmHumanReq(boolean confirmHumanReq) {
+        this.confirmHumanReq = confirmHumanReq;
+    }
 }
