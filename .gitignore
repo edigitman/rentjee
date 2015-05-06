@@ -2,3 +2,6 @@
 *.iml
 /rent.iml
 rent-ear.iml
+/rent-ear/rent-ear.iml
+/rent-ejb/rent-ejb.iml
+/rent-web/rent-web.iml
