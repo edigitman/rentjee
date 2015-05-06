@@ -137,3 +137,7 @@ input.error, select.error, textarea.error {
 .displayInlineBlock{
     display: inline-block;
 }
+
+.fontSize_16{
+    font-size: 16px;
+}

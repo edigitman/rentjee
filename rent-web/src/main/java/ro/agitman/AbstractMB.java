@@ -25,6 +25,12 @@ public abstract class AbstractMB implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
     }
 
+    public void errorPersistRedirect(String message) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
+        context.getExternalContext().getFlash().setKeepMessages(true);
+    }
+
     public HttpServletRequest getRequest(){
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }

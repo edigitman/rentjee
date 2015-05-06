@@ -1,5 +1,7 @@
 package ro.agitman.account;
 
+import com.ocpsoft.pretty.PrettyContext;
+import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import ro.agitman.AbstractMB;
 import ro.agitman.dto.DotariEnum;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
+import ro.agitman.model.User;
 import ro.agitman.pub.FileUploadBean;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +21,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -42,8 +46,9 @@ public class AddMB extends AbstractMB implements Serializable {
     @ManagedProperty(value = "#{fileUploadBean}")
     private FileUploadBean fileUploadBean;
 
-    private List<DotariEnum> dotariSelected = new ArrayList<>();
+    private EnumSet<DotariEnum> dotariSelected = EnumSet.noneOf(DotariEnum.class);
     private Advert advert;
+    private User user;
 
     private List<Advert> myAds = null;
     private List<Advert> favAds = null;
@@ -52,10 +57,20 @@ public class AddMB extends AbstractMB implements Serializable {
     @PostConstruct
     public void init() {
         advert = advertService.init();
+        user = userMB.getUser();
+    }
+
+    @URLAction(onPostback = false)
+    public void load() {
+        String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
+        if ("add".equals(viewId) && (user.getPhone() == null || "".equals(user.getPhone()))) {
+            errorPersistRedirect("Trebuie sa iti adaugi numarul de telefon pentru a adauga un anunt");
+            redirectPretty("settings");
+        }
     }
 
     public void save() {
-        advert.setUser(userMB.getUser());
+        advert.setUser(user);
         advert.setDotari(mapDotari());
         advertService.save(advert, fileUploadBean.getImages());
         fileUploadBean.clearAll();
@@ -63,7 +78,7 @@ public class AddMB extends AbstractMB implements Serializable {
     }
 
     private long mapDotari() {
-        long result = 1 << 30;
+        long result = 1 << 2;
         for (DotariEnum d : DotariEnum.values()) {
             result = (result << 1) | (dotariSelected.contains(d) ? 1 : 0);
         }
@@ -73,13 +88,13 @@ public class AddMB extends AbstractMB implements Serializable {
     private void loadAds(int type) {
         switch (type) {
             case 1:
-                myAds = advertService.findForUser(userMB.getUser());
+                myAds = advertService.findForUser(user);
                 break;
             case 2:
-                favAds = advertService.findFavoritesForUser(userMB.getUser());
+                favAds = advertService.findFavoritesForUser(user);
                 break;
             case 3:
-                dezAds = advertService.findDezByUser(userMB.getUser());
+                dezAds = advertService.findDezByUser(user);
                 break;
         }
     }
@@ -142,12 +157,12 @@ public class AddMB extends AbstractMB implements Serializable {
         return result;
     }
 
-    public List<DotariEnum> getDotariSelected() {
+    public EnumSet<DotariEnum> getDotariSelected() {
         return dotariSelected;
     }
 
-    public void setDotariSelected(List<DotariEnum> dotariSelected) {
-        this.dotariSelected = dotariSelected;
+    public void setDotariSelected(EnumSet<DotariEnum> dotariSelected) {
+        this.dotariSelected.addAll(dotariSelected);
     }
 
     public FileUploadBean getFileUploadBean() {

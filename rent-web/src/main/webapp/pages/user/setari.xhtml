@@ -24,12 +24,12 @@
                              value="#{userMB.user.name}"/>
 
                 <p:outputLabel for="telefon" value="Telefon:"/>
-                <p:inputMask id="telefon" autocomplete="false"
+                <p:inputMask id="telefon" autocomplete="false" required="true"
                              value="#{userMB.user.phone}" mask="0799.999.999"/>
 
-                <p:outputLabel for="mobil" value="Mobil:"/>
-                <p:inputMask id="mobil" autocomplete="false"
-                             value="#{userMB.user.phone2}" mask="0799.999.999"/>
+                <!--<p:outputLabel for="mobil" value="Mobil:"/>-->
+                <!--<p:inputMask id="mobil" autocomplete="false"-->
+                             <!--value="#{userMB.user.phone2}" mask="0799.999.999"/>-->
 
                 <h:outputLabel for="password" value="Parola noua: "/>
                 <p:password id="password" value="#{userMB.newPassword}" feedback="true"
@@ -37,7 +37,7 @@
                             goodLabel="Medie" strongLabel="Puternica" match="confirm"/>
 
                 <h:outputText value="Confirma parola noua: "/>
-                <p:password id="confirm" value="#{registerMB.confirm}" required="true"/>
+                <p:password id="confirm" value="#{registerMB.confirm}"/>
 
             </p:panelGrid>
 
@@ -49,7 +49,7 @@
                 <p:commandButton value="Salveaza"
                                  oncomplete="setTimeout(function() { $('#detailsForm\\:msgs').hide(1000); }, 4000);"
                                  actionListener="#{userMB.update()}"
-                                 update=":detailsForm"/>
+                                 update="@form"/>
             </p:panelGrid>
 
         </h:form>
