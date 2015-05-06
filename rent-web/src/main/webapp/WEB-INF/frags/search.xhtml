@@ -10,11 +10,10 @@
         <p:messages/>
         <p:panel id="search" header="cautare">
 
-            <p:selectOneMenu id="city" value="#{indexMB.city}"
-                             style="vertical-align:middle"
-                             converter="omnifaces.SelectItemsConverter">
-                <f:selectItem itemValue="#{null}" itemLabel="Alege oras"/>
-                <f:selectItems value="#{mdSessionMB.cities}"/>
+            <p:selectOneMenu id="city" value="#{indexMB.cityName}"
+                             style="vertical-align:middle">
+                <f:selectItem itemValue="-" itemLabel="Alege oras"/>
+                <f:selectItems value="#{mdSessionMB.cityNames}"/>
                 <p:ajax process="@this" update="searchLink"/>
             </p:selectOneMenu>
 
@@ -42,7 +41,7 @@
             <p:commandButton id="searchLink" value="cauta"
                              style="width: 100%; margin-top: 10px"
                              action="pretty:search">
-                <f:param value="#{indexMB.city.id}"/>
+                <f:param value="#{indexMB.cityName}"/>
                 <f:param value="#{indexMB.minPrice}"/>
                 <f:param value="#{indexMB.maxPrice}"/>
                 <f:param value="#{indexMB.onlyImages}"/>

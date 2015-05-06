@@ -111,9 +111,15 @@
         <param-value>WEB-INF/log4j.properties</param-value>
     </context-param>
 
+    <!--ERROR PAGES-->
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/pages/index.xhtml</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errors/error404.xhtml</location>
     </error-page>
 
     <!-- Protected area definition -->

@@ -1,7 +1,5 @@
 package ro.agitman.pub;
 
-import com.ocpsoft.pretty.faces.annotation.URLMapping;
-import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -17,9 +15,6 @@ import java.util.List;
 
 @ManagedBean
 @SessionScoped
-@URLMappings(mappings = {
-        @URLMapping(id = "upload", pattern = "/upload", viewId = "/pages/upload.xhtml?faces-redirect=true")
-})
 public class FileUploadBean implements Serializable {
 
     private List<UploadedImage> images = new ArrayList<>();

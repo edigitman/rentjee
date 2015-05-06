@@ -21,14 +21,17 @@
             <p:outputPanel id="addPanel" layout="block" styleClass="ui-grid">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12">
-                        <o:outputLabel for="description" value="Descriere:"/>
+                        <o:outputLabel for="description" value="Descriere: *"/>
                         <p:inputTextarea id="description" maxlength="150"
                                          required="true"
+                                         validatorMessage="Descrierea intre 10 si 150 caractere"
                                          requiredMessage="Decriere obligatorie"
                                          counter="decriptionLeft"
                                          value="#{addMB.advert.description}"
                                          counterTemplate="{0} charactere remase."
-                                         style="width: 98%; height: 30px; resize: none"/>
+                                         style="width: 98%; height: 30px; resize: none">
+                            <f:validateLength for="description" minimum="10" maximum="150"/>
+                        </p:inputTextarea>
                         <h:outputText id="decriptionLeft"/>
                     </div>
                 </div>
@@ -52,7 +55,8 @@
                         <p:inputText id="value" size="3" style="text-align: right"
                                      value="#{addMB.advert.value.value}"
                                      required="true"
-                                     requiredMessage="Valoare obligatorie">
+                                     requiredMessage="Valoare obligatorie"
+                                     validatorMessage="Valoarea trebuie sa fie numerica">
                             <f:convertNumber maxFractionDigits="2" maxIntegerDigits="4"/>
                         </p:inputText>
 
@@ -170,7 +174,7 @@
                 <p:outputPanel id="uploadPanel" styleClass="ui-grid-row" style="margin-top: 10px">
                     <p:panelGrid id="table" columns="1">
                         <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUpload}"
-                                      update="@form"
+                                      update=":uploadFormId:uploadPanel"
                                       mode="advanced"
                                       auto="true"
                                       dragDropSupport="false"
@@ -186,7 +190,7 @@
                                       invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
 
                             <p:commandButton value="Sterge toate pozele"
-                                             update="@form" immediate="true"
+                                             update=":uploadFormId:uploadPanel" immediate="true"
                                              rendered="#{not empty fileUploadBean.images}"
                                              actionListener="#{fileUploadBean.clearAll()}"/>
 
@@ -194,9 +198,8 @@
                             <p:panelGrid columns="1" style="display: inline-block">
                                 <o:graphicImage height="70" value="#{img.contents}" dataURI="true"/>
                                 <p:commandLink actionListener="#{fileUploadBean.remove(img)}" immediate="true"
-                                               value="sterge" update="@form"/>
+                                               value="sterge" update=":uploadFormId:uploadPanel"/>
                             </p:panelGrid>
-
                         </ui:repeat>
 
                     </p:panelGrid>
@@ -204,7 +207,9 @@
 
                 <div class="ui-grid-row" style="margin-top: 10px">
                     <div class="ui-grid-col-12">
-                        <p:commandButton id="saveBtn" value="Adauga anunt" ajax="false" actionListener="#{addMB.save()}"/>
+                        <p:commandButton id="saveBtn" value="Adauga anunt"
+                                         update="@form"
+                                         actionListener="#{addMB.save()}"/>
                     </div>
                 </div>
             </p:outputPanel>

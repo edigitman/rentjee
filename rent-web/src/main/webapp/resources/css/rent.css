@@ -24,3 +24,11 @@
 .tableNoPadding .ui-panelgrid-cell{
     padding: 0 !important;
 }
+
+label.error {
+    background: #f2dede 50% 50% repeat-x;
+    color: #b94a48;
+}
+input.error, select.error, textarea.error {
+    background-color: #fee;
+}

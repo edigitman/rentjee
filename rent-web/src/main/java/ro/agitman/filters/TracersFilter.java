@@ -43,7 +43,7 @@ public class TracersFilter implements Filter {
 
             //TODO cauta ora, cartier si pret
 
-            service.create(t);
+            //service.create(t);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

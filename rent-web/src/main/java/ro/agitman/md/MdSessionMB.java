@@ -26,7 +26,9 @@ public class MdSessionMB implements Serializable {
     private MdService mdService;
 
     private List<SelectItem> cities;
+    private List<SelectItem> cityNames;
     private List<SelectItem> neighborhoods;
+    private List<MdCity> citiesList;
     private List<SelectItem> types;
     private List<SelectItem> accomodations;
     private List<SelectItem> currencies;
@@ -39,6 +41,23 @@ public class MdSessionMB implements Serializable {
             }
         }
         return cities;
+    }
+
+    public List<MdCity> getCitiesList() {
+        if (citiesList == null) {
+            citiesList = mdService.findAllCities();
+        }
+        return citiesList;
+    }
+
+    public List<SelectItem> getCityNames() {
+        if (cityNames == null) {
+            cityNames = new ArrayList<>();
+            for (MdCity city : getCitiesList()) {
+                cityNames.add(new SelectItem(city.getName(), city.getName()));
+            }
+        }
+        return cityNames;
     }
 
     public List<SelectItem> getNeighborhoods(MdCity city) {
