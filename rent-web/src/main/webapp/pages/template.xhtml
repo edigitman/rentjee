@@ -19,9 +19,9 @@
 
 <h:body>
     <o:highlight />
-    <p:layout style="width:760px; height: 1024px; margin: 0 auto; margin-top:20px">
+    <p:layout style="width:765px; height: 1200px; margin: 0 auto; margin-top:20px">
 
-        <p:layoutUnit position="west" resizable="false" size="180" style="border: none">
+        <p:layoutUnit id="westLayout" position="west" resizable="false" size="180" style="border: none">
             <h2>
                 <pretty:link mappingId="index">
                     <h:outputText value="La Chirie"/>
@@ -34,14 +34,12 @@
         </p:layoutUnit>
 
         <!--User status-->
-        <p:layoutUnit position="center" style="border: none; min-height:200px;">
+        <p:layoutUnit id="centerLayout" position="center" style="border: none;">
             <ui:include src="/WEB-INF/frags/topBar.xhtml"/>
-
 
             <ui:insert name="content">
                 Center
             </ui:insert>
-
 
         </p:layoutUnit>
     </p:layout>

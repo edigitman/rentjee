@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui">
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:r="http://java.sun.com/jsf/composite/components">
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -19,6 +20,7 @@
             <p:messages />
 
             <p:outputPanel id="addPanel" layout="block" styleClass="ui-grid">
+                <!--description-->
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12">
                         <o:outputLabel for="description" value="Descriere: *"/>
@@ -29,14 +31,15 @@
                                          counter="decriptionLeft"
                                          value="#{addMB.advert.description}"
                                          counterTemplate="{0} charactere remase."
-                                         style="width: 98%; height: 30px; resize: none">
+                                         styleClass="width_98_pc height_30_px resize_none">
                             <f:validateLength for="description" minimum="10" maximum="150"/>
                         </p:inputTextarea>
                         <h:outputText id="decriptionLeft"/>
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 10px">
+                <!--type and value-->
+                <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
                         <p:selectOneButton id="type" value="#{addMB.advert.adType}"
                                            converter="omnifaces.SelectItemsConverter"
@@ -46,12 +49,14 @@
                         </p:selectOneButton>
 
                         <p:selectOneMenu id="accomodation" value="#{addMB.advert.buildingType}"
-                                         style="vertical-align:middle"
+                                         styleClass="valign_middle" required="true"
+                                         requiredMessage="Tip imobil obligatoriu"
                                          converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemValue="#{null}" itemLabel="Tip Imobil"/>
                             <f:selectItems value="#{mdSessionMB.accomodations}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="value" value="Valoare:" style="margin-left: 5px"/>
+                        <p:outputLabel for="value" value="Valoare:" styleClass="margin_left_5"/>
                         <p:inputText id="value" size="3" style="text-align: right"
                                      value="#{addMB.advert.value.value}"
                                      required="true"
@@ -60,56 +65,49 @@
                             <f:convertNumber maxFractionDigits="2" maxIntegerDigits="4"/>
                         </p:inputText>
 
-                        <p:outputLabel for="deposit" value="Garantie:" style="margin-left: 10px"/>
-                        <p:inputText id="deposit" size="3" style="text-align: right"
+                        <p:outputLabel for="deposit" value="Garantie:" styleClass="margin_left_10"/>
+                        <p:inputText id="deposit" size="3" styleClass="textAlign_right"
                                      value="#{addMB.advert.value.deposit}"/>
 
                         <p:selectOneMenu id="curr" value="#{addMB.advert.value.currency}"
                                          converter="omnifaces.SelectItemsConverter"
-                                         style="vertical-align:middle; margin-left: 10px">
+                                         styleClass="valign_middle margin_left_10">
                             <f:selectItems value="#{mdSessionMB.currencies}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="negot" value="Neg.: " style="margin-left: 10px"/>
-                        <p:selectBooleanCheckbox id="negot" style="vertical-align:middle"
+                        <p:outputLabel for="negot" value="Neg.: " styleClass="margin_left_10"/>
+                        <p:selectBooleanCheckbox id="negot" styleClass="valign_middle"
                                                  value="#{addMB.advert.value.negotiable}"/>
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 10px">
+                <!--address-->
+                <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
                         <p:outputLabel value="Adresa"/>
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 10px">
+                <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
                         <!--<p:outputLabel for="city" value="Oras:"/>-->
                         <p:selectOneMenu id="city" value="#{addMB.advert.address.city}"
                                          converter="omnifaces.SelectItemsConverter"
                                          required="true"
                                          requiredMessage="Oras obligatoriu"
-                                         style="vertical-align:middle">
+                                         styleClass="valign_middle">
                             <f:selectItem itemLabel="Alege oras" itemValue="#{null}"/>
                             <f:selectItems value="#{mdSessionMB.cities}"/>
                             <p:ajax event="change" update="neighborhood"/>
                         </p:selectOneMenu>
 
-                        <p:selectOneMenu id="neighborhood" value="#{addMB.advert.address.neighborhood}"
-                                         filter="true" filterMatchMode="contains"
-                                         converter="omnifaces.SelectItemsConverter"
-                                         style="vertical-align:middle; width: 175px; margin-left: 5px">
-                            <f:selectItem itemLabel="Alege cartier" itemValue="#{null}"/>
-                            <f:selectItems value="#{mdSessionMB.getNeighborhoods(addMB.advert.address.city)}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel for="street" value="Strada:" style="margin-left: 10px"/>
-                        <p:inputText id="street" size="20"
+                        <p:outputLabel for="street" value="Strada:" styleClass="margin_left_10"/>
+                        <p:inputText id="street" size="50"
                                      required="true"
                                      requiredMessage="Strada obligatorie"
                                      value="#{addMB.advert.address.street}"/>
 
-                        <p:outputLabel for="nr" value="Nr.:" style="margin-left: 10px"/>
+                        <p:outputLabel for="nr" value="Nr.:" styleClass="margin_left_10"/>
                         <p:inputText id="nr" size="2"
                                      required="true"
                                      requiredMessage="Numar obligatoriu"
@@ -118,60 +116,74 @@
                 </div>
 
                 <!--detalii adresa, sc bloc et, CP-->
-                <h:panelGroup layout="block" style="margin-top: 10px" styleClass="ui-grid-row">
-                    <div class="ui-grid-col-3">
-                        <p:button id="moreAddress" value="Detalii adresa" onclick="return false;">
-                            <p:effect type="fade" event="click" for="detaliiAdresa">
-                                <f:param name="mode" value="'show'"/>
-                            </p:effect>
-                            <p:effect type="fade" event="click" for="moreAddress"/>
-                        </p:button>
+                <h:panelGroup layout="block" styleClass="ui-grid-row margin_top_10 width_99_pc">
+                    <div class="ui-grid-col-4">
+                        <!--<p:button id="moreAddress" value="Detalii adresa" onclick="return false;">-->
+                            <!--<p:effect type="fade" event="click" for="detaliiAdresa">-->
+                                <!--<f:param name="mode" value="'show'"/>-->
+                            <!--</p:effect>-->
+                            <!--<p:effect type="fade" event="click" for="moreAddress"/>-->
+                        <!--</p:button>-->
+                        <p:selectOneMenu id="neighborhood" value="#{addMB.advert.address.neighborhood}"
+                                         filter="true" filterMatchMode="contains"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         styleClass="valign_middle width_175 margin_left_5">
+                            <f:selectItem itemLabel="Alege cartier" itemValue="#{null}"/>
+                            <f:selectItems value="#{mdSessionMB.getNeighborhoods(addMB.advert.address.city)}"/>
+                        </p:selectOneMenu>
                     </div>
-                    <h:panelGroup layout="block" id="detaliiAdresa" style="display: none" class="ui-grid-col-9">
-                        <p:outputLabel for="bloc" value="Bloc: " style="margin-left: 19px;"/>
-                        <p:inputText id="bloc" size="3" style="text-align: right; margin-right: 5px"
+                    <h:panelGroup layout="block" id="detaliiAdresa" styleClass="ui-grid-col-8 textAlign_right">
+                        <p:outputLabel for="bloc" value="Bloc: " styleClass="margin_left_19"/>
+                        <p:inputText id="bloc" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.bloc}"/>
 
                         <p:outputLabel for="scara" value="Scara: "/>
-                        <p:inputText id="scara" size="3" style="text-align: right; margin-right: 5px"
+                        <p:inputText id="scara" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.sc}"/>
 
                         <p:outputLabel for="etaj" value="Etaj: "/>
-                        <p:inputText id="etaj" size="3" style="text-align: right; margin-right: 5px"
+                        <p:inputText id="etaj" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.et}"/>
 
                         <p:outputLabel for="cp" value="C.P.: "/>
-                        <p:inputText id="cp" size="3" style="text-align: right"
+                        <p:inputText id="cp" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.cp}"/>
                     </h:panelGroup>
                 </h:panelGroup>
 
-                <div class="ui-grid-row" style="margin-top: 20px">
+                <!--interval-->
+                <div class="ui-grid-row margin_top_20">
                     <div class="ui-grid-col-12">
                         <h:outputText value=" Disponibil din: "/>
-                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}"
-                                    locale="ro" size="6" pattern="dd/MMM/yyyy">
+                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}" size="7">
                             <p:ajax event="dateSelect" process="@this" update="untilDate"/>
                         </p:calendar>
 
                         <h:outputText value=" pana: "/>
                         <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
-                                    mindate="#{addMB.advert.interval.fromDate}"
-                                    locale="ro" size="6" pattern="dd/MMM/yyyy"/>
+                                    disabled="#{addMB.advert.interval.untilUndefined}"
+                                    mindate="#{addMB.advert.interval.fromDate}" size="7" />
+
+                        <h:outputLabel value="Nedeterminat:" for="intervalUndefined" styleClass="margin_left_10"/>
+                        <p:selectBooleanCheckbox id="intervalUndefined"
+                                                 style="vertical-align:middle"
+                                                 value="#{addMB.advert.interval.untilUndefined}">
+                            <p:ajax process="@this" update="untilDate"/>
+                        </p:selectBooleanCheckbox>
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 20px">
-                    <div class="ui-grid-col-12">
-                        <p:selectManyCheckbox id="grid" layout="grid" columns="3"
-                                              style="margin-left: 10px; width: 100%"
-                                              value="#{addMB.dotariSelected}" >
-                            <f:selectItems value="#{addMB.dotari}"/>
-                        </p:selectManyCheckbox>
-                    </div>
-                </div>
+                <!-- features -->
+                <r:features features="#{addMB.dotariSelected}"
+                            ftClean="#{addMB.getDotari(1)}"
+                            ftConfort="#{addMB.getDotari(2)}"
+                            ftKitchen="#{addMB.getDotari(3)}"
+                            ftLiving="#{addMB.getDotari(4)}"
+                            ftExterior="#{addMB.getDotari(5)}"
+                            ftOthers="#{addMB.getDotari(6)}"/>
 
-                <p:outputPanel id="uploadPanel" styleClass="ui-grid-row" style="margin-top: 10px">
+                <!-- image uploads -->
+                <p:outputPanel id="uploadPanel" styleClass="ui-grid-row margin_top_10">
                     <p:panelGrid id="table" columns="1">
                         <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUpload}"
                                       update=":uploadFormId:uploadPanel"
@@ -184,7 +196,7 @@
                                       allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
                                       uploadLabel="Incarca"
                                       cancelLabel="Anuleaza"
-                                      label="Alege poze"
+                                      label="Adauga poze"
                                       fileLimitMessage="Maxim 5 poze"
                                       invalidFileMessage="Fisier invalid"
                                       invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
@@ -195,17 +207,18 @@
                                              actionListener="#{fileUploadBean.clearAll()}"/>
 
                         <ui:repeat value="#{fileUploadBean.images}" var="img">
-                            <p:panelGrid columns="1" style="display: inline-block">
+                            <p:panelGrid columns="1" styleClass="tableNoPadding displayInlineBlock margin_bottom_15 margin_right_15">
                                 <o:graphicImage height="70" value="#{img.contents}" dataURI="true"/>
-                                <p:commandLink actionListener="#{fileUploadBean.remove(img)}" immediate="true"
-                                               value="sterge" update=":uploadFormId:uploadPanel"/>
+                                <p:commandLink actionListener="#{fileUploadBean.remove(img)}"
+                                               immediate="true" value="X sterge" styleClass="margin_top_5"
+                                               update=":uploadFormId:uploadPanel"/>
                             </p:panelGrid>
                         </ui:repeat>
 
                     </p:panelGrid>
                 </p:outputPanel>
 
-                <div class="ui-grid-row" style="margin-top: 10px">
+                <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
                         <p:commandButton id="saveBtn" value="Adauga anunt"
                                          update="@form"
@@ -216,7 +229,7 @@
 
             <p:blockUI block="addPanel" trigger="saveBtn">
                 datele se salveaza
-                <p:graphicImage value="/resources/images/loading.gif" width="20px" height="20px"/>
+                <p:graphicImage value="/resources/images/loading.gif" styleClass="width_20 height_20"/>
             </p:blockUI>
         </h:form>
     </ui:define>

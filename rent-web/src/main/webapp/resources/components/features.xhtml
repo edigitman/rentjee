@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<composite:interface>
+    <composite:attribute name="features" required="true"/>
+    <composite:attribute name="readonly" default="false" />
+
+    <composite:attribute name="ftClean" required="true"/>
+    <composite:attribute name="ftConfort" required="true"/>
+    <composite:attribute name="ftKitchen" required="true"/>
+    <composite:attribute name="ftLiving" required="true"/>
+    <composite:attribute name="ftExterior" required="true"/>
+    <composite:attribute name="ftOthers" required="true"/>
+</composite:interface>
+
+<composite:implementation>
+    <p:messages autoUpdate="true"/>
+
+    <div class="ui-grid-row margin_top_20 width_98_pc">
+        <div class="ui-grid-col-2">
+            <p>Curatenie</p>
+        </div>
+        <div class="ui-grid-col-10">
+            <p:selectManyCheckbox id="gridClean" layout="grid" columns="4"
+                                  styleClass="fixCheckboxLable"
+                                  value="#{cc.attrs.features}" >
+                <f:selectItems value="#{cc.attrs.ftClean}"/>
+            </p:selectManyCheckbox>
+        </div>
+    </div><hr/>
+
+    <div class="ui-grid-row margin_top_5 width_98_pc">
+        <div class="ui-grid-col-2">
+            <p>Confort</p>
+        </div>
+        <div class="ui-grid-col-10">
+            <p:selectManyCheckbox id="gridConfort" layout="grid" columns="4"
+                                  styleClass="fixCheckboxLable"
+                                  value="#{cc.attrs.features}" >
+                <f:selectItems value="#{cc.attrs.ftConfort}"/>
+            </p:selectManyCheckbox>
+        </div>
+    </div><hr/>
+
+    <div class="ui-grid-row margin_top_5 width_98_pc">
+        <div class="ui-grid-col-2">
+            <p>Bucatarie</p>
+        </div>
+        <div class="ui-grid-col-10">
+            <p:selectManyCheckbox id="gridKitchen" layout="grid" columns="4"
+                                  styleClass="fixCheckboxLable"
+                                  value="#{cc.attrs.features}" >
+                <f:selectItems value="#{cc.attrs.ftKitchen}"/>
+            </p:selectManyCheckbox>
+        </div>
+    </div><hr/>
+
+    <div class="ui-grid-row margin_top_5 width_98_pc">
+        <div class="ui-grid-col-2">
+            <p>Living</p>
+        </div>
+        <div class="ui-grid-col-10">
+            <p:selectManyCheckbox id="gridLiving" layout="grid" columns="4"
+                                  styleClass="fixCheckboxLable"
+                                  value="#{cc.attrs.features}" >
+                <f:selectItems value="#{cc.attrs.ftLiving}"/>
+            </p:selectManyCheckbox>
+        </div>
+    </div><hr/>
+
+    <div class="ui-grid-row margin_top_5 width_98_pc">
+        <div class="ui-grid-col-2">
+            <p>Exterior</p>
+        </div>
+        <div class="ui-grid-col-10">
+            <p:selectManyCheckbox id="gridExterior" layout="grid" columns="4"
+                                  styleClass="fixCheckboxLable"
+                                  value="#{cc.attrs.features}" >
+                <f:selectItems value="#{cc.attrs.ftExterior}"/>
+            </p:selectManyCheckbox>
+        </div>
+    </div><hr/>
+
+    <div class="ui-grid-row margin_top_5 width_98_pc">
+        <div class="ui-grid-col-2">
+            <p>Altele</p>
+        </div>
+        <div class="ui-grid-col-10">
+            <p:selectManyCheckbox id="gridOthers" layout="grid" columns="4"
+                                  styleClass="fixCheckboxLable"
+                                  value="#{cc.attrs.features}" >
+                <f:selectItems value="#{cc.attrs.ftOthers}"/>
+            </p:selectManyCheckbox>
+        </div>
+    </div><hr/>
+
+</composite:implementation>
+</html>

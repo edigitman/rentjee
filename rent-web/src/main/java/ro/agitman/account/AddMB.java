@@ -133,10 +133,11 @@ public class AddMB extends AbstractMB implements Serializable {
         this.userMB = userMB;
     }
 
-    public List<SelectItem> getDotari() {
+    public List<SelectItem> getDotari(int cat) {
         List<SelectItem> result = new ArrayList<>();
         for (DotariEnum dotare : DotariEnum.values()) {
-            result.add(new SelectItem(dotare, dotare.name()));
+            if(dotare.getCat() == cat)
+                result.add(new SelectItem(dotare, dotare.gethName()));
         }
         return result;
     }

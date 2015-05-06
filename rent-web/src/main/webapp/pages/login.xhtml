@@ -34,14 +34,14 @@
 
                 <h:outputText/>
                 <p:outputPanel layout="block">
-                    <p:commandButton value="Login" actionListener="#{userMB.login()}" update="@form"/>
-                    <p:commandButton value="Curata" type="reset"/>
+                    <p:commandButton value="Conecteaza-te" actionListener="#{userMB.login()}" update="@form"/>
+                    <!--<p:commandButton value="Curata" type="reset"/>-->
                 </p:outputPanel>
             </h:panelGrid>
 
-            <p:outputPanel layout="block" style="margin-top: 10px">
+            <p:outputPanel layout="block" styleClass="margin_top_10">
                 <pretty:link mappingId="register">
-                    <h:outputText value="Inregistreaza-te"/>
+                    <h:outputText value="Inregistrare"/>
                 </pretty:link>
                 <br/><br/>
                 <pretty:link mappingId="recover">
