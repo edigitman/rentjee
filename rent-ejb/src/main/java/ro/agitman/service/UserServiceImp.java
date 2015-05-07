@@ -106,7 +106,7 @@ public class UserServiceImp implements UserService {
         if (user == null) {
             return false;
         }
-        user.setPassword(pws);
+        user.setPassword(sha256(pws));
         user.setRegToken(null);
         user.setConfirmedBl(true);
 

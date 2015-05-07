@@ -16,8 +16,9 @@ import java.util.List;
         @NamedQuery(name = Advert.FIND_ALL, query = "select distinct a from Advert a where a.status in :stats"),
         @NamedQuery(name = Advert.FIND_FOR_USER, query = "select a from Advert a where a.user = :user"),
         @NamedQuery(name = Advert.FIND_FAV_BY_USER, query = "select a from Advert a JOIN a.favorites fs where fs.user = :user"),
-        @NamedQuery(name = Advert.FIND_STATUS_TO_EXPIRED, query = "select a from Advert a where a.status = 'ACTIVE' and a.statusUpdate <= :date"),
-        @NamedQuery(name = Advert.FIND_STATUS_TO_REMOVED, query = "select a from Advert a where (a.status = 'EXPIRED' and a.statusUpdate <= :dateExp) or (a.status = 'RETIRED' and a.statusUpdate <= :dateRet)")
+        @NamedQuery(name = Advert.FIND_STATUS_TO_EXPIRED, query = "select a from Advert a where a.status = :status and a.statusUpdate <= :date"),
+        @NamedQuery(name = Advert.FIND_STATUS_TO_REMOVED, query =
+                "select a from Advert a where (a.status = :statusExpired and a.statusUpdate <= :dateExp) or (a.status = :statusRetired and a.statusUpdate <= :dateRet)")
 
 // @NamedQuery(name = "findActive", query =
 // "select a from Advert a where a.state = 1")

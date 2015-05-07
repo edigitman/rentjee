@@ -2,6 +2,7 @@ package ro.agitman.service;
 
 import org.joda.time.MutableDateTime;
 import ro.agitman.dba.DataAccessService;
+import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.model.Advert;
 
 import javax.ejb.EJB;
@@ -21,7 +22,7 @@ public class UpdateAdvertStatusScheduler {
     @EJB
     private DataAccessService service;
 
-    @Schedule(second = "*", minute = "*", hour = "5", persistent = false)
+    @Schedule(second = "1", minute = "*", hour = "5", persistent = false)
     public void executeUpdate() {
         MutableDateTime date = new MutableDateTime();
         System.out.println("Execute batch... at " + date.toString("dd/MM/yy hh:mm:ss"));
@@ -32,6 +33,7 @@ public class UpdateAdvertStatusScheduler {
 
         Map<String, Object> map1 = new HashMap<>();
         map1.put("date", dateExp);
+        map1.put("status", AdvertStatusEnum.ACTIVE);
 
         List<Advert> expiredAdverts = service.findWithNamedQuery(Advert.FIND_STATUS_TO_EXPIRED, map1);
         for (Advert advert : expiredAdverts) {
@@ -43,6 +45,8 @@ public class UpdateAdvertStatusScheduler {
         Map<String, Object> map2 = new HashMap<>();
         map2.put("dateExp", dateExp);
         map2.put("dateRet", dateRet.toDate());
+        map2.put("statusExpired", AdvertStatusEnum.EXPIRED);
+        map2.put("statusRetired", AdvertStatusEnum.RETIRED);
         System.out.println("dateRM param: " + dateRet.toString("dd/MM/yy hh:mm:ss"));
 
         List<Advert> removedAdverts = service.findWithNamedQuery(Advert.FIND_STATUS_TO_REMOVED, map2);

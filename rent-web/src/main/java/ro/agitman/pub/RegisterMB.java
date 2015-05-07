@@ -74,7 +74,8 @@ public class RegisterMB extends AbstractMB {
 
     public String recoverConfirm() {
         if(userService.recoverConfirm(user.getPassword(), recoverConfirmToken)){
-
+            error("Token expirat");
+            return null;
         }
         return "/pages/login?faces-redirect=true";
     }

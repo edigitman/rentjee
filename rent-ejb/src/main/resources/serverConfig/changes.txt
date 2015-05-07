@@ -1,6 +1,0 @@
-add eclipselink-2.5.1.jar
-JBOSS_HOME\modules\system\layers\base\org\eclipse\persistence\main
-edit module.xml and add <resource-root path="eclipselink-2.5.1.jar"/>
-
-https://docs.jboss.org/author/display/WFLY8/Developer+Guide#DeveloperGuide-InstalltheJDBCdriver
-JBOSS_HOME/standalone/deployments/mysql-connector-java-5.1.15.jar
