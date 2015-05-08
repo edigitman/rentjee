@@ -59,7 +59,7 @@
                         <p:outputLabel for="value" value="Valoare:" styleClass="margin_left_5"/>
                         <p:inputText id="value" size="3" style="text-align: right"
                                      value="#{addMB.advert.value}"
-                                     required="true"
+                                     required="true" autocomplete="false"
                                      requiredMessage="Valoare obligatorie"
                                      validatorMessage="Valoarea trebuie sa fie numerica">
                             <f:convertNumber maxFractionDigits="2" maxIntegerDigits="4"/>
@@ -67,7 +67,7 @@
 
                         <p:outputLabel for="deposit" value="Garantie:" styleClass="margin_left_10"/>
                         <p:inputText id="deposit" size="3" styleClass="textAlign_right"
-                                     value="#{addMB.advert.deposit}"/>
+                                     value="#{addMB.advert.deposit}" autocomplete="false"/>
 
                         <p:selectOneMenu id="curr" value="#{addMB.advert.currency}"
                                          converter="omnifaces.SelectItemsConverter"
@@ -102,13 +102,13 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel for="street" value="Strada:" styleClass="margin_left_10"/>
-                        <p:inputText id="street" size="50"
+                        <p:inputText id="street" size="50" autocomplete="false"
                                      required="true"
                                      requiredMessage="Strada obligatorie"
                                      value="#{addMB.advert.address.street}"/>
 
                         <p:outputLabel for="nr" value="Nr.:" styleClass="margin_left_10"/>
-                        <p:inputText id="nr" size="2"
+                        <p:inputText id="nr" size="2" autocomplete="false"
                                      required="true"
                                      requiredMessage="Numar obligatoriu"
                                      value="#{addMB.advert.address.nr}"/>
@@ -133,21 +133,21 @@
                         </p:selectOneMenu>
                     </div>
                     <h:panelGroup layout="block" id="detaliiAdresa" styleClass="ui-grid-col-8 textAlign_right">
-                        <p:outputLabel for="bloc" value="Bloc: " styleClass="margin_left_19"/>
+                        <p:outputLabel for="bloc" value="Bloc: "/>
                         <p:inputText id="bloc" size="3" styleClass="textAlign_right margin_right_5"
-                                     value="#{addMB.advert.address.bloc}"/>
+                                     value="#{addMB.advert.address.bloc}" autocomplete="false"/>
 
-                        <p:outputLabel for="scara" value="Scara: "/>
+                        <p:outputLabel for="scara" value="Scara: " styleClass="margin_left_5"/>
                         <p:inputText id="scara" size="3" styleClass="textAlign_right margin_right_5"
-                                     value="#{addMB.advert.address.sc}"/>
+                                     value="#{addMB.advert.address.sc}" autocomplete="false"/>
 
-                        <p:outputLabel for="etaj" value="Etaj: "/>
+                        <p:outputLabel for="etaj" value="Etaj: " styleClass="margin_left_5"/>
                         <p:inputText id="etaj" size="3" styleClass="textAlign_right margin_right_5"
-                                     value="#{addMB.advert.address.et}"/>
+                                     value="#{addMB.advert.address.et}" autocomplete="false"/>
 
-                        <p:outputLabel for="cp" value="C.P.: "/>
+                        <p:outputLabel for="cp" value="C.P.: " styleClass="margin_left_5"/>
                         <p:inputText id="cp" size="3" styleClass="textAlign_right margin_right_5"
-                                     value="#{addMB.advert.address.cp}"/>
+                                     value="#{addMB.advert.address.cp}" autocomplete="false"/>
                     </h:panelGroup>
                 </h:panelGroup>
 
@@ -155,14 +155,17 @@
                 <div class="ui-grid-row margin_top_20">
                     <div class="ui-grid-col-12">
                         <h:outputText value=" Disponibil din: "/>
-                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}" size="7">
+                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/YYYY">
                             <p:ajax event="dateSelect" process="@this" update="untilDate"/>
+                            <f:convertDateTime for="untilDate" pattern="dd/MMM/YYYY"/>
                         </p:calendar>
 
                         <h:outputText value=" pana: "/>
                         <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
                                     disabled="#{addMB.advert.interval.untilUndefined}"
-                                    mindate="#{addMB.advert.interval.fromDate}" size="7" />
+                                    mindate="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/YYYY">
+                            <f:convertDateTime for="untilDate" pattern="dd/MMM/YYYY"/>
+                        </p:calendar>
 
                         <h:outputLabel value="Nedeterminat:" for="intervalUndefined" styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="intervalUndefined"

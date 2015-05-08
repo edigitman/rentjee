@@ -68,6 +68,46 @@ public class AdvertServiceImpl implements AdvertService {
         return service.findWithNamedQuery(Advert.FIND_ALL, map);
     }
 
+    public List<Advert> load(int first, int pageSize, Object sortField, Object sortOrder, Map<String, Object> filters){
+        EntityManager em = service.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
+        Root<Advert> advert = cq.from(Advert.class);
+
+        if (filters != null && !filters.isEmpty()) {
+            List<Predicate> predicates = buildPredicateFromFilters(advert, cb, filters);
+            cq.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+        }
+
+        cq.select(advert);
+        TypedQuery<Advert> q = em.createQuery(cq);
+        //pagination
+        if (pageSize >= 0){
+            q.setMaxResults(pageSize);
+        }
+        if (first >= 0){
+            q.setFirstResult(first);
+        }
+
+        return q.getResultList();
+    }
+
+    public int count(Map<String, Object> filters){
+        EntityManager em = service.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Advert> advert = cq.from(Advert.class);
+
+        if (filters != null && !filters.isEmpty()) {
+            List<Predicate> predicates = buildPredicateFromFilters(advert, cb, filters);
+            cq.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+        }
+
+        cq.select(cb.count(advert));
+        TypedQuery<Long> q = em.createQuery(cq);
+        return q.getSingleResult().intValue();
+    }
+
     @Override
     public Advert findForId(Long id) {
         return service.find(Advert.class, id);
@@ -120,9 +160,7 @@ public class AdvertServiceImpl implements AdvertService {
         cq.select(advert);
 
         TypedQuery<Advert> q = em.createQuery(cq);
-        List<Advert> allAdverts = q.getResultList();
-
-        return allAdverts;
+        return q.getResultList();
     }
 
     public void markFav(User user, Advert advert, boolean makeActive) {
@@ -147,5 +185,36 @@ public class AdvertServiceImpl implements AdvertService {
 
         List<RentFavorite> list = service.findWithNamedQuery(RentFavorite.FIND_ONE, map);
         return list.size();
+    }
+
+    //============== UTILITY METHODS
+
+    private List<Predicate> buildPredicateFromFilters(Root<Advert> advert, CriteriaBuilder cb, Map<String, Object> filters){
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        // filter price
+        BigDecimal minPrice = (BigDecimal) filters.get("minPrice");
+        BigDecimal maxPrice = (BigDecimal) filters.get("maxPrice");
+        predicates.add(cb.between(advert.<BigDecimal>get("value"), minPrice, maxPrice));
+
+        //filter images
+        Boolean onlyImages = (Boolean) filters.get("onlyImages");
+        if (onlyImages)
+            predicates.add(cb.isTrue(advert.<Boolean>get("withPictures")));
+
+        //filter status
+        List<AdvertStatusEnum> list = new ArrayList<>();
+        list.add(AdvertStatusEnum.ACTIVE);
+        list.add(AdvertStatusEnum.EXPIRED);
+        predicates.add(advert.<AdvertStatusEnum>get("status").in(list));
+
+        //filter city if required
+        Long cityId = (Long) filters.get("cityId");
+        if (cityId != 0) {
+            Join<Advert, MdCity> city = advert.join("address").join("city");
+            predicates.add(cb.equal(city.<Long>get("id"), cityId));
+        }
+
+        return predicates;
     }
 }

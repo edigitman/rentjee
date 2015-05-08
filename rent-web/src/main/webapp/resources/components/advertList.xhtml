@@ -15,6 +15,10 @@
     <p:messages autoUpdate="true" for="indexAds"/>
     <p:dataTable id="indexAds" var="ad" styleClass="adList"
                  value="#{cc.attrs.adverts}"
+                 paginator="true" rows="2" lazy="true" paginatorPosition="bottom"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}"
+                 currentPageReportTemplate="Pagina {currentPage} din {totalPages}"
+                 paginatorAlwaysVisible="false"
                  rowIndexVar="rowIdx"
                  emptyMessage="Nu sunt anunturi"
                  rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">

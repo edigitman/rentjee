@@ -4,6 +4,8 @@ import com.ocpsoft.pretty.PrettyContext;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.md.MdSessionMB;
 import ro.agitman.model.Advert;
@@ -15,7 +17,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by edi on 2/10/2015.
@@ -30,13 +35,12 @@ import java.util.List;
 })
 public class IndexMB implements Serializable{
 
-    private List<Advert> adverts;
-    private MdCity city = new MdCity(0L);
-    private Integer cityId = 0;
+    private LazyDataModel<Advert> lazyAdverts;
     private String cityName = "-";
     private Integer minPrice = 100;
     private Integer maxPrice = 400;
     private Boolean onlyImages;
+    private String title = "Anunturi rencente";
 
     @EJB
     private AdvertService advertService;
@@ -49,20 +53,50 @@ public class IndexMB implements Serializable{
         String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
 
         if ("search".equals(viewId)) {
-//            long id = cityId == 0 ? (city == null || city.getId() == 0) ? 0 : city.getId() : cityId;
-            long id = findByName(cityName);
-            adverts = advertService.findSearch(id, minPrice, maxPrice, onlyImages);
+            title = "Rezultatele cautarii";
+            lazyAdverts = new LazyDataModel<Advert>() {
+                @Override
+                public List<Advert> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> mapFilters) {
+
+                    Map<String, Object> filters = new HashMap<>();
+                    filters.put("minPrice", new BigDecimal(minPrice));
+                    filters.put("maxPrice", new BigDecimal(maxPrice));
+                    filters.put("onlyImages", onlyImages);
+                    filters.put("cityId", findByName(cityName));
+
+
+                    List<Advert> result = advertService.load(first, pageSize, null, null, filters);
+                    lazyAdverts.setRowCount(advertService.count(filters));
+
+                    return result;
+                }
+            };
         }
 
         if ("index".equals(viewId)) {
-            adverts = advertService.findAll();
+            title = "Anunturi rencente";
+            lazyAdverts = getLazyModel();
         }
-
     }
 
     @PostConstruct
     public void load() {
-        adverts = advertService.findAll();
+        lazyAdverts = getLazyModel();
+    }
+
+    //============== UTILITY METHODS
+
+    private LazyDataModel<Advert> getLazyModel() {
+        return new LazyDataModel<Advert>() {
+            @Override
+            public List<Advert> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+
+                List<Advert> result = advertService.load(first, pageSize, null, null, null);
+                lazyAdverts.setRowCount(advertService.count(null));
+
+                return result;
+            }
+        };
     }
 
     private long findByName(String name){
@@ -76,21 +110,7 @@ public class IndexMB implements Serializable{
         return 0L;
     }
 
-    public List<Advert> getAdverts() {
-        return adverts;
-    }
-
-    public void setAdverts(List<Advert> adverts) {
-        this.adverts = adverts;
-    }
-
-    public MdCity getCity() {
-        return city;
-    }
-
-    public void setCity(MdCity city) {
-        this.city = city;
-    }
+    //============== GETTERS AND SETTERS
 
     public Integer getMinPrice() {
         return minPrice;
@@ -116,14 +136,6 @@ public class IndexMB implements Serializable{
         this.onlyImages = onlyImages;
     }
 
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
     public String getCityName() {
         return cityName;
     }
@@ -138,5 +150,21 @@ public class IndexMB implements Serializable{
 
     public void setMdSession(MdSessionMB mdSession) {
         this.mdSession = mdSession;
+    }
+
+    public LazyDataModel<Advert> getLazyAdverts() {
+        return lazyAdverts;
+    }
+
+    public void setLazyAdverts(LazyDataModel<Advert> lazyAdverts) {
+        this.lazyAdverts = lazyAdverts;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

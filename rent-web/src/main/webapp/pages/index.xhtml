@@ -18,8 +18,8 @@
             <p:messages autoUpdate="true"/>
 
             <p:outputPanel id="addList" layout="block">
-                <h2>Anunturi recente</h2>
-                <r:advertList adverts="#{indexMB.adverts}"/>
+                <h2><h:outputText value="#{indexMB.title}"/></h2>
+                <r:advertList adverts="#{indexMB.lazyAdverts}"/>
             </p:outputPanel>
 
         </h:form>

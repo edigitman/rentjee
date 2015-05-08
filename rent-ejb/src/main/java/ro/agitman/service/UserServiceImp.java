@@ -66,8 +66,7 @@ public class UserServiceImp implements UserService {
 
     public boolean update(User user, String confirmPwd, Boolean withPassword) {
 
-        String encripted = sha256(confirmPwd);
-        if(user.getPassword().equals(encripted))
+        if(user.getPassword().equals(sha256(confirmPwd)))
             return false;
 
         if(withPassword){
