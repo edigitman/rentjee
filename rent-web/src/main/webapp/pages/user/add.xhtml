@@ -35,6 +35,7 @@
                             <f:validateLength for="description" minimum="10" maximum="150"/>
                         </p:inputTextarea>
                         <h:outputText id="decriptionLeft"/>
+                        <p:tooltip for="description" value="Descrearea anuntului" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -47,6 +48,7 @@
                                            requiredMessage="Tip acomodare obligatoiu">
                             <f:selectItems value="#{mdSessionMB.types}"/>
                         </p:selectOneButton>
+                        <p:tooltip for="type" value="Tipul de anunt, Inchiriere sau Gazda, este obligatoriu" trackMouse="true"/>
 
                         <p:selectOneMenu id="accomodation" value="#{addMB.advert.buildingType}"
                                          styleClass="valign_middle" required="true"
@@ -55,6 +57,7 @@
                             <f:selectItem itemValue="#{null}" itemLabel="Tip Imobil"/>
                             <f:selectItems value="#{mdSessionMB.accomodations}"/>
                         </p:selectOneMenu>
+                        <p:tooltip for="accomodation" value="Tipul de imobil supus anuntului" trackMouse="true"/>
 
                         <p:outputLabel for="value" value="Valoare:" styleClass="margin_left_5"/>
                         <p:inputText id="value" size="3" style="text-align: right"
@@ -64,20 +67,24 @@
                                      validatorMessage="Valoarea trebuie sa fie numerica">
                             <f:convertNumber maxFractionDigits="2" maxIntegerDigits="4"/>
                         </p:inputText>
+                        <p:tooltip for="value" value="Pretul cerut pentru obiectul anuntului" trackMouse="true"/>
 
                         <p:outputLabel for="deposit" value="Garantie:" styleClass="margin_left_10"/>
                         <p:inputText id="deposit" size="3" styleClass="textAlign_right"
                                      value="#{addMB.advert.deposit}" autocomplete="false"/>
+                        <p:tooltip for="deposit" value="Farantia ceruta pentru obiectul anuntului" trackMouse="true"/>
 
                         <p:selectOneMenu id="curr" value="#{addMB.advert.currency}"
                                          converter="omnifaces.GenericEnumConverter"
                                          styleClass="valign_middle margin_left_10">
                             <f:selectItems value="#{mdSessionMB.currencies}"/>
                         </p:selectOneMenu>
+                        <p:tooltip for="curr" value="Moneda aplicata valorii si garantiei anuntului" trackMouse="true"/>
 
                         <p:outputLabel for="negot" value="Neg.: " styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="negot" styleClass="valign_middle"
                                                  value="#{addMB.advert.negotiable}"/>
+                        <p:tooltip for="negot" value="Bifati daca valoarea anuntului este negociabila" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -100,18 +107,21 @@
                             <f:selectItems value="#{mdSessionMB.cities}"/>
                             <p:ajax event="change" update="neighborhood"/>
                         </p:selectOneMenu>
+                        <p:tooltip for="city" value="Orasul in case se afla imobilul" trackMouse="true"/>
 
                         <p:outputLabel for="street" value="Strada:" styleClass="margin_left_10"/>
                         <p:inputText id="street" size="50" autocomplete="false"
                                      required="true"
                                      requiredMessage="Strada obligatorie"
                                      value="#{addMB.advert.address.street}"/>
+                        <p:tooltip for="street" value="Strada pe care se afla imobilul" trackMouse="true"/>
 
                         <p:outputLabel for="nr" value="Nr.:" styleClass="margin_left_10"/>
                         <p:inputText id="nr" size="2" autocomplete="false"
                                      required="true"
                                      requiredMessage="Numar obligatoriu"
                                      value="#{addMB.advert.address.nr}"/>
+                        <p:tooltip for="nr" value="Numarul la care se fla imobilul pe strada" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -131,6 +141,7 @@
                             <f:selectItem itemLabel="Alege cartier" itemValue="#{null}"/>
                             <f:selectItems value="#{mdSessionMB.getNeighborhoods(addMB.advert.address.city)}"/>
                         </p:selectOneMenu>
+                        <p:tooltip for="neighborhood" value="Cartierul unde se afla imobilul" trackMouse="true"/>
                     </div>
                     <h:panelGroup layout="block" id="detaliiAdresa" styleClass="ui-grid-col-8 textAlign_right">
                         <p:outputLabel for="bloc" value="Bloc: "/>
@@ -159,6 +170,7 @@
                             <p:ajax event="dateSelect" process="@this" update="untilDate"/>
                             <f:convertDateTime for="untilDate" pattern="dd/MMM/yyyy"/>
                         </p:calendar>
+                        <p:tooltip for="fromDate" value="Data incepand de la care este disponibil imobilul" trackMouse="true"/>
 
                         <h:outputText value=" pana: "/>
                         <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
@@ -166,6 +178,7 @@
                                     mindate="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/yyyy">
                             <f:convertDateTime for="untilDate" pattern="dd/MMM/yyyy"/>
                         </p:calendar>
+                        <p:tooltip for="untilDate" value="Data pana la care este disponibil imobilul" trackMouse="true"/>
 
                         <h:outputLabel value="Nedeterminat:" for="intervalUndefined" styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="intervalUndefined"
@@ -173,6 +186,7 @@
                                                  value="#{addMB.advert.interval.untilUndefined}">
                             <p:ajax process="@this" update="untilDate"/>
                         </p:selectBooleanCheckbox>
+                        <p:tooltip for="intervalUndefined" value="Obiectul anuntului este disponibil spre inchiriere pe perioada nedeterminata" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -188,7 +202,7 @@
                 <!-- image uploads -->
                 <p:outputPanel id="uploadPanel" styleClass="ui-grid-row margin_top_10">
                     <p:panelGrid id="table" columns="1">
-                        <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUpload}"
+                        <p:fileUpload id="fileUpload" fileUploadListener="#{fileUploadBean.handleFileUpload}"
                                       update=":uploadFormId:uploadPanel"
                                       mode="advanced"
                                       auto="true"
@@ -203,11 +217,13 @@
                                       fileLimitMessage="Maxim 5 poze"
                                       invalidFileMessage="Fisier invalid"
                                       invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
+                        <p:tooltip for="fileUpload" value="Adauga poze la anunt" trackMouse="true"/>
 
-                            <p:commandButton value="Sterge toate pozele"
-                                             update=":uploadFormId:uploadPanel" immediate="true"
-                                             rendered="#{not empty fileUploadBean.images}"
-                                             actionListener="#{fileUploadBean.clearAll()}"/>
+                        <p:commandButton id="deleteImages" value="Sterge toate pozele"
+                                         update=":uploadFormId:uploadPanel" immediate="true"
+                                         rendered="#{not empty fileUploadBean.images}"
+                                         actionListener="#{fileUploadBean.clearAll()}"/>
+                        <p:tooltip for="deleteImages" value="Sterge toate pozele pentru acest anunt" trackMouse="true"/>
 
                         <ui:repeat value="#{fileUploadBean.images}" var="img">
                             <p:panelGrid columns="1" styleClass="tableNoPadding displayInlineBlock margin_bottom_15 margin_right_15">
@@ -237,5 +253,14 @@
         </h:form>
     </ui:define>
 
+    // removes 'no files choosen' title from file input
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if (window.webkitURL)
+                $('input[type="file"]').attr('title', ' ');
+            else
+                $('input[type="file"]').attr('title', '');
+        });
+    </script>
 </ui:composition>
 </html>

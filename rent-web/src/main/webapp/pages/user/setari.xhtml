@@ -22,10 +22,12 @@
                 <p:outputLabel for="nume" value="Nume:"/>
                 <p:inputText id="nume" autocomplete="false"
                              value="#{userMB.user.name}"/>
+                <p:tooltip for="nume" value="Pseudonimul pentru cont, acest nume va aparea public in lista de anunturi" trackMouse="true"/>
 
                 <p:outputLabel for="telefon" value="Telefon:"/>
                 <p:inputMask id="telefon" autocomplete="false" required="true"
                              value="#{userMB.user.phone}" mask="0799.999.999"/>
+                <p:tooltip for="telefon" value="Numarul de contact, va aparea public in pagina de detalii a anuturilor" trackMouse="true"/>
 
                 <!--<p:outputLabel for="mobil" value="Mobil:"/>-->
                 <!--<p:inputMask id="mobil" autocomplete="false"-->

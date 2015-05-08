@@ -55,7 +55,6 @@ public class AddMB extends AbstractMB implements Serializable {
 
     private List<Advert> myAds = null;
     private List<Advert> favAds = null;
-    private List<Advert> dezAds = null;
 
     @PostConstruct
     public void init() {
@@ -112,9 +111,6 @@ public class AddMB extends AbstractMB implements Serializable {
             case 2:
                 favAds = advertService.findFavoritesForUser(user);
                 break;
-            case 3:
-                dezAds = advertService.findDezByUser(user);
-                break;
         }
     }
 
@@ -138,17 +134,6 @@ public class AddMB extends AbstractMB implements Serializable {
 
     public void setFavAds(List<Advert> favAds) {
         this.favAds = favAds;
-    }
-
-    public List<Advert> getDezAds() {
-        if (dezAds == null) {
-            loadAds(3);
-        }
-        return dezAds;
-    }
-
-    public void setDezAds(List<Advert> dezAds) {
-        this.dezAds = dezAds;
     }
 
     public Advert getAdvert() {
