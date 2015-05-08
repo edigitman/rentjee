@@ -41,5 +41,4 @@ public class MdBuildingType extends AbstractModel {
     public void setOrdering(Integer ordering) {
         this.ordering = ordering;
     }
-
 }

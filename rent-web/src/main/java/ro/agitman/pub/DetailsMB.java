@@ -103,6 +103,10 @@ public class DetailsMB extends AbstractMB {
         advertService.save(selected, null);
     }
 
+    public boolean isMyAdvert() {
+        return selected != null && selected.getUser().getId().equals(user.getId());
+    }
+
     public void confirmHuman(ActionEvent actionEvent){
         confirmHumanReq = true;
     }

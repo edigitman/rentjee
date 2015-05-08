@@ -44,5 +44,4 @@ public class MdNeighborhood extends AbstractModel {
     public void setCity(MdCity city) {
         this.city = city;
     }
-
 }

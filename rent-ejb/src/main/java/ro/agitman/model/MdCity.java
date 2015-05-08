@@ -58,9 +58,4 @@ public class MdCity extends AbstractModel {
     public void setNeighborhoods(List<MdNeighborhood> neighborhoods) {
         this.neighborhoods = neighborhoods;
     }
-
-    @Override
-    public String toString() {
-        return String.format("%s[id=%d]", getClass().getSimpleName(), getId());
-    }
 }

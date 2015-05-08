@@ -7,6 +7,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ro.agitman.AbstractMB;
+import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.DotariEnum;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
@@ -31,6 +32,7 @@ import java.util.List;
 @ViewScoped
 @URLMappings(mappings = {
         @URLMapping(id = "add", pattern = "/u/add", viewId = "/pages/user/add.xhtml?faces-redirect=true"),
+        @URLMapping(id = "edit", pattern = "/u/edit/#{addMB.id}", viewId = "/pages/user/add.xhtml?faces-redirect=true"),
         @URLMapping(id = "home", pattern = "/u/home", viewId = "/pages/user/home.xhtml?faces-redirect=true")
 })
 public class AddMB extends AbstractMB implements Serializable {
@@ -48,6 +50,7 @@ public class AddMB extends AbstractMB implements Serializable {
 
     private EnumSet<DotariEnum> dotariSelected = EnumSet.noneOf(DotariEnum.class);
     private Advert advert;
+    private Long id;
     private User user;
 
     private List<Advert> myAds = null;
@@ -56,13 +59,29 @@ public class AddMB extends AbstractMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        advert = advertService.init();
         user = userMB.getUser();
     }
 
     @URLAction(onPostback = false)
     public void load() {
         String viewId = PrettyContext.getCurrentInstance().getCurrentMapping().getId();
+
+        if ("add".equals(viewId)){
+            advert = advertService.init();
+        }
+
+        if ("edit".equals(viewId)) {
+            advert = advertService.findForId(id);
+            if (advert == null ||
+                    !advert.getUser().getId().equals(user.getId()) ||
+                    AdvertStatusEnum.REMOVED.equals(advert.getStatus()) ||
+                    AdvertStatusEnum.EXPIRED.equals(advert.getStatus())) {
+                advert = null;
+                errorPersistRedirect("Anunt invalid");
+                redirectPretty("add");
+            }
+        }
+
         if ("add".equals(viewId) && (user.getPhone() == null || "".equals(user.getPhone()))) {
             errorPersistRedirect("Trebuie sa iti adaugi numarul de telefon pentru a adauga un anunt");
             redirectPretty("settings");
@@ -171,5 +190,13 @@ public class AddMB extends AbstractMB implements Serializable {
 
     public void setFileUploadBean(FileUploadBean fileUploadBean) {
         this.fileUploadBean = fileUploadBean;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

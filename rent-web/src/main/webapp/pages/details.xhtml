@@ -4,7 +4,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:r="http://java.sun.com/jsf/composite/components">
+      xmlns:r="http://java.sun.com/jsf/composite/components"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="menu">
@@ -26,7 +28,11 @@
                     <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/>
                 </h:panelGrid>
 
-                <h:panelGrid columns="2" style="float: right" styleClass="displayInlineBlock">
+                <h:panelGrid columns="3" style="float: right" styleClass="displayInlineBlock">
+                    <pretty:link mappingId="edit" rendered="#{userMB.userLogged and detailsMB.isMyAdvert()}">
+                        <f:param value="#{detailsMB.selected.id}"/>
+                        <h:outputText value="editeaza"/>
+                    </pretty:link>
                     Status:
                     <h:outputText value="#{detailsMB.selected.status}"
                                   rendered="#{not detailsMB.isMine() or (detailsMB.selected.status ne 'ACTIVE' and detailsMB.selected.status ne 'RETIRED')}"/>
@@ -41,7 +47,6 @@
 
 
             <div class="ui-grid">
-
                 <div class="ui-grid-row">
 
                     <p:outputPanel id="contactPanel" layout="block" styleClass="ui-grid-col-12">

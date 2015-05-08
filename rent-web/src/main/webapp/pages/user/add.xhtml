@@ -42,7 +42,7 @@
                 <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
                         <p:selectOneButton id="type" value="#{addMB.advert.adType}"
-                                           converter="omnifaces.SelectItemsConverter"
+                                           converter="omnifaces.GenericEnumConverter"
                                            required="true"
                                            requiredMessage="Tip acomodare obligatoiu">
                             <f:selectItems value="#{mdSessionMB.types}"/>
@@ -70,7 +70,7 @@
                                      value="#{addMB.advert.deposit}" autocomplete="false"/>
 
                         <p:selectOneMenu id="curr" value="#{addMB.advert.currency}"
-                                         converter="omnifaces.SelectItemsConverter"
+                                         converter="omnifaces.GenericEnumConverter"
                                          styleClass="valign_middle margin_left_10">
                             <f:selectItems value="#{mdSessionMB.currencies}"/>
                         </p:selectOneMenu>
@@ -155,16 +155,16 @@
                 <div class="ui-grid-row margin_top_20">
                     <div class="ui-grid-col-12">
                         <h:outputText value=" Disponibil din: "/>
-                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/YYYY">
+                        <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/yyyy">
                             <p:ajax event="dateSelect" process="@this" update="untilDate"/>
-                            <f:convertDateTime for="untilDate" pattern="dd/MMM/YYYY"/>
+                            <f:convertDateTime for="untilDate" pattern="dd/MMM/yyyy"/>
                         </p:calendar>
 
                         <h:outputText value=" pana: "/>
                         <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
                                     disabled="#{addMB.advert.interval.untilUndefined}"
-                                    mindate="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/YYYY">
-                            <f:convertDateTime for="untilDate" pattern="dd/MMM/YYYY"/>
+                                    mindate="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/yyyy">
+                            <f:convertDateTime for="untilDate" pattern="dd/MMM/yyyy"/>
                         </p:calendar>
 
                         <h:outputLabel value="Nedeterminat:" for="intervalUndefined" styleClass="margin_left_10"/>
