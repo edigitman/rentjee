@@ -2,8 +2,10 @@ package ro.agitman.model;
 
 import ro.agitman.dto.AdTypeEnum;
 import ro.agitman.dto.AdvertStatusEnum;
+import ro.agitman.dto.CurrencyEnum;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,6 @@ public class Advert extends AbstractModel {
     private Address address;
     private MdBuildingType buildingType;
     private RentInterval interval;
-    private RentValue value;
     private RentInfo info;
     private List<EstimationUnit> estimationUnits;
     private List<Image> imageList = new ArrayList<>();
@@ -48,6 +49,12 @@ public class Advert extends AbstractModel {
     private List<RentFavorite> favorites;
     private AdvertStatusEnum status;
     private Date statusUpdate;
+    private Boolean withPictures;
+
+    private BigDecimal value;
+    private BigDecimal deposit;
+    private Boolean negotiable;
+    private CurrencyEnum currency;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -115,16 +122,6 @@ public class Advert extends AbstractModel {
 
     public void setInterval(RentInterval interval) {
         this.interval = interval;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "valueId")
-    public RentValue getValue() {
-        return value;
-    }
-
-    public void setValue(RentValue value) {
-        this.value = value;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -201,5 +198,45 @@ public class Advert extends AbstractModel {
 
     public void setStatus(AdvertStatusEnum status) {
         this.status = status;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    public BigDecimal getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(BigDecimal deposit) {
+        this.deposit = deposit;
+    }
+
+    public Boolean getNegotiable() {
+        return negotiable;
+    }
+
+    public void setNegotiable(Boolean negotiable) {
+        this.negotiable = negotiable;
+    }
+
+    public CurrencyEnum getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(CurrencyEnum currency) {
+        this.currency = currency;
+    }
+
+    public Boolean getWithPictures() {
+        return withPictures;
+    }
+
+    public void setWithPictures(Boolean withPictures) {
+        this.withPictures = withPictures;
     }
 }

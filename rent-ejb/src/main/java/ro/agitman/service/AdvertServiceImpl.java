@@ -38,7 +38,6 @@ public class AdvertServiceImpl implements AdvertService {
         advert.setAddress(new Address());
         advert.setInfo(new RentInfo());
         advert.setInterval(new RentInterval());
-        advert.setValue(new RentValue());
         return advert;
     }
 
@@ -50,6 +49,7 @@ public class AdvertServiceImpl implements AdvertService {
             advert.setCreateDate(new Date());
             advert.setStatusUpdate(new Date());
             advert.setStatus(AdvertStatusEnum.ACTIVE);
+            advert.setWithPictures(images != null && !images.isEmpty());
             advert = service.create(advert);
             imageService.uploadImages(advert, images);
             mailService.sendAdvertAdded(advert);
@@ -95,15 +95,14 @@ public class AdvertServiceImpl implements AdvertService {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
         Root<Advert> advert = cq.from(Advert.class);
-        Join<Advert, RentValue> value = advert.join("value");
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         // filter price
-        predicates.add(cb.between(value.<BigDecimal>get("value"), new BigDecimal(minPrice), new BigDecimal(maxPrice)));
+        predicates.add(cb.between(advert.<BigDecimal>get("value"), new BigDecimal(minPrice), new BigDecimal(maxPrice)));
 
         //filter images
         if (onlyImages)
-            predicates.add(cb.isNotEmpty(advert.<List>get("imageList")));
+            predicates.add(cb.isTrue(advert.<Boolean>get("withPictures")));
 
         //filter status
         List<AdvertStatusEnum> list = new ArrayList<>();

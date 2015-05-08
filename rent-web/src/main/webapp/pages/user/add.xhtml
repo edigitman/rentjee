@@ -58,7 +58,7 @@
 
                         <p:outputLabel for="value" value="Valoare:" styleClass="margin_left_5"/>
                         <p:inputText id="value" size="3" style="text-align: right"
-                                     value="#{addMB.advert.value.value}"
+                                     value="#{addMB.advert.value}"
                                      required="true"
                                      requiredMessage="Valoare obligatorie"
                                      validatorMessage="Valoarea trebuie sa fie numerica">
@@ -67,9 +67,9 @@
 
                         <p:outputLabel for="deposit" value="Garantie:" styleClass="margin_left_10"/>
                         <p:inputText id="deposit" size="3" styleClass="textAlign_right"
-                                     value="#{addMB.advert.value.deposit}"/>
+                                     value="#{addMB.advert.deposit}"/>
 
-                        <p:selectOneMenu id="curr" value="#{addMB.advert.value.currency}"
+                        <p:selectOneMenu id="curr" value="#{addMB.advert.currency}"
                                          converter="omnifaces.SelectItemsConverter"
                                          styleClass="valign_middle margin_left_10">
                             <f:selectItems value="#{mdSessionMB.currencies}"/>
@@ -77,7 +77,7 @@
 
                         <p:outputLabel for="negot" value="Neg.: " styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="negot" styleClass="valign_middle"
-                                                 value="#{addMB.advert.value.negotiable}"/>
+                                                 value="#{addMB.advert.negotiable}"/>
                     </div>
                 </div>
 

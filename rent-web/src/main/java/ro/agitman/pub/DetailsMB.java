@@ -108,7 +108,7 @@ public class DetailsMB extends AbstractMB {
     }
 
     public boolean hasDeposit() {
-        return selected != null && !new BigDecimal("0.00").equals(selected.getValue().getDeposit());
+        return selected != null && !new BigDecimal("0.00").equals(selected.getDeposit());
     }
 
     public boolean isMine() {
