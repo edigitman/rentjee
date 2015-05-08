@@ -29,7 +29,7 @@
                 <h:panelGrid columns="2" style="float: right" styleClass="displayInlineBlock">
                     Status:
                     <h:outputText value="#{detailsMB.selected.status}"
-                                  rendered="#{detailsMB.isMine() and (detailsMB.selected.status ne 'ACTIVE' and detailsMB.selected.status ne 'RETIRED')}"/>
+                                  rendered="#{not detailsMB.isMine() or (detailsMB.selected.status ne 'ACTIVE' and detailsMB.selected.status ne 'RETIRED')}"/>
                     <p:inputSwitch id="statusSwitch" value="#{detailsMB.active}"
                                    onLabel="activ" offLabel="inactiv" label="Status: "
 
@@ -75,18 +75,18 @@
                     <div class="ui-grid-col-12">
                         <p:outputLabel for="value" value="Pret: "/>
                         <h:outputText id="value" size="5" styleClass="textAlign_right"
-                                      value="#{detailsMB.selected.value.value}"/>
+                                      value="#{detailsMB.selected.value}"/>
 
                         <p:outputLabel for="deposit" value="Garantie: " styleClass="margin_left_10"
                                        rendered="#{detailsMB.hasDeposit()}"/>
                         <h:outputText id="deposit" size="5" styleClass="textAlign_right"
                                       rendered="#{detailsMB.hasDeposit()}"
-                                      value="#{detailsMB.selected.value.deposit}"/>
+                                      value="#{detailsMB.selected.deposit}"/>
 
                         <h:outputText id="curr" size="5" styleClass="textAlign_right"
-                                      value=" #{detailsMB.selected.value.currency}"/>
+                                      value=" #{detailsMB.selected.currency}"/>
 
-                        <h:outputText value=", Negociabil" rendered="#{detailsMB.selected.value.negotiable}"/>
+                        <h:outputText value=", Negociabil" rendered="#{detailsMB.selected.negotiable}"/>
                     </div>
                 </div>
 
