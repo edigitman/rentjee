@@ -15,7 +15,7 @@
     <p:messages autoUpdate="true" for="indexAds"/>
     <p:dataTable id="indexAds" var="ad" styleClass="adList"
                  value="#{cc.attrs.adverts}"
-                 paginator="true" rows="2" lazy="true" paginatorPosition="bottom"
+                 paginator="true" rows="10" lazy="true" paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}"
                  currentPageReportTemplate="Pagina {currentPage} din {totalPages}"
                  paginatorAlwaysVisible="false"
@@ -23,13 +23,15 @@
                  emptyMessage="Nu sunt anunturi"
                  rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
 
-        <p:column headerText="" style="width: 95px;">
-            <pretty:link mappingId="details">
+        <p:column headerText="" style="width: 95px; text-align: center">
+            <pretty:link id="detailsLink" mappingId="details">
                 <f:param value="#{ad.id}"/>
                 <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
                 <p:graphicImage value="/resources/images/home168.png" rendered="#{empty ad.imageList}"/>
             </pretty:link>
+            <p:tooltip for="detailsLink" value="Detalii anunt" trackMouse="true"/>
         </p:column>
+
 
         <p:column headerText="">
             <p:panelGrid columns="1"

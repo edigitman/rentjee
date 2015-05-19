@@ -32,7 +32,7 @@
                                   styleClass="fixCheckboxLable"
                                   value="#{cc.attrs.features}"
                                   converter="omnifaces.GenericEnumConverter">
-                <f:selectItems value="#{cc.attrs.ftClean}"/>
+                <f:selectItems value="#{cc.attrs.ftClean}" var="dot" itemLabel="#{dot.hName}"/>
             </p:selectManyCheckbox>
         </div>
     </p:outputPanel>
@@ -53,7 +53,7 @@
                                   styleClass="fixCheckboxLable"
                                   value="#{cc.attrs.features}"
                                   converter="omnifaces.GenericEnumConverter">
-                <f:selectItems value="#{cc.attrs.ftConfort}"/>
+                <f:selectItems value="#{cc.attrs.ftConfort}" var="dot" itemLabel="#{dot.hName}"/>
             </p:selectManyCheckbox>
         </div>
     </p:outputPanel>
@@ -61,8 +61,6 @@
                    rendered="#{not empty cc.attrs.ftConfort}">
         <div class="ui-grid-col-12"><hr/></div>
     </p:outputPanel>
-
-
 
 
     <p:outputPanel styleClass="ui-grid-row margin_top_5 width_98_pc"
@@ -75,7 +73,7 @@
                                   styleClass="fixCheckboxLable"
                                   value="#{cc.attrs.features}"
                                   converter="omnifaces.GenericEnumConverter">
-                <f:selectItems value="#{cc.attrs.ftKitchen}"/>
+                <f:selectItems value="#{cc.attrs.ftKitchen}" var="dot" itemLabel="#{dot.hName}"/>
             </p:selectManyCheckbox>
         </div>
     </p:outputPanel>
@@ -96,7 +94,7 @@
                                   styleClass="fixCheckboxLable"
                                   value="#{cc.attrs.features}"
                                   converter="omnifaces.GenericEnumConverter">
-                <f:selectItems value="#{cc.attrs.ftLiving}"/>
+                <f:selectItems value="#{cc.attrs.ftLiving}" var="dot" itemLabel="#{dot.hName}"/>
             </p:selectManyCheckbox>
         </div>
     </p:outputPanel>
@@ -117,7 +115,7 @@
                                   styleClass="fixCheckboxLable"
                                   value="#{cc.attrs.features}"
                                   converter="omnifaces.GenericEnumConverter">
-                <f:selectItems value="#{cc.attrs.ftExterior}"/>
+                <f:selectItems value="#{cc.attrs.ftExterior}" var="dot" itemLabel="#{dot.hName}"/>
             </p:selectManyCheckbox>
         </div>
     </p:outputPanel>
@@ -138,7 +136,7 @@
                                   styleClass="fixCheckboxLable"
                                   value="#{cc.attrs.features}"
                                   converter="omnifaces.GenericEnumConverter">
-                <f:selectItems value="#{cc.attrs.ftOthers}"/>
+                <f:selectItems value="#{cc.attrs.ftOthers}" var="dot" itemLabel="#{dot.hName}"/>
             </p:selectManyCheckbox>
         </div>
     </p:outputPanel>
@@ -149,8 +147,10 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            if('#{cc.attrs.readonly}' == 'true')
+            if('#{cc.attrs.readonly}' == 'true'){
                 $('.ui-chkbox div').css('display', 'none');
+                $(".searchCh-js div").css("display","");
+            }
         });
     </script>
 

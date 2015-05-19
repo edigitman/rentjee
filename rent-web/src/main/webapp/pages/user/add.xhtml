@@ -139,7 +139,9 @@
                                          converter="omnifaces.SelectItemsConverter"
                                          styleClass="valign_middle width_175 margin_left_5">
                             <f:selectItem itemLabel="Alege cartier" itemValue="#{null}"/>
-                            <f:selectItems value="#{mdSessionMB.getNeighborhoods(addMB.advert.address.city)}"/>
+                            <f:selectItems value="#{addMB.advert.address.city.neighborhoods}"
+                                           var="nbh"
+                                           itemLabel="#{nbh.name}"/>
                         </p:selectOneMenu>
                         <p:tooltip for="neighborhood" value="Cartierul unde se afla imobilul" trackMouse="true"/>
                     </div>
@@ -192,12 +194,12 @@
 
                 <!-- features -->
                 <r:features features="#{addMB.dotariSelected}"
-                            ftClean="#{addMB.getDotari(1)}"
-                            ftConfort="#{addMB.getDotari(2)}"
-                            ftKitchen="#{addMB.getDotari(3)}"
-                            ftLiving="#{addMB.getDotari(4)}"
-                            ftExterior="#{addMB.getDotari(5)}"
-                            ftOthers="#{addMB.getDotari(6)}"/>
+                            ftClean="#{addMB.getDotariEnum(1)}"
+                            ftConfort="#{addMB.getDotariEnum(2)}"
+                            ftKitchen="#{addMB.getDotariEnum(3)}"
+                            ftLiving="#{addMB.getDotariEnum(4)}"
+                            ftExterior="#{addMB.getDotariEnum(5)}"
+                            ftOthers="#{addMB.getDotariEnum(6)}"/>
 
                 <!-- image uploads -->
                 <p:outputPanel id="uploadPanel" styleClass="ui-grid-row margin_top_10">
@@ -247,7 +249,7 @@
             </p:outputPanel>
 
             <p:blockUI block="addPanel" trigger="saveBtn">
-                datele se salveaza
+                anunt in curs de procesare
                 <p:graphicImage value="/resources/images/loading.gif" styleClass="width_20 height_20"/>
             </p:blockUI>
         </h:form>

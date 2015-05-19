@@ -13,6 +13,7 @@ import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.User;
 import ro.agitman.pub.FileUploadBean;
+import ro.agitman.util.RentUtils;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -49,6 +50,7 @@ public class AddMB extends AbstractMB implements Serializable {
     private FileUploadBean fileUploadBean;
 
     private EnumSet<DotariEnum> dotariSelected = EnumSet.noneOf(DotariEnum.class);
+    private boolean firstAdd = true;
     private Advert advert;
     private Long id;
     private User user;
@@ -67,6 +69,10 @@ public class AddMB extends AbstractMB implements Serializable {
 
         if ("add".equals(viewId)){
             advert = advertService.init();
+            if (user.getPhone() == null || "".equals(user.getPhone())) {
+                errorPersistRedirect("Trebuie sa iti adaugi numarul de telefon pentru a adauga un anunt");
+                redirectPretty("settings");
+            }
         }
 
         if ("edit".equals(viewId)) {
@@ -78,29 +84,19 @@ public class AddMB extends AbstractMB implements Serializable {
                 advert = null;
                 errorPersistRedirect("Anunt invalid");
                 redirectPretty("add");
+            } else {
+                dotariSelected = RentUtils.loadDotari(advert);
+                firstAdd = true;
             }
-        }
-
-        if ("add".equals(viewId) && (user.getPhone() == null || "".equals(user.getPhone()))) {
-            errorPersistRedirect("Trebuie sa iti adaugi numarul de telefon pentru a adauga un anunt");
-            redirectPretty("settings");
         }
     }
 
     public void save() {
         advert.setUser(user);
-        advert.setDotari(mapDotari());
+        advert.setDotari(RentUtils.criptDotari(dotariSelected));
         advertService.save(advert, fileUploadBean.getImages());
         fileUploadBean.clearAll();
         redirectPretty("home");
-    }
-
-    private long mapDotari() {
-        long result = 1 << 2;
-        for (DotariEnum d : DotariEnum.values()) {
-            result = (result << 1) | (dotariSelected.contains(d) ? 1 : 0);
-        }
-        return result;
     }
 
     private void loadAds(int type) {
@@ -161,11 +157,24 @@ public class AddMB extends AbstractMB implements Serializable {
         return result;
     }
 
+    public EnumSet<DotariEnum> getDotariEnum(int cat){
+        EnumSet<DotariEnum> result = EnumSet.noneOf(DotariEnum.class);
+        for (DotariEnum dotare : DotariEnum.values()) {
+            if(dotare.getCat() == cat)
+                result.add(dotare);
+        }
+        return result;
+    }
+
     public EnumSet<DotariEnum> getDotariSelected() {
         return dotariSelected;
     }
 
     public void setDotariSelected(EnumSet<DotariEnum> dotariSelected) {
+        if (firstAdd) {
+            this.dotariSelected.clear();
+            firstAdd = false;
+        }
         this.dotariSelected.addAll(dotariSelected);
     }
 

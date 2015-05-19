@@ -12,6 +12,7 @@ import ro.agitman.dto.DotariEnum;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.User;
+import ro.agitman.util.RentUtils;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -59,7 +60,7 @@ public class DetailsMB extends AbstractMB {
         oldFav = advertService.isFav(user, selected);
         favNr = oldFav;
         if (selected != null) {
-            buildDotari();
+            dotari = RentUtils.loadDotari(selected);
             active = AdvertStatusEnum.ACTIVE.equals(selected.getStatus());
         }
     }
@@ -71,17 +72,6 @@ public class DetailsMB extends AbstractMB {
         } else {
             advertService.markFav(user, selected, false);
             favNr = oldFav = 0;
-        }
-    }
-
-    private void buildDotari() {
-        long dot = selected.getDotari();
-        if (dot != 0) {
-            for (DotariEnum d : DotariEnum.values()) {
-                if ((dot & d.getVal()) != 0) {
-                    dotari.add(d);
-                }
-            }
         }
     }
 
