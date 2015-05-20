@@ -1,0 +1,37 @@
+WildFly 8 administrator added.  Please make note of these credentials:
+
+   Username: adminbgiAvtD
+   Password: 5k1deP3UK4cG
+
+   run 'rhc port-forward lachirie' to access the web admin area on port 9990.
+
+
+   Making code changes
+Install the Git client for your operating system, and from your command line run
+
+git clone ssh://555af1d95973ca3fcc000155@lachirie-agitman.rhcloud.com/~/git/lachirie.git/
+cd lachirie/
+This will create a folder with the source code of your application. After making a change, add, commit, and push your changes.
+
+git add .
+git commit -m 'My changes'
+git push
+When you push changes the OpenShift server will report back its status on deploying your code. The server will run any of your configured deploy hooks and then restart the application.
+
+
+
+MySQL 5.5 database added.  Please make note of these credentials:
+
+       Root User: adminCmTW4RE
+   Root Password: RJvsExKmjYgY
+   Database Name: lachirie
+
+Connection URL: mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/
+
+You can manage your new MySQL database by also embedding phpmyadmin.
+The phpmyadmin username and password will be the same as the MySQL credentials above.
+
+Please make note of these MySQL credentials again:
+  Root User: adminCmTW4RE
+  Root Password: RJvsExKmjYgY
+URL: https://lachirie-agitman.rhcloud.com/phpmyadmin/
