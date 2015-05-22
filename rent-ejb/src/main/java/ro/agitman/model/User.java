@@ -3,7 +3,7 @@ package ro.agitman.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 @NamedQueries({@NamedQuery(name = User.FIND_BY_EMAIL, query = "select u from User u where u.email = :email"),
         @NamedQuery(name = User.FIND_BY_TOKEN, query = "select u from User u where u.regToken = :token"),
         @NamedQuery(name = User.FIND_BY_EMAIL_TOKEN, query = "select u from User u where u.regToken = :token and u.email = :email")
