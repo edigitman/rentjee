@@ -1,242 +1,242 @@
-CREATE DATABASE RENTEE
-  CHARACTER SET = UTF8;
+create database rentee
+  character set = utf8;
 
-use RENTEE;
+use rentee;
 
-CREATE TABLE `MD_BUILDING_TYPE` (
-  `ID`       BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `NAME`     VARCHAR(55)
-             CHARACTER SET UTF8 DEFAULT NULL,
-  `ORDERING` INT(2) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+create table `md_building_type` (
+  `id`       bigint(20) not null auto_increment,
+  `name`     varchar(55)
+             character set utf8 default null,
+  `ordering` int(2) default null,
+  primary key (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `MD_HEAT_SOURCE` (
-  `ID`       BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `NAME`     VARCHAR(55)
-             CHARACTER SET UTF8 DEFAULT NULL,
-  `ORDERING` INT(2) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+create table `md_heat_source` (
+  `id`       bigint(20) not null auto_increment,
+  `name`     varchar(55)
+             character set utf8 default null,
+  `ordering` int(2) default null,
+  primary key (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `MD_CITY` (
-  `ID`       BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `NAME`     VARCHAR(55)
-             CHARACTER SET UTF8 DEFAULT NULL,
-  `ORDERING` INT(2) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+create table `md_city` (
+  `id`       bigint(20) not null auto_increment,
+  `name`     varchar(55)
+             character set utf8 default null,
+  `ordering` int(2) default null,
+  primary key (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `MD_NEIGHBORHOOD` (
-  `ID`      BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `NAME`    VARCHAR(55)
-            CHARACTER SET UTF8 DEFAULT NULL,
-  `CITY_ID` BIGINT(20) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_MD_NEIGHBORHOOD_CITY_ID` (`CITY_ID`),
-  CONSTRAINT `FK_MD_NEIGHBORHOOD_CITY_ID` FOREIGN KEY (`CITY_ID`) REFERENCES `MD_CITY` (`ID`)
+create table `md_neighborhood` (
+  `id`      bigint(20) not null auto_increment,
+  `name`    varchar(55)
+            character set utf8 default null,
+  `city_id` bigint(20) default null,
+  primary key (`id`),
+  key `fk_md_neighborhood_city_id` (`city_id`),
+  constraint `fk_md_neighborhood_city_id` foreign key (`city_id`) references `md_city` (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `RT_ADDRESS` (
-  `ID`     BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `AP`     VARCHAR(10)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `BLOC`   VARCHAR(10)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `CP`     VARCHAR(10)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `ET`     VARCHAR(5)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `NR`     VARCHAR(5)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `SC`     VARCHAR(5)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `STREET` VARCHAR(50)
-           CHARACTER SET UTF8 DEFAULT NULL,
-  `CITYID` BIGINT(20) DEFAULT NULL,
-  `NBHID`  BIGINT(20) DEFAULT NULL,
-  `LAT`    DECIMAL(10, 7) DEFAULT NULL,
-  `LNG`    DECIMAL(10, 7) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_RT_ADDRESS_CITYID` (`CITYID`),
-  KEY `FK_RT_ADDRESS_NBHID` (`NBHID`),
-  CONSTRAINT `FK_RT_ADDRESS_CITYID` FOREIGN KEY (`CITYID`) REFERENCES `MD_CITY` (`ID`),
-  CONSTRAINT `FK_RT_ADDRESS_NBHID` FOREIGN KEY (`NBHID`) REFERENCES `MD_NEIGHBORHOOD` (`ID`)
+create table `rt_address` (
+  `id`     bigint(20) not null auto_increment,
+  `ap`     varchar(10)
+           character set utf8 default null,
+  `bloc`   varchar(10)
+           character set utf8 default null,
+  `cp`     varchar(10)
+           character set utf8 default null,
+  `et`     varchar(5)
+           character set utf8 default null,
+  `nr`     varchar(5)
+           character set utf8 default null,
+  `sc`     varchar(5)
+           character set utf8 default null,
+  `street` varchar(50)
+           character set utf8 default null,
+  `cityid` bigint(20) default null,
+  `nbhid`  bigint(20) default null,
+  `lat`    decimal(10, 7) default null,
+  `lng`    decimal(10, 7) default null,
+  primary key (`id`),
+  key `fk_rt_address_cityid` (`cityid`),
+  key `fk_rt_address_nbhid` (`nbhid`),
+  constraint `fk_rt_address_cityid` foreign key (`cityid`) references `md_city` (`id`),
+  constraint `fk_rt_address_nbhid` foreign key (`nbhid`) references `md_neighborhood` (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `RT_INFO` (
-  `ID`         BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `FURNISHED`  TINYINT(1) DEFAULT '0',
-  `MAXPERSONS` INT(2) DEFAULT NULL,
-  `NOBATHS`    INT(2) DEFAULT NULL,
-  `NOROOMS`    INT(2) DEFAULT NULL,
-  `SQRM`       DECIMAL(10, 3) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+create table `rt_info` (
+  `id`         bigint(20) not null auto_increment,
+  `furnished`  tinyint(1) default '0',
+  `maxpersons` int(2) default null,
+  `nobaths`    int(2) default null,
+  `norooms`    int(2) default null,
+  `sqrm`       decimal(10, 3) default null,
+  primary key (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =6
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =6
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `RT_INTERVAL` (
-  `ID`             BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `FROMDATE`       DATE DEFAULT NULL,
-  `FROMNOW`        TINYINT(1) DEFAULT '0',
-  `UNTILDATE`      DATE DEFAULT NULL,
-  `UNTILUNDEFINED` TINYINT(1) DEFAULT '0',
-  PRIMARY KEY (`ID`)
+create table `rt_interval` (
+  `id`             bigint(20) not null auto_increment,
+  `fromdate`       date default null,
+  `fromnow`        tinyint(1) default '0',
+  `untildate`      date default null,
+  `untilundefined` tinyint(1) default '0',
+  primary key (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `TRACERS` (
-  `ID`         BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `IP`         BIGINT(20) DEFAULT NULL,
-  `USER`       VARCHAR(50) DEFAULT NULL,
-  `URL`        INT(11) DEFAULT NULL,
-  `CITY`       INT(11) DEFAULT NULL,
-  `NBH`        INT(11) DEFAULT NULL,
-  `PRICEMIN`   DECIMAL(10, 2) DEFAULT NULL,
-  `PRICEMAX`   DECIMAL(10, 2) DEFAULT NULL,
-  `CREATEDATE` DATE DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+create table `tracers` (
+  `id`         bigint(20) not null auto_increment,
+  `ip`         bigint(20) default null,
+  `user`       varchar(50) default null,
+  `url`        int(11) default null,
+  `city`       int(11) default null,
+  `nbh`        int(11) default null,
+  `pricemin`   decimal(10, 2) default null,
+  `pricemax`   decimal(10, 2) default null,
+  `createdate` date default null,
+  primary key (`id`)
 )
-  ENGINE =MYISAM
-  AUTO_INCREMENT =100
-  DEFAULT CHARSET =LATIN1;
+  engine =myisam
+  auto_increment =100
+  default charset =latin1;
 
-CREATE TABLE `USERS` (
-  `ID`           BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `CONFIRMED_BL` TINYINT(1) DEFAULT '0',
-  `EMAIL`        VARCHAR(50) DEFAULT NULL,
-  `NAME`         VARCHAR(50)
-                 CHARACTER SET UTF8 DEFAULT NULL,
-  `PASSWORD`     VARCHAR(50) DEFAULT NULL,
-  `PHONE`        VARCHAR(20) DEFAULT NULL,
-  `PHONE2`       VARCHAR(20) DEFAULT NULL,
-  `PHONE3`       VARCHAR(20) DEFAULT NULL,
-  `REGTOKEN`     VARCHAR(60) DEFAULT NULL,
-  `ROLE`         VARCHAR(10) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `EMAIL` (`EMAIL`)
+create table `users` (
+  `id`           bigint(20) not null auto_increment,
+  `confirmed_bl` tinyint(1) default '0',
+  `email`        varchar(50) default null,
+  `name`         varchar(50)
+                 character set utf8 default null,
+  `password`     varchar(50) default null,
+  `phone`        varchar(20) default null,
+  `phone2`       varchar(20) default null,
+  `phone3`       varchar(20) default null,
+  `regtoken`     varchar(60) default null,
+  `role`         varchar(10) default null,
+  primary key (`id`),
+  unique key `email` (`email`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `RT_ADVERT` (
-  `ID`               BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `ADTYPE`           VARCHAR(255) DEFAULT NULL,
-  `DESCRIPTION`      VARCHAR(255) DEFAULT NULL,
-  `DOTARI`           BIGINT(20) DEFAULT NULL,
-  `PRIVATE_OWNED_BL` TINYINT(1) DEFAULT '0',
-  `STATUS`           VARCHAR(255) DEFAULT NULL,
-  `STATUSUPDATE`     DATE DEFAULT NULL,
-  `BUILDINGTYPEID`   BIGINT(20) DEFAULT NULL,
-  `ADUSR`            BIGINT(20) DEFAULT NULL,
-  `ADDRESSID`        BIGINT(20) DEFAULT NULL,
-  `INFOID`           BIGINT(20) DEFAULT NULL,
-  `INTERVALID`       BIGINT(20) DEFAULT NULL,
-  `CURRENCY`         VARCHAR(4) DEFAULT NULL,
-  `DEPOSIT`          DECIMAL(11, 2) DEFAULT NULL,
-  `NEGOTIABLE`       TINYINT(1) DEFAULT '0',
-  `VALUE`            DECIMAL(11, 2) DEFAULT NULL,
-  `WITHPICTURES`     TINYINT(1) DEFAULT '0',
-  PRIMARY KEY (`ID`),
-  KEY `FK_RT_ADVERT_ADUSR` (`ADUSR`),
-  KEY `FK_RT_ADVERT_BUILDINGTYPEID` (`BUILDINGTYPEID`),
-  KEY `FK_RT_ADVERT_ADDRESSID` (`ADDRESSID`),
-  KEY `FK_RT_ADVERT_INFOID` (`INFOID`),
-  KEY `FK_RT_ADVERT_INTERVALID` (`INTERVALID`),
-  CONSTRAINT `FK_RT_ADVERT_ADDRESSID` FOREIGN KEY (`ADDRESSID`) REFERENCES `RT_ADDRESS` (`ID`),
-  CONSTRAINT `FK_RT_ADVERT_ADUSR` FOREIGN KEY (`ADUSR`) REFERENCES `USERS` (`ID`),
-  CONSTRAINT `FK_RT_ADVERT_BUILDINGTYPEID` FOREIGN KEY (`BUILDINGTYPEID`) REFERENCES `MD_BUILDING_TYPE` (`ID`),
-  CONSTRAINT `FK_RT_ADVERT_INFOID` FOREIGN KEY (`INFOID`) REFERENCES `RT_INFO` (`ID`),
-  CONSTRAINT `FK_RT_ADVERT_INTERVALID` FOREIGN KEY (`INTERVALID`) REFERENCES `RT_INTERVAL` (`ID`)
+create table `rt_advert` (
+  `id`               bigint(20) not null auto_increment,
+  `adtype`           varchar(255) default null,
+  `description`      varchar(255) default null,
+  `dotari`           bigint(20) default null,
+  `private_owned_bl` tinyint(1) default '0',
+  `status`           varchar(255) default null,
+  `statusupdate`     date default null,
+  `buildingtypeid`   bigint(20) default null,
+  `adusr`            bigint(20) default null,
+  `addressid`        bigint(20) default null,
+  `infoid`           bigint(20) default null,
+  `intervalid`       bigint(20) default null,
+  `currency`         varchar(4) default null,
+  `deposit`          decimal(11, 2) default null,
+  `negotiable`       tinyint(1) default '0',
+  `value`            decimal(11, 2) default null,
+  `withpictures`     tinyint(1) default '0',
+  primary key (`id`),
+  key `fk_rt_advert_adusr` (`adusr`),
+  key `fk_rt_advert_buildingtypeid` (`buildingtypeid`),
+  key `fk_rt_advert_addressid` (`addressid`),
+  key `fk_rt_advert_infoid` (`infoid`),
+  key `fk_rt_advert_intervalid` (`intervalid`),
+  constraint `fk_rt_advert_addressid` foreign key (`addressid`) references `rt_address` (`id`),
+  constraint `fk_rt_advert_adusr` foreign key (`adusr`) references `users` (`id`),
+  constraint `fk_rt_advert_buildingtypeid` foreign key (`buildingtypeid`) references `md_building_type` (`id`),
+  constraint `fk_rt_advert_infoid` foreign key (`infoid`) references `rt_info` (`id`),
+  constraint `fk_rt_advert_intervalid` foreign key (`intervalid`) references `rt_interval` (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
-CREATE TABLE `RT_IMAGE` (
-  `ID`           BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `BYTES`        BIGINT(20) DEFAULT NULL,
-  `CREATEDAT`    DATE DEFAULT NULL,
-  `ETAG`         VARCHAR(255) DEFAULT NULL,
-  `FORMAT`       VARCHAR(50) DEFAULT NULL,
-  `HEIGHT`       BIGINT(6) DEFAULT NULL,
-  `PUBLICID`     VARCHAR(255) DEFAULT NULL,
-  `RESOURCETYPE` VARCHAR(255) DEFAULT NULL,
-  `SECUREURL`    VARCHAR(255) DEFAULT NULL,
-  `SIGNATURE`    VARCHAR(255) DEFAULT NULL,
-  `TYPE`         VARCHAR(50) DEFAULT NULL,
-  `URL`          VARCHAR(255) DEFAULT NULL,
-  `URLSMALL`     VARCHAR(255) DEFAULT NULL,
-  `VERSION`      BIGINT(10) DEFAULT NULL,
-  `WIDTH`        BIGINT(6) DEFAULT NULL,
-  `ADVERTID`     BIGINT(20) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_RT_IMAGE_ADVERTID` (`ADVERTID`),
-  CONSTRAINT `FK_RT_IMAGE_ADVERTID` FOREIGN KEY (`ADVERTID`) REFERENCES `RT_ADVERT` (`ID`)
+create table `rt_image` (
+  `id`           bigint(20) not null auto_increment,
+  `bytes`        bigint(20) default null,
+  `createdat`    date default null,
+  `etag`         varchar(255) default null,
+  `format`       varchar(50) default null,
+  `height`       bigint(6) default null,
+  `publicid`     varchar(255) default null,
+  `resourcetype` varchar(255) default null,
+  `secureurl`    varchar(255) default null,
+  `signature`    varchar(255) default null,
+  `type`         varchar(50) default null,
+  `url`          varchar(255) default null,
+  `urlsmall`     varchar(255) default null,
+  `version`      bigint(10) default null,
+  `width`        bigint(6) default null,
+  `advertid`     bigint(20) default null,
+  primary key (`id`),
+  key `fk_rt_image_advertid` (`advertid`),
+  constraint `fk_rt_image_advertid` foreign key (`advertid`) references `rt_advert` (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =LATIN1;
+  engine =innodb
+  auto_increment =1000
+  default charset =latin1;
 
-CREATE TABLE `RT_ESTIMATED_UNIT` (
-  `ID`        BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `CURRENCY`  VARCHAR(3) DEFAULT NULL,
-  `FROMDATE`  DATE DEFAULT NULL,
-  `NAME`      VARCHAR(100) DEFAULT NULL,
-  `TODATE`    DATE DEFAULT NULL,
-  `VALUE`     DECIMAL(15, 3) DEFAULT NULL,
-  `ADVERT_ID` BIGINT(20) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_RT_ESTIMATED_UNIT_ADVERT_ID` (`ADVERT_ID`),
-  CONSTRAINT `FK_RT_ESTIMATED_UNIT_ADVERT_ID` FOREIGN KEY (`ADVERT_ID`) REFERENCES `RT_ADVERT` (`ID`)
+create table `rt_estimated_unit` (
+  `id`        bigint(20) not null auto_increment,
+  `currency`  varchar(3) default null,
+  `fromdate`  date default null,
+  `name`      varchar(100) default null,
+  `todate`    date default null,
+  `value`     decimal(15, 3) default null,
+  `advert_id` bigint(20) default null,
+  primary key (`id`),
+  key `fk_rt_estimated_unit_advert_id` (`advert_id`),
+  constraint `fk_rt_estimated_unit_advert_id` foreign key (`advert_id`) references `rt_advert` (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =UTF8
-  COLLATE =UTF8_ROMANIAN_CI;
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
 
 
-CREATE TABLE `RT_FAVORITES` (
-  `ID`          BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `DATECREATED` DATETIME DEFAULT NULL,
-  `ADVERTID`    BIGINT(20) DEFAULT NULL,
-  `USERID`      BIGINT(20) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_RT_FAVORITES_ADVERTID` (`ADVERTID`),
-  KEY `FK_RT_FAVORITES_USERID` (`USERID`),
-  CONSTRAINT `FK_RT_FAVORITES_ADVERTID` FOREIGN KEY (`ADVERTID`) REFERENCES `RT_ADVERT` (`ID`),
-  CONSTRAINT `FK_RT_FAVORITES_USERID` FOREIGN KEY (`USERID`) REFERENCES `USERS` (`ID`)
+create table `rt_favorites` (
+  `id`          bigint(20) not null auto_increment,
+  `datecreated` datetime default null,
+  `advertid`    bigint(20) default null,
+  `userid`      bigint(20) default null,
+  primary key (`id`),
+  key `fk_rt_favorites_advertid` (`advertid`),
+  key `fk_rt_favorites_userid` (`userid`),
+  constraint `fk_rt_favorites_advertid` foreign key (`advertid`) references `rt_advert` (`id`),
+  constraint `fk_rt_favorites_userid` foreign key (`userid`) references `users` (`id`)
 )
-  ENGINE =INNODB
-  AUTO_INCREMENT =1000
-  DEFAULT CHARSET =LATIN1;
+  engine =innodb
+  auto_increment =1000
+  default charset =latin1;
 
