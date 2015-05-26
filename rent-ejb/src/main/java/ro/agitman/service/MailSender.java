@@ -1,5 +1,7 @@
 package ro.agitman.service;
 
+import com.sendgrid.SendGrid;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.mail.*;
@@ -13,41 +15,32 @@ import java.util.Properties;
 @Singleton
 public class MailSender {
 
-    private final String username = "lachirie@gmail.com";
-    private Properties props;
-    private MyAuthenticator authenticator;
+    private SendGrid sendgrid;
 
     @PostConstruct
     public void init() {
-        authenticator = new MyAuthenticator();
-        props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        // email: lachirie@gmail.com
+        // pwd: stailachirie
+
+        sendgrid = new SendGrid("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");
     }
 
     public void sendEmail(String to, String subject, String body) {
-        Session session = Session.getInstance(props, authenticator);
 
         try {
-            Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            SendGrid.Email email = new SendGrid.Email();
+            email.addTo(to);
+            email.addToName(to);
+            email.setReplyTo("lachirie@gmail.com");
+            email.setFrom("lachirie@gmail.com");
+            email.setFromName("La Chirie");
+            email.setSubject(subject);
+            email.setHtml(body);
 
-            message.setSubject(subject);
-            message.setContent(body, "text/html");
-
-            Transport.send(message);
-        } catch (MessagingException e) {
+            sendgrid.send(email);
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    class MyAuthenticator extends Authenticator {
-        protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication(username, "stailachirie");
         }
     }
 }
