@@ -128,17 +128,17 @@ create table `tracers` (
   default charset =latin1;
 
 create table `users` (
-  `id`           bigint(20) not null auto_increment,
-  `confirmed_bl` tinyint(1) default '0',
+  `id`           bigint(20)  not null auto_increment,
+  `confirmed_bl` tinyint(1)  default '0',
   `email`        varchar(50) default null,
-  `name`         varchar(50)
-                 character set utf8 default null,
+  `name`         varchar(50) character set utf8 default null,
   `password`     varchar(50) default null,
   `phone`        varchar(20) default null,
   `phone2`       varchar(20) default null,
   `phone3`       varchar(20) default null,
   `regtoken`     varchar(60) default null,
   `role`         varchar(10) default null,
+  `net_user_id`  bigint(20),
   primary key (`id`),
   unique key `email` (`email`)
 )
@@ -146,6 +146,19 @@ create table `users` (
   auto_increment =1000
   default charset =utf8
   collate =utf8_romanian_ci;
+
+create table `rt_net_user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `picurl` VARCHAR(100) NULL,
+  `tokenexp` DATETIME NULL,
+  `net_type` VARCHAR(10) NULL,
+  PRIMARY KEY (`id`)
+)
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
+
 
 create table `rt_advert` (
   `id`               bigint(20) not null auto_increment,

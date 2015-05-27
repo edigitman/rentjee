@@ -109,7 +109,7 @@ public class RegisterMB extends AbstractMB {
         StringBuilder url = new StringBuilder(root);
         url.append("secret=").append(secret);
         url.append("&response=").append(response);
-        url.append("&&remoteip=").append(ip);
+        url.append("&remoteip=").append(ip);
 
         URL obj = new URL(url.toString());
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();

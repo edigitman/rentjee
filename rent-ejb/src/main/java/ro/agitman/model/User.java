@@ -25,6 +25,7 @@ public class User extends AbstractModel {
     private String phone3;
     private String regToken;
     private boolean confirmedBl;
+    private NetUser netUser;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -109,5 +110,15 @@ public class User extends AbstractModel {
 
     public void setConfirmedBl(boolean confirmedBl) {
         this.confirmedBl = confirmedBl;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "net_user_id")
+    public NetUser getNetUser() {
+        return netUser;
+    }
+
+    public void setNetUser(NetUser netUser) {
+        this.netUser = netUser;
     }
 }
