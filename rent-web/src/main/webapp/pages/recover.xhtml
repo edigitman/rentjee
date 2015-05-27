@@ -24,11 +24,8 @@
                 <p:outputLabel for="email" value="Email: "/>
                 <p:inputText id="email" value="#{registerMB.user.email}"/>
 
-                <p:row>
-                    <p:column colspan="2">
-                        <!--<div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>-->
-                    </p:column>
-                </p:row>
+                <h:outputText/>
+                <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
 
                 <h:outputText/>
                 <p:commandButton value="Recupereaza" action="#{registerMB.recover()}" ajax="false"/>

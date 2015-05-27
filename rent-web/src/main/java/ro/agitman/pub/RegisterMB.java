@@ -57,17 +57,23 @@ public class RegisterMB extends AbstractMB {
 
     public String register() {
         //TODO call captcha validate
-        userService.register(user);
-        info("Cont create cu succes");
-        return "pretty:index";
+        if(validateCapthca()) {
+            userService.register(user);
+            info("Cont create cu succes");
+            return "pretty:index";
+        }
+        error("Confirmare ca nu esti om esuata");
+        return null;
     }
 
     public String recover() {
         //TODO call captcha validate
-        if (userService.recover(user.getEmail())){
-            info("Verifica emailul");
-        }else {
-            error("Eroare !");
+        if(validateCapthca()) {
+            if (userService.recover(user.getEmail())) {
+                info("Verifica emailul");
+            } else {
+                error("Eroare !");
+            }
         }
         return "pretty:index";
     }
