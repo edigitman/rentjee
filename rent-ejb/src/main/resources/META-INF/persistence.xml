@@ -19,6 +19,7 @@
         <class>ro.agitman.model.RentInterval</class>
         <class>ro.agitman.model.Tracers</class>
         <class>ro.agitman.model.User</class>
+        <class>ro.agitman.model.NetUser</class>
 
         <properties>
             <!--<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>-->

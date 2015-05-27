@@ -41,8 +41,14 @@
 
             <p:panelGrid columns="1">
 
-                <p:link  href="https://www.facebook.com/dialog/oauth?client_id=1078929275454685&amp;response_type=token&amp;granted_scopes=public_profile,email&amp;redirect_uri=http://lachirie.ro/callback/g"/>
+                <p:link href="https://www.facebook.com/dialog/oauth?client_id=1078929275454685&amp;response_type=token&amp;granted_scopes=public_profile,email&amp;redirect_uri=http://lachirie.ro/callback/g"
+                        value="facebook"/>
 
+                <p:link href="#{netLogin.buildGoogleLoginUrl()}"
+                        value="google"/>
+
+                <p:link href="#{netLogin.buildTwitterLoginUrl()}"
+                        value="twitter"/>
             </p:panelGrid>
 
             <p:outputPanel layout="block" styleClass="margin_top_10">
