@@ -41,13 +41,13 @@
 
             <p:panelGrid columns="1">
 
-                <p:link href="https://www.facebook.com/dialog/oauth?client_id=1078929275454685&amp;response_type=token&amp;granted_scopes=public_profile,email&amp;redirect_uri=http://lachirie.ro/callback/g"
+                <p:link href="#{netLogin.getAuthRequestLink('FACEBOOK')}"
                         value="facebook"/>
 
-                <p:link href="#{netLogin.buildGoogleLoginUrl()}"
+                <p:link href="#{netLogin.getAuthRequestLink('GOOGLE')}"
                         value="google"/>
 
-                <p:link href="#{netLogin.buildTwitterLoginUrl()}"
+                <p:link href="#{netLogin.getAuthRequestLink('TWITTER')}"
                         value="twitter"/>
             </p:panelGrid>
 

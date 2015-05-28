@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/template.xhtml">
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/frags/search.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="main">
+            <p:outputPanel id="addList" layout="block">
+                <h2>Despre noi:</h2>
+                <b>Acest site ofera o solutie sigura si eficienta pentru adaugarea anunturilor de inchiriere.</b>
+            </p:outputPanel>
+        </div>
+
+        <div class="technic">
+            Acest site este oferit cu ajutorul urmatoarelor tehnologii:
+
+            <a href="http://www.digitalocean.com/?refcode=f6c9cc25417a">
+                <img src="https://www.digitalocean.com/assets/images/logos-badges/png/DO_Proudly_Hosted_Badge_Blue-735d53ec.png"
+                     alt="digitalOcean"
+                     style="width: 100px"/>
+            </a>
+
+            <a href="http://www.wildfly.org/">
+                <img src="http://i0.wp.com/tuxtor.shekalug.org/wp-content/uploads/2015/02/wildfly-logo.png" alt="wildfly" style="width: 100px"/>
+            </a>
+
+            <a href="http://mysql.org">
+                mysql
+            </a>
+         </div>
+
+
+    </ui:define>
+
+</ui:composition>
+</html>

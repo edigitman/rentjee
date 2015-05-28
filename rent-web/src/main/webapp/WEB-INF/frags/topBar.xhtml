@@ -10,7 +10,8 @@
             <p:commandButton value="Adauga anunt" action="pretty:add"/>
             <p:commandButton value="Ajutor" action="pretty:help"/>
             <p:commandButton value="Contact" action="pretty:contact"/>
-            <h:outputText/>
+            <p:commandButton value="Despre" action="pretty:contact"/>
+
             <p:outputPanel layout="block" styleClass="displayInlineBlock">
                 <!--USer not logged in-->
                 <p:panelGrid columns="3" styleClass="noBorders" rendered="#{!userMB.userLogged}">

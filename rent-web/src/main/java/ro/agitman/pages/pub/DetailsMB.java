@@ -6,7 +6,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import ro.agitman.AbstractMB;
-import ro.agitman.pages.pub.account.UserMB;
+import ro.agitman.pages.account.UserMB;
 import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.DotariEnum;
 import ro.agitman.facade.AdvertService;
