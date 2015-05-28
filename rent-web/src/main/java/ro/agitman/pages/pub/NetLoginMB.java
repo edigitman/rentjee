@@ -1,4 +1,4 @@
-package ro.agitman.pub;
+package ro.agitman.pages.pub;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -18,7 +18,6 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import ro.agitman.AbstractMB;
 import ro.agitman.dto.FBValidateTokenResponse;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -28,7 +27,6 @@ import twitter4j.auth.RequestToken;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.servlet.http.Cookie;
 import java.io.BufferedReader;
 import java.io.IOException;

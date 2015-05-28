@@ -1,4 +1,4 @@
-package ro.agitman.pub;
+package ro.agitman.pages.pub;
 
 import com.ocpsoft.pretty.PrettyContext;
 import com.ocpsoft.pretty.faces.annotation.URLAction;

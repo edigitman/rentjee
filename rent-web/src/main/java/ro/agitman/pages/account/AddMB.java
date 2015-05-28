@@ -1,4 +1,4 @@
-package ro.agitman.account;
+package ro.agitman.pages.account;
 
 import com.ocpsoft.pretty.PrettyContext;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
@@ -12,7 +12,7 @@ import ro.agitman.dto.DotariEnum;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.User;
-import ro.agitman.pub.FileUploadBean;
+import ro.agitman.pages.pub.FileUploadBean;
 import ro.agitman.util.RentUtils;
 
 import javax.annotation.PostConstruct;

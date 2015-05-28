@@ -1,4 +1,4 @@
-package ro.agitman.account;
+package ro.agitman.pages.account;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;

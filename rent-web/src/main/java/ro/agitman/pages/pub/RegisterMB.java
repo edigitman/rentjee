@@ -1,4 +1,4 @@
-package ro.agitman.pub;
+package ro.agitman.pages.pub;
 
 import com.google.gson.Gson;
 import com.ocpsoft.pretty.PrettyContext;

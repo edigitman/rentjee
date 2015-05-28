@@ -1,4 +1,4 @@
-package ro.agitman.pub;
+package ro.agitman.pages.pub;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
