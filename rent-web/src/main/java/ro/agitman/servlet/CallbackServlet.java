@@ -22,10 +22,8 @@ public class CallbackServlet extends AbstractFacesServlet {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String,String[]> map = request.getParameterMap();
-        String pathInfo = request.getPathInfo(); // /{value}/test
+        String pathInfo = request.getPathInfo();
         NetLoginMB netLogin = getManagedBean("netLogin", getFacesContext(request,response), NetLoginMB.class);
-
-        findCookies(request);
 
         String[] pathParts = pathInfo.split("/");
 
@@ -37,8 +35,8 @@ public class CallbackServlet extends AbstractFacesServlet {
                 if (pathParts[1].contains("g") && map.containsKey("code") && map.containsKey("state")) {
                     netLogin.googleFlow(map.get("code")[0], map.get("state")[0]);
                 }
-                if (pathParts[1].contains("t") && map.containsKey("??")) {
-                    netLogin.twitterFlow(map.get("??")[0]);
+                if (pathParts[1].contains("t") && map.containsKey("oauth_token") && map.containsKey("oauth_verifier")) {
+                    netLogin.twitterFlow(map.get("oauth_token")[0], map.get("oauth_verifier")[0]);
                 }
             }
         } catch (FacebookException | TwitterException e) {

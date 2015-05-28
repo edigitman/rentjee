@@ -120,7 +120,9 @@ public class NetLoginMB extends AbstractMB {
      */
     public void facebookFlow(String oauthCode, final String state) throws FacebookException {
         facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
-
+        accessToken.getToken();
+        accessToken.getExpires();
+        facebook.getName();
     }
 
     /**
@@ -142,16 +144,20 @@ public class NetLoginMB extends AbstractMB {
      * ================ TWITTER FLOW
      */
 
-    public void twitterFlow(String token) throws TwitterException, IOException {
+    public void twitterFlow(String token, String verifier) throws TwitterException, IOException {
         // The factory instance is re-useable and thread safe.
         AccessToken accessToken = null;
         RequestToken requestToken = (RequestToken)getRequest().getSession().getAttribute("TWITTER_REQ_TOKEN");
+
         try {
             if (token.length() > 0) {
                 accessToken = twitter.getOAuthAccessToken(requestToken, token);
             } else {
                 accessToken = twitter.getOAuthAccessToken();
             }
+
+            twitter.getId();
+
         } catch (TwitterException te) {
             if (401 == te.getStatusCode()) {
                 System.out.println("Unable to get the access token.");
