@@ -6,7 +6,9 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import ro.agitman.AbstractMB;
 import ro.agitman.facade.AdvertService;
+import ro.agitman.facade.MailService;
 import ro.agitman.md.MdSessionMB;
 import ro.agitman.model.Advert;
 import ro.agitman.model.MdCity;
@@ -16,7 +18,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +32,20 @@ import java.util.Map;
         @URLMapping(id = "index", pattern = "/index", viewId = "/pages/index.jsf?faces-redirect=true"),
         @URLMapping(id = "contact", pattern = "/contact", viewId = "/pages/contact.jsf?faces-redirect=true"),
         @URLMapping(id = "help", pattern = "/help", viewId = "/pages/help.jsf?faces-redirect=true"),
-        @URLMapping(id = "abour", pattern = "/about", viewId = "/pages/help.jsf?faces-redirect=true"),
+        @URLMapping(id = "about", pattern = "/about", viewId = "/pages/help.jsf?faces-redirect=true"),
         @URLMapping(id = "search", pattern = "/index/#{indexMB.cityName}/#{indexMB.minPrice}/#{indexMB.maxPrice}/#{indexMB.onlyImages}", viewId = "/pages/index.jsf?faces-redirect=true")
 })
-public class IndexMB implements Serializable{
+public class IndexMB extends AbstractMB{
 
+    @EJB
+    private MailService mailService;
+
+    //contact parameters
+    private String contactEmail;
+    private String contactSubject;
+    private String contactMessage;
+
+    //search parameters
     private LazyDataModel<Advert> lazyAdverts;
     private String cityName = "-";
     private Integer minPrice = 100;
@@ -111,6 +121,16 @@ public class IndexMB implements Serializable{
         return 0L;
     }
 
+    public void sendContactEmail(){
+        if(validateCapthca()) {
+            mailService.sendContactEmail(contactEmail, contactSubject, contactMessage);
+            contactMessage = null;
+            contactSubject = null;
+            contactEmail = null;
+            info("Am primit mailul tau. Multumim.");
+        }
+    }
+
     //============== GETTERS AND SETTERS
 
     public Integer getMinPrice() {
@@ -167,5 +187,29 @@ public class IndexMB implements Serializable{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactSubject() {
+        return contactSubject;
+    }
+
+    public void setContactSubject(String contactSubject) {
+        this.contactSubject = contactSubject;
+    }
+
+    public String getContactMessage() {
+        return contactMessage;
+    }
+
+    public void setContactMessage(String contactMessage) {
+        this.contactMessage = contactMessage;
     }
 }

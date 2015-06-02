@@ -149,3 +149,11 @@ input.error, select.error, textarea.error {
 .fontSize_16{
     font-size: 16px;
 }
+
+.noPadding{
+    padding: 0 !important;
+}
+
+.padding_4{
+    padding: 4px !important;
+}

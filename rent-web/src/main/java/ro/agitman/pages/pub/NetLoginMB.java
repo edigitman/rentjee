@@ -16,6 +16,9 @@ import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import ro.agitman.AbstractMB;
 import ro.agitman.dto.NetTypeEnum;
+import ro.agitman.facade.UserService;
+import ro.agitman.model.NetUser;
+import ro.agitman.model.User;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -23,12 +26,13 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.servlet.http.Cookie;
+import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.URLDecoder;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -68,19 +72,22 @@ public class NetLoginMB extends AbstractMB {
     private static final String FACEBOOK_CLIENT_TOKEN = "6871c65216ce1479b5ed96048c7e3c11";
     private static final String FACEBOOK_APP_ID = "1078929275454685";
     private static final String FACEBOOK_APP_SECRET = "649624dada428322177646ade99ab56b";
-    private static final String FACEBOOK_CALLBACK_URI = "http://localhost:8080/callback/f/";
+    private static final String FACEBOOK_CALLBACK_URI = "http://lachirie.ro/callback/f/";
 
     private GoogleAuthorizationCodeFlow google;
     private Twitter twitter;
     private Facebook facebook;
 
+    @EJB
+    private UserService userService;
+
     @PostConstruct
     public void init() {
         google = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SCOPE).build();
         twitter = TwitterFactory.getSingleton();
-        try{
+        try {
             twitter.setOAuthConsumer(TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET);
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
         }
         facebook = new FacebookFactory().getInstance();
         facebook.setOAuthAppId(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET);
@@ -89,7 +96,7 @@ public class NetLoginMB extends AbstractMB {
 
     public String getAuthRequestLink(NetTypeEnum netTypeEnum) throws TwitterException {
         SecureRandom sr1 = new SecureRandom();
-        switch (netTypeEnum){
+        switch (netTypeEnum) {
             case FACEBOOK:
                 String stateTokenFb = "facebook;" + sr1.nextInt();
                 String fbAuthUrl = facebook.getOAuthAuthorizationURL(FACEBOOK_CALLBACK_URI, stateTokenFb);
@@ -103,9 +110,9 @@ public class NetLoginMB extends AbstractMB {
                 getRequest().getSession().setAttribute("GOOGLE_REQ_TOKEN", urlGoogle);
                 return urlGoogle.setRedirectUri(GOOGLE_CALLBACK_URI).setState(stateTokenGo).build();
             case TWITTER:
-                try{
+                try {
                     twitter.setOAuthConsumer(TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET);
-                }catch (IllegalStateException e){
+                } catch (IllegalStateException e) {
                 }
                 RequestToken requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URI);
                 getRequest().getSession().setAttribute("TWITTER_REQ_TOKEN", requestToken);
@@ -118,18 +125,21 @@ public class NetLoginMB extends AbstractMB {
     /**
      * ================ FACEBOOK FLOW
      */
-    public void facebookFlow(String oauthCode, final String state) throws FacebookException {
+    public void facebookFlow(String oauthCode, final String state) throws FacebookException, ServletException {
         facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
-        accessToken.getToken();
-        accessToken.getExpires();
-        facebook.getName();
+
+        //TODO validate state
+
+        registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), "" + accessToken.getExpires());
     }
 
     /**
      * ================ GOOGLE FLOW
      */
 
-    public void googleFlow(final String authCode, final String state) throws IOException{
+    public void googleFlow(final String authCode, final String state) throws IOException, ServletException {
+        //TODO validate state
+
         final GoogleTokenResponse response = google.newTokenRequest(authCode).setRedirectUri(GOOGLE_CALLBACK_URI).execute();
         final Credential credential = google.createAndStoreCredential(response, null);
         final HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(credential);
@@ -138,6 +148,35 @@ public class NetLoginMB extends AbstractMB {
         final HttpRequest request = requestFactory.buildGetRequest(url);
         request.getHeaders().setContentType("application/json");
         final String jsonIdentity = request.execute().parseAsString();
+
+        registerLogin(NetTypeEnum.GOOGLE, jsonIdentity, credential.getAccessToken(), "" + credential.getExpirationTimeMilliseconds());
+
+    }
+
+    private void registerLogin(NetTypeEnum netType, final String name, final String token, final String exp) throws ServletException {
+        User user = null;
+        NetUser netUser;
+        user = userService.findUserByEmail(name);
+        if (user != null) {
+            if (user.getPassword().equals(token)) {
+                getRequest().login(user.getName(), user.getPassword());
+                redirectPretty("home");
+            } else {
+                //TODO renew token
+            }
+        } else {
+            user = new User();
+            netUser = new NetUser();
+            user.setNetUser(netUser);
+            netUser.setNetTypeEnum(netType);
+            netUser.setTokenExp(exp);
+            user.setName(name);
+            user.setConfirmedBl(true);
+            user.setPassword(token);
+            userService.register(user);
+            getRequest().login(user.getName(), user.getPassword());
+            redirectPretty("home");
+        }
     }
 
     /**
@@ -146,8 +185,9 @@ public class NetLoginMB extends AbstractMB {
 
     public void twitterFlow(String token, String verifier) throws TwitterException, IOException {
         // The factory instance is re-useable and thread safe.
+        System.out.println("twitterFlow ");
         AccessToken accessToken = null;
-        RequestToken requestToken = (RequestToken)getRequest().getSession().getAttribute("TWITTER_REQ_TOKEN");
+        RequestToken requestToken = (RequestToken) getRequest().getSession().getAttribute("TWITTER_REQ_TOKEN");
 
         try {
             if (token.length() > 0) {
@@ -165,6 +205,10 @@ public class NetLoginMB extends AbstractMB {
                 te.printStackTrace();
             }
         }
+
+        System.out.println("facebookFlow - token " + accessToken.getToken());
+        System.out.println("facebookFlow - expires " + accessToken);
+        System.out.println("facebookFlow - name " + twitter.getId());
     }
 
     //=============== HELP METHODS

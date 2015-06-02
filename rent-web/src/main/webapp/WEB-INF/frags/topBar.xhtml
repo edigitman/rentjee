@@ -10,11 +10,13 @@
             <p:commandButton value="Adauga anunt" action="pretty:add"/>
             <p:commandButton value="Ajutor" action="pretty:help"/>
             <p:commandButton value="Contact" action="pretty:contact"/>
-            <p:commandButton value="Despre" action="pretty:contact"/>
+            <p:commandButton value="Despre" action="pretty:about"/>
 
             <p:outputPanel layout="block" styleClass="displayInlineBlock">
-                <!--USer not logged in-->
-                <p:panelGrid columns="3" styleClass="noBorders" rendered="#{!userMB.userLogged}">
+                <!--User not logged in-->
+                <p:panelGrid columns="3"
+                             columnClasses="noPadding,padding_4,noPadding"
+                             rendered="#{!userMB.userLogged}">
                     <pretty:link mappingId="home">
                         <h:outputText value="Conecteaza-te"/>
                     </pretty:link>
@@ -25,7 +27,9 @@
                 </p:panelGrid>
 
                 <!--User logged in-->
-                <p:panelGrid columns="3" styleClass="noBorders" rendered="#{userMB.userLogged}">
+                <p:panelGrid columns="3"
+                             columnClasses="noPadding,padding_4,noPadding"
+                             rendered="#{userMB.userLogged}">
                     <pretty:link mappingId="home">
                         <h:outputText value="Cont"/>
                     </pretty:link>

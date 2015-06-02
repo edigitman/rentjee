@@ -3,9 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/pages/template.xhtml">
+    <ui:define name="customHead">
+        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
+    </ui:define>
+
     <ui:define name="menu">
         <ui:include src="/WEB-INF/frags/search.xhtml"/>
     </ui:define>
@@ -18,7 +24,29 @@
 
             <p:outputPanel id="addList" layout="block">
                 <h2>Contact</h2>
-                <b>Email: lachirie@gmail.com</b>
+                <p>Formular contact:</p>
+
+
+                <p:panelGrid columns="2">
+                    <o:outputLabel for="email" value="Email:"/>
+                    <p:inputText id="email" value="#{indexMB.contactEmail}" required="true">
+                        <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                    </p:inputText>
+
+                    <o:outputLabel for="subject" value="Subiect:"/>
+                    <p:inputText id="subject"  value="#{indexMB.contactSubject}" required="true"/>
+
+                    <o:outputLabel for="description" value="Descriere:"/>
+                    <p:inputTextarea id="description"  value="#{indexMB.contactMessage}" maxlength="100"/>
+
+                    <h:outputText/>
+                    <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
+
+                    <h:outputText/>
+                    <p:commandButton value="Trimite email" action="#{indexMB.sendContactEmail}"/>
+                </p:panelGrid>
+
             </p:outputPanel>
 
         </h:form>
