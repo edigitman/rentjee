@@ -78,6 +78,10 @@ public class NetLoginMB extends AbstractMB {
     private Twitter twitter;
     private Facebook facebook;
 
+    private String facebookStateToken = null;
+    private String googleStateToken = null;
+    private RequestToken twitterRequestToken = null;
+
     @EJB
     private UserService userService;
 
@@ -85,10 +89,6 @@ public class NetLoginMB extends AbstractMB {
     public void init() {
         google = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SCOPE).build();
         twitter = TwitterFactory.getSingleton();
-        try {
-            twitter.setOAuthConsumer(TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET);
-        } catch (IllegalStateException e) {
-        }
         facebook = new FacebookFactory().getInstance();
         facebook.setOAuthAppId(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET);
         facebook.setOAuthPermissions("public_profile,email");
@@ -98,24 +98,21 @@ public class NetLoginMB extends AbstractMB {
         SecureRandom sr1 = new SecureRandom();
         switch (netTypeEnum) {
             case FACEBOOK:
-                String stateTokenFb = "facebook;" + sr1.nextInt();
-                String fbAuthUrl = facebook.getOAuthAuthorizationURL(FACEBOOK_CALLBACK_URI, stateTokenFb);
-                getRequest().getSession().setAttribute("FACEBOOK_REQ_TOKEN", fbAuthUrl);
-                getRequest().getSession().setAttribute("FACEBOOK_STATE_TOKEN", stateTokenFb);
-                return fbAuthUrl;
+                facebookStateToken = "facebook;" + sr1.nextInt();
+                return facebook.getOAuthAuthorizationURL(FACEBOOK_CALLBACK_URI, facebookStateToken);
             case GOOGLE:
-                String stateTokenGo = "google;" + sr1.nextInt();
+                googleStateToken = "google;" + sr1.nextInt();
                 final GoogleAuthorizationCodeRequestUrl urlGoogle = google.newAuthorizationUrl();
-                getRequest().getSession().setAttribute("GOOGLE_STATE_TOKEN", stateTokenGo);
-                getRequest().getSession().setAttribute("GOOGLE_REQ_TOKEN", urlGoogle);
-                return urlGoogle.setRedirectUri(GOOGLE_CALLBACK_URI).setState(stateTokenGo).build();
+                return urlGoogle.setRedirectUri(GOOGLE_CALLBACK_URI).setState(googleStateToken).build();
             case TWITTER:
                 try {
-                    twitter.setOAuthConsumer(TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET);
+                    if(twitterRequestToken == null){
+                        twitter.setOAuthConsumer(TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET);
+                        twitterRequestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URI);
+                    }
                 } catch (IllegalStateException e) {
+                    e.printStackTrace();
                 }
-                RequestToken requestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URI);
-                getRequest().getSession().setAttribute("TWITTER_REQ_TOKEN", requestToken);
                 return requestToken.getAuthorizationURL();
         }
         return "";
@@ -126,9 +123,12 @@ public class NetLoginMB extends AbstractMB {
      * ================ FACEBOOK FLOW
      */
     public void facebookFlow(String oauthCode, final String state) throws FacebookException, ServletException {
-        facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
+        if(facebookStateToken==null || !facebookStateToken.equals(state)){
+            //TODO invalid request
+            redirectPretty("home");
+        }
 
-        //TODO validate state
+        facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
 
         registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), accessToken.getExpires(), facebook.getName());
     }
@@ -138,7 +138,10 @@ public class NetLoginMB extends AbstractMB {
      */
 
     public void googleFlow(final String authCode, final String state) throws IOException, ServletException {
-        //TODO validate state
+        if(googleStateToken==null || !googleStateToken.equals(state)){
+            //TODO invalid request
+            redirectPretty("home");
+        }
 
         final GoogleTokenResponse response = google.newTokenRequest(authCode).setRedirectUri(GOOGLE_CALLBACK_URI).execute();
         final Credential credential = google.createAndStoreCredential(response, null);
@@ -165,6 +168,33 @@ public class NetLoginMB extends AbstractMB {
         registerLogin(NetTypeEnum.GOOGLE, map.get("id"), credential.getAccessToken(), credential.getExpirationTimeMilliseconds(), map.get("name"));
 
     }
+
+    /**
+     * ================ TWITTER FLOW
+     */
+
+    public void twitterFlow(String token, String verifier) throws TwitterException, IOException {
+        AccessToken accessToken = null;
+
+        try {
+            if (token.length() > 0 && twitterRequestToken != null) {
+                accessToken = twitter.getOAuthAccessToken(twitterRequestToken, token);
+            } else {
+                accessToken = twitter.getOAuthAccessToken();
+            }
+
+            registerLogin(NetTypeEnum.TWITTER, twitter.getId(), accessToken.getToken(), 0L, twitter.getId());
+
+        } catch (TwitterException te) {
+            if (401 == te.getStatusCode()) {
+                System.out.println("Unable to get the access token.");
+            } else {
+                te.printStackTrace();
+            }
+        }
+    }
+
+    //=============== HELP METHODS
 
     private void registerLogin(NetTypeEnum netType, final String userId, final String token, final Long exp, final String name) throws ServletException {
         User user = null;
@@ -194,53 +224,5 @@ public class NetLoginMB extends AbstractMB {
             getRequest().login(user.getEmail(), user.getPassword());
             redirectPretty("home");
         }
-    }
-
-    /**
-     * ================ TWITTER FLOW
-     */
-
-    public void twitterFlow(String token, String verifier) throws TwitterException, IOException {
-        // The factory instance is re-useable and thread safe.
-        AccessToken accessToken = null;
-        RequestToken requestToken = (RequestToken) getRequest().getSession().getAttribute("TWITTER_REQ_TOKEN");
-
-        try {
-            if (token.length() > 0) {
-                accessToken = twitter.getOAuthAccessToken(requestToken, token);
-            } else {
-                accessToken = twitter.getOAuthAccessToken();
-            }
-
-            twitter.getId();
-
-        } catch (TwitterException te) {
-            if (401 == te.getStatusCode()) {
-                System.out.println("Unable to get the access token.");
-            } else {
-                te.printStackTrace();
-            }
-        }
-    }
-
-    //=============== HELP METHODS
-
-    private Map<String, List<String>> splitQuery(String url) {
-        final Map<String, List<String>> queryPairs = new LinkedHashMap<>();
-        final String[] pairs = url.split("&");
-        try {
-            for (String pair : pairs) {
-                final int idx = pair.indexOf("=");
-                final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
-                if (!queryPairs.containsKey(key)) {
-                    queryPairs.put(key, new LinkedList<String>());
-                }
-                final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
-                queryPairs.get(key).add(value);
-            }
-        } catch (UnsupportedEncodingException e) {
-            return queryPairs;
-        }
-        return queryPairs;
     }
 }
