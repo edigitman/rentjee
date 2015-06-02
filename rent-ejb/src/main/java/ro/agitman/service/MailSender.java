@@ -4,10 +4,6 @@ import com.sendgrid.SendGrid;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 /**
  * Created by AlexandruG on 4/22/2015.
@@ -26,9 +22,7 @@ public class MailSender {
     }
 
     public void sendEmail(String to, String subject, String body) {
-
         try {
-
             SendGrid.Email email = new SendGrid.Email();
             email.addTo(to);
             email.addToName(to);

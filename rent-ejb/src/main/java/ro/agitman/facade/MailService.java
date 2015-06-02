@@ -19,4 +19,6 @@ public interface MailService {
 
     void sendNewPwd(User advert);
 
+    void sendContactEmail(String email, String subject, String description);
+
 }

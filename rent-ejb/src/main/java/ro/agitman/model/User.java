@@ -112,7 +112,7 @@ public class User extends AbstractModel {
         this.confirmedBl = confirmedBl;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "net_user_id")
     public NetUser getNetUser() {
         return netUser;

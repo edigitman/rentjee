@@ -36,6 +36,11 @@ public class MailServiceImpl implements MailService {
         mailSender.sendEmail(user.getEmail(), "Schima parola", buildNewPwd(user.getRegToken()));
     }
 
+    @Override
+    public void sendContactEmail(String email, String subject, String description) {
+        mailSender.sendEmail("lachirie@gmail.com", email + "_" + subject, description);
+    }
+
     private String buildConfirm(String token) {
         StringBuilder sb = new StringBuilder("Bine ai venit La chirie, <br/><br/>");
         sb.append("<p style='margin-left: 10px;'>Pentru a confirma inregistrarea acceseaza linkul: ");
