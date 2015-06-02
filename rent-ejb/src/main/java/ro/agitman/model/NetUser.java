@@ -13,7 +13,8 @@ public class NetUser extends AbstractModel {
 
     private Long id;
     private String picUrl;
-    private String tokenExp;
+    private String token;
+    private Long tokenExp;
     private NetTypeEnum netTypeEnum;
 
     @Override
@@ -35,11 +36,19 @@ public class NetUser extends AbstractModel {
         this.picUrl = picUrl;
     }
 
-    public String getTokenExp() {
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Long getTokenExp() {
         return tokenExp;
     }
 
-    public void setTokenExp(String tokenExp) {
+    public void setTokenExp(Long tokenExp) {
         this.tokenExp = tokenExp;
     }
 

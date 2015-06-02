@@ -52,7 +52,10 @@ public class RegisterMB extends AbstractMB {
         if(validateCapthca()) {
             userService.register(user);
             info("Cont create cu succes");
-            return "pretty:index";
+
+            //Login via the Servlet Context
+            getRequest().login(user.getEmail(), user.getPassword());
+            redirectPretty("home");
         }
         error("Confirmare ca nu esti om esuata");
         return null;

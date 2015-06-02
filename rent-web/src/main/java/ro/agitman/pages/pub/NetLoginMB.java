@@ -130,7 +130,7 @@ public class NetLoginMB extends AbstractMB {
 
         //TODO validate state
 
-        registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), "" + accessToken.getExpires());
+        registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), accessToken.getExpires(), facebook.getName());
     }
 
     /**
@@ -149,17 +149,31 @@ public class NetLoginMB extends AbstractMB {
         request.getHeaders().setContentType("application/json");
         final String jsonIdentity = request.execute().parseAsString();
 
-        registerLogin(NetTypeEnum.GOOGLE, jsonIdentity, credential.getAccessToken(), "" + credential.getExpirationTimeMilliseconds());
+        Gson gson=new Gson();
+        Map<String,String> map=new HashMap<String,String>();
+        map=(Map<String,String>) gson.fromJson(jsonIdentity, map.getClass());
+        /**
+         * "id": "xx",
+         * "name": "xx",
+         * "given_name": "xx",
+         * "family_name": "xx",
+         * "link": "xx",
+         * "picture": "xx",
+         * "gender": "xx",
+         * "locale": "xx"
+         */
+        registerLogin(NetTypeEnum.GOOGLE, map.get("id"), credential.getAccessToken(), credential.getExpirationTimeMilliseconds(), map.get("name"));
 
     }
 
-    private void registerLogin(NetTypeEnum netType, final String name, final String token, final String exp) throws ServletException {
+    private void registerLogin(NetTypeEnum netType, final String userId, final String token, final Long exp, final String name) throws ServletException {
         User user = null;
         NetUser netUser;
-        user = userService.findUserByEmail(name);
+        user = userService.findUserByEmail(userId);
         if (user != null) {
-            if (user.getPassword().equals(token)) {
-                getRequest().login(user.getName(), user.getPassword());
+            netUser = user.getNetUser();
+            if (netUser != null) {
+                getRequest().login(user.getEmail(), "netUser");
                 redirectPretty("home");
             } else {
                 //TODO renew token
@@ -170,11 +184,14 @@ public class NetLoginMB extends AbstractMB {
             user.setNetUser(netUser);
             netUser.setNetTypeEnum(netType);
             netUser.setTokenExp(exp);
+            netUser.setToken(token);
+            user.setEmail(userId);
             user.setName(name);
             user.setConfirmedBl(true);
-            user.setPassword(token);
+            user.setPassword("netUser");
+
             userService.register(user);
-            getRequest().login(user.getName(), user.getPassword());
+            getRequest().login(user.getEmail(), user.getPassword());
             redirectPretty("home");
         }
     }
@@ -185,7 +202,6 @@ public class NetLoginMB extends AbstractMB {
 
     public void twitterFlow(String token, String verifier) throws TwitterException, IOException {
         // The factory instance is re-useable and thread safe.
-        System.out.println("twitterFlow ");
         AccessToken accessToken = null;
         RequestToken requestToken = (RequestToken) getRequest().getSession().getAttribute("TWITTER_REQ_TOKEN");
 
@@ -205,10 +221,6 @@ public class NetLoginMB extends AbstractMB {
                 te.printStackTrace();
             }
         }
-
-        System.out.println("facebookFlow - token " + accessToken.getToken());
-        System.out.println("facebookFlow - expires " + accessToken);
-        System.out.println("facebookFlow - name " + twitter.getId());
     }
 
     //=============== HELP METHODS
