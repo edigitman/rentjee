@@ -200,13 +200,26 @@ public class NetLoginMB extends AbstractMB {
         User user = null;
         NetUser netUser;
         user = userService.findUserByEmail(userId);
+        //account already exists
         if (user != null) {
             netUser = user.getNetUser();
-            if (netUser != null) {
+            //users exists with a valid access token
+            if (netUser != null && netUser.getToken().equals(token)) {
                 getRequest().login(user.getEmail(), "netUser");
                 redirectPretty("home");
             } else {
                 //TODO renew token
+                switch(netType){
+                    case FACEBOOK:
+                        renewFacebookToken();
+                        break;
+                    case GOOGLE:
+                        renewGoogleToken();
+                        break;
+                    case TWITTER:
+                        renewTwitterToken();
+                        break;
+                }
             }
         } else {
             user = new User();
