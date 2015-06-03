@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
- 
+
 <server xmlns="urn:jboss:domain:2.2">
- 
+
     <extensions>
         <extension module="org.jboss.as.clustering.infinispan"/>
         <extension module="org.jboss.as.connector"/>
@@ -27,8 +27,8 @@
         <extension module="org.wildfly.extension.io"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
- 
- 
+
+
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -79,7 +79,7 @@
             </role-mapping>
         </access-control>
     </management>
- 
+
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:2.0">
             <console-handler name="CONSOLE">
@@ -96,6 +96,15 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
+
+            <!-- Application logger -->
+            <logger category="ro.agitman">
+                <level name="INFO"/>
+                <handlers>
+                    <handler name="FILE"/>
+                </handlers>
+            </logger>
+
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
@@ -402,7 +411,7 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:weld:2.0"/>
     </profile>
- 
+
     <interfaces>
         <interface name="management">
             <inet-address value="${jboss.bind.address.management:127.0.0.1}"/>
@@ -414,7 +423,7 @@
             <inet-address value="${jboss.bind.address.unsecure:127.0.0.1}"/>
         </interface>
     </interfaces>
- 
+
     <socket-binding-group name="standard-sockets" default-interface="public"
                           port-offset="${jboss.socket.binding.port-offset:0}">
         <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
@@ -428,7 +437,7 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
- 
+
     <deployments>
         <deployment name="rent-ear-1.0-SNAPSHOT.ear" runtime-name="rent-ear-1.0-SNAPSHOT.ear">
             <fs-archive path="D:\workspace\mine\rentjee\rent-ear\target\rent-ear-1.0-SNAPSHOT.ear"/>
