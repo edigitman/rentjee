@@ -45,6 +45,18 @@ public class UserServiceImp implements UserService {
         return u;
     }
 
+    public User registerNetUser(User u){
+        String encripted = sha256(u.getPassword());
+        if (encripted != null) {
+            u.setPassword(encripted);
+        }
+
+        u.setConfirmedBl(Boolean.TRUE);
+        u.setCreateDate(new Date());
+        u.setRole("USER");
+        u = service.create(u);
+        return u;
+    }
 
     public User create(User u) {
         return service.create(u);
@@ -66,7 +78,7 @@ public class UserServiceImp implements UserService {
 
     public boolean update(User user, String confirmPwd, Boolean withPassword) {
 
-        if(user.getPassword().equals(sha256(confirmPwd)))
+        if(!user.getPassword().equals(sha256(confirmPwd)) || user.getNetUser() != null)
             return false;
 
         if(withPassword){

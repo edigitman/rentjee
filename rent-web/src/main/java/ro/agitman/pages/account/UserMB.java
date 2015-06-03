@@ -49,7 +49,7 @@ public class UserMB extends AbstractMB {
     }
 
     public void update() {
-        if (password != null && !password.isEmpty()) {
+        if (password != null && !password.isEmpty() && user.getNetUser() == null) {
             if (newPassword != null) {
                 user.setRegToken(newPassword);
             }

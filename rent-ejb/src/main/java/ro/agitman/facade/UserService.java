@@ -12,6 +12,8 @@ public interface UserService {
 
 	User register(User u);
 
+	User registerNetUser(User u);
+
 	User create(User u);
 
 	boolean confirm(String registerConfirmToken);

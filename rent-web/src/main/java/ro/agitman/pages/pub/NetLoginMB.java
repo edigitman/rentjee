@@ -11,9 +11,12 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.gson.Gson;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ro.agitman.AbstractMB;
 import ro.agitman.dto.NetTypeEnum;
 import ro.agitman.facade.UserService;
@@ -31,10 +34,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by AlexandruG on 5/27/2015.
@@ -42,6 +46,8 @@ import java.util.*;
 @ManagedBean(name = "netLogin", eager = true)
 @SessionScoped
 public class NetLoginMB extends AbstractMB {
+
+    private static Logger logger = LoggerFactory.getLogger(NetLoginMB.class);
 
     /**
      * GOOGLE CONSTANTS
@@ -87,6 +93,7 @@ public class NetLoginMB extends AbstractMB {
 
     @PostConstruct
     public void init() {
+        logger.debug("Init social clients");
         google = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SCOPE).build();
         twitter = TwitterFactory.getSingleton();
         facebook = new FacebookFactory().getInstance();
@@ -113,7 +120,7 @@ public class NetLoginMB extends AbstractMB {
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
-                return requestToken.getAuthorizationURL();
+                return twitterRequestToken.getAuthorizationURL();
         }
         return "";
     }
@@ -129,6 +136,8 @@ public class NetLoginMB extends AbstractMB {
         }
 
         facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
+
+
 
         registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), accessToken.getExpires(), facebook.getName());
     }
@@ -173,7 +182,7 @@ public class NetLoginMB extends AbstractMB {
      * ================ TWITTER FLOW
      */
 
-    public void twitterFlow(String token, String verifier) throws TwitterException, IOException {
+    public void twitterFlow(String token, String verifier) throws TwitterException, IOException, ServletException {
         AccessToken accessToken = null;
 
         try {
@@ -183,7 +192,7 @@ public class NetLoginMB extends AbstractMB {
                 accessToken = twitter.getOAuthAccessToken();
             }
 
-            registerLogin(NetTypeEnum.TWITTER, twitter.getId(), accessToken.getToken(), 0L, twitter.getId());
+            registerLogin(NetTypeEnum.TWITTER, "" + twitter.getId(), accessToken.getToken(), 0L, "" + twitter.getId());
 
         } catch (TwitterException te) {
             if (401 == te.getStatusCode()) {
@@ -204,7 +213,7 @@ public class NetLoginMB extends AbstractMB {
         if (user != null) {
             netUser = user.getNetUser();
             //users exists with a valid access token
-            if (netUser != null && netUser.getToken().equals(token)) {
+            if (netUser != null) {
                 getRequest().login(user.getEmail(), "netUser");
                 redirectPretty("home");
             } else {
@@ -233,9 +242,18 @@ public class NetLoginMB extends AbstractMB {
             user.setConfirmedBl(true);
             user.setPassword("netUser");
 
-            userService.register(user);
-            getRequest().login(user.getEmail(), user.getPassword());
+            userService.registerNetUser(user);
+            getRequest().login(user.getEmail(), "netUser");
             redirectPretty("home");
         }
+    }
+
+    private void renewFacebookToken(){
+    }
+
+    private void renewGoogleToken(){
+    }
+
+    private void renewTwitterToken(){
     }
 }

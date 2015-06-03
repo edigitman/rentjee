@@ -109,6 +109,10 @@ input.error, select.error, textarea.error {
     margin-left: 10px;
 }
 
+.margin_left_80{
+    margin-left: 80px;
+}
+
 .margin_right_5{
     margin-right: 5px;
 }

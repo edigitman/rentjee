@@ -14,14 +14,14 @@
         <h3>Setari</h3>
 
         <h:form id="detailsForm">
+            <ui:param name="normalUser" value="#{empty userMB.user.netUser}"/>
             <p:messages id="msgs" autoUpdate="true" severity="info,error"/>
             <p:panelGrid columns="2">
-                <p:outputLabel for="email" value="Email:"/>
-                <h:outputText id="email" value="#{userMB.user.email}"/>
+                <p:outputLabel for="email" value="Email:" rendered="#{normalUser}"/>
+                <h:outputText id="email" value="#{userMB.user.email}" rendered="#{normalUser}"/>
 
                 <p:outputLabel for="nume" value="Nume:"/>
-                <p:inputText id="nume" autocomplete="false"
-                             value="#{userMB.user.name}"/>
+                <p:inputText id="nume" autocomplete="false" value="#{userMB.user.name}"/>
 
                 <p:tooltip for="nume" value="Pseudonimul pentru cont, acest nume va aparea public in lista de anunturi" trackMouse="true"/>
                 <p:tooltip for="telefon" value="Numarul de contact, va aparea public in pagina de detalii a anuturilor" trackMouse="true"/>
@@ -34,20 +34,21 @@
                 <!--<p:inputMask id="mobil" autocomplete="false"-->
                              <!--value="#{userMB.user.phone2}" mask="0799.999.999"/>-->
 
-                <h:outputLabel for="password" value="Parola noua: "/>
+                <h:outputLabel for="password" value="Parola noua: " rendered="#{normalUser}"/>
                 <p:password id="password" value="#{userMB.newPassword}" feedback="true"
+                            rendered="#{normalUser}"
                             promptLabel="Siguranta parola" weakLabel="Slaba"
                             goodLabel="Medie" strongLabel="Puternica" match="confirm"/>
 
-                <h:outputText value="Confirma parola noua: "/>
-                <p:password id="confirm" value="#{registerMB.confirm}"/>
+                <h:outputText value="Confirma parola noua: " rendered="#{not empty userMB.user.netUser}"/>
+                <p:password id="confirm" value="#{registerMB.confirm}" rendered="#{not empty userMB.user.netUser}"/>
 
             </p:panelGrid>
 
             <p:panelGrid columns="1" styleClass="margin_top_20">
                 <p:outputLabel for="parola" style="font-weight: bold"
-                               value="Parola veche pentru confirmare schimbari: * "/>
-                <p:password id="parola" value="#{userMB.password}"/>
+                               value="Parola veche pentru confirmare schimbari: * " rendered="#{normalUser}"/>
+                <p:password id="parola" value="#{userMB.password}" rendered="#{normalUser}"/>
 
                 <p:spacer width="10px"/>
                 <p:commandButton value="Salveaza"

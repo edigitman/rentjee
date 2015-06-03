@@ -11,6 +11,7 @@ import ro.agitman.model.User;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.ServletException;
 
 /**
  * Created by edi on 2/25/2015.
@@ -47,14 +48,15 @@ public class RegisterMB extends AbstractMB {
         }
     }
 
-    public String register() {
+    public String register() throws ServletException {
         //TODO call captcha validate
         if(validateCapthca()) {
+            String plainPwd = user.getPassword();
             userService.register(user);
             info("Cont create cu succes");
 
             //Login via the Servlet Context
-            getRequest().login(user.getEmail(), user.getPassword());
+            getRequest().login(user.getEmail(), plainPwd);
             redirectPretty("home");
         }
         error("Confirmare ca nu esti om esuata");
