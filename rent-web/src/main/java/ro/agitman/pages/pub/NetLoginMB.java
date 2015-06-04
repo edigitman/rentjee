@@ -137,7 +137,30 @@ public class NetLoginMB extends AbstractMB {
 
         facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
 
+        Map<String,String> map = new HashMap<>();
+        map.add("input_token", accessToken.getToken());
+        map.add("access_token", accessToken.getToken())
+        RawAPIResponse response = facebook.callGetAPI("/debug_token", map);
 
+        Gson gson = new Gson();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap = (Map<String, Object>) gson.fromJson(response.asString(), resultMap.getClass());
+        /*
+        *{ "data": {
+        *    "app_id": 000000000000000,
+        *    "application": "Social Cafe",
+        *    "expires_at": 1352419328,
+        *    "is_valid": true,
+        *    "issued_at": 1347235328,
+        *    "scopes": [
+        *        "email",
+        *        "publish_actions"
+        *    ],
+        *    "user_id": 1207059
+        *    }
+        *}
+        */
+        //TODO validate values from debug request
 
         registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), accessToken.getExpires(), facebook.getName());
     }
@@ -155,6 +178,18 @@ public class NetLoginMB extends AbstractMB {
         final GoogleTokenResponse response = google.newTokenRequest(authCode).setRedirectUri(GOOGLE_CALLBACK_URI).execute();
         final Credential credential = google.createAndStoreCredential(response, null);
         final HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(credential);
+
+        // VAlidate token
+        //https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=1/fFBGRNJru1FQd44AzqT3Zg
+        /*
+        *{
+        *   "audience":"8819981768.apps.googleusercontent.com",
+        *   "user_id":"123456789",
+        *   "scope":"profile email",
+        *   "expires_in":436
+        *}
+        */
+
         // Make an authenticated request
         final GenericUrl url = new GenericUrl(USER_INFO_URL);
         final HttpRequest request = requestFactory.buildGetRequest(url);
