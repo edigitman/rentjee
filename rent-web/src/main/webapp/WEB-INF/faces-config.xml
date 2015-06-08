@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+              version="2.2">
+
+
+    <!-- Declare properties files. Note that "messages1" for base-name really
+         means WEB-INF/classes/messages1.properties (src/messages1.properties in
+         the Eclipse project) -->
+    <application>
+        <locale-config>
+            <default-locale>ro</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+        <message-bundle>
+            messages
+        </message-bundle>
+    </application>
+
+    <lifecycle>
+        <phase-listener>
+            com.ocpsoft.pretty.application.MultiPageMessagesSupport
+        </phase-listener>
+    </lifecycle>
+
+</faces-config>
