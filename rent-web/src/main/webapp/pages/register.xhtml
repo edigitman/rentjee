@@ -18,30 +18,30 @@
 
     <ui:define name="content">
 
-        <p>Inregistreaza-te:</p>
+        <p>#{msgs['register.title']}</p>
         <h:form id="registerForm">
             <p:messages/>
             <h:panelGrid columns="2" id="registerPanel">
-                <p:outputLabel for="email" value="Email: "/>
+                <p:outputLabel for="email" value="#{msgs['register.email']}"/>
                 <p:inputText id="email" value="#{registerMB.user.email}"/>
 
-                <h:outputLabel for="password" value="Parola: "/>
+                <h:outputLabel for="password" value="#{msgs['register.pwd']}"/>
                 <p:password id="password" value="#{registerMB.user.password}" feedback="true"
-                            promptLabel="Siguranta parola" weakLabel="Slaba" required="true"
-                            goodLabel="Medie" strongLabel="Puternica" match="confirm"/>
+                            promptLabel="#{msgs['register.pwd.strength']}" weakLabel="#{msgs['register.pwd.weak']}" required="true"
+                            goodLabel="#{msgs['register.pwd.good']}" strongLabel="#{msgs['register.pwd.strong']}" match="confirm"/>
 
-                <h:outputText value="Confirma: "/>
+                <h:outputText value="#{msgs['register.confirm']}"/>
                 <p:password id="confirm" value="#{registerMB.confirm}" required="true"/>
 
                 <h:outputText/>
                 <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
 
                 <h:outputText/>
-                <p:commandButton id="registerBtn" value="Inregistrare" action="#{registerMB.register}" update="@form"/>
+                <p:commandButton id="registerBtn" value="#{msgs['register.submit']}" action="#{registerMB.register}" update="@form"/>
             </h:panelGrid>
 
             <p:blockUI block="registerPanel" trigger="registerBtn">
-                se creeaza cont
+                #{msgs['register.loading']}
                 <p:graphicImage value="/resources/images/loading.gif" width="15px" height="15px"/>
             </p:blockUI>
         </h:form>

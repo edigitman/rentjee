@@ -18,17 +18,17 @@
 
     <ui:define name="content">
 
-        <p>Ai uitat parola ?, Nicio problema</p>
+        <p>#{msgs['recover.title']}</p>
         <h:form>
             <h:panelGrid columns="2" id="registerForm">
-                <p:outputLabel for="email" value="Email: "/>
+                <p:outputLabel for="email" value="#{msgs['recover.email']}"/>
                 <p:inputText id="email" value="#{registerMB.user.email}"/>
 
                 <h:outputText/>
                 <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
 
                 <h:outputText/>
-                <p:commandButton value="Recupereaza" action="#{registerMB.recover()}" ajax="false"/>
+                <p:commandButton value="#{msgs['recover.submit']}" action="#{registerMB.recover()}" ajax="false"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

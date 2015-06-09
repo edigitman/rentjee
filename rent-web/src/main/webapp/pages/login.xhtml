@@ -13,28 +13,28 @@
 
     <ui:define name="content">
 
-        <h3>Autentificare:</h3>
+        <h3>#{msgs['login.title']}</h3>
         <h:form>
             <p:messages/>
             <h:panelGrid columns="2">
 
-                <p:outputLabel for="username" value="Email: "/>
+                <p:outputLabel for="username" value="#{msgs['login.email']}"/>
                 <p:inputText id="username" value="#{userMB.username}"
                              required="true" label="Email"
-                             requiredMessage="Completeaza andresa de email"
-                             validatorMessage="Email invalid">
+                             requiredMessage="#{msgs['login.email.req']}"
+                             validatorMessage="#{msgs['login.email.invalid']}">
                     <f:validateRegex
                             pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                 </p:inputText>
 
-                <p:outputLabel for="password" value="Password : "/>
+                <p:outputLabel for="password" value="#{msgs['login.pwd']}"/>
                 <p:password id="password" value="#{userMB.password}"
                             required="true"
-                            requiredMessage="Parola obligatorie"/>
+                            requiredMessage="#{msgs['login.pwd.req']}"/>
 
                 <h:outputText/>
                 <p:outputPanel layout="block">
-                    <p:commandButton value="Conecteaza-te" actionListener="#{userMB.login()}" update="@form"/>
+                    <p:commandButton value="#{msgs['login.submit']}" actionListener="#{userMB.login()}" update="@form"/>
                     <!--<p:commandButton value="Curata" type="reset"/>-->
                 </p:outputPanel>
             </h:panelGrid>
@@ -54,11 +54,11 @@
 
             <p:outputPanel layout="block" styleClass="margin_top_10">
                 <pretty:link mappingId="register">
-                    <h:outputText value="Inregistrare"/>
+                    <h:outputText value="#{msgs['login.register']}"/>
                 </pretty:link>
                 <br/><br/>
                 <pretty:link mappingId="recover">
-                    <h:outputText value="Recupereaza parola"/>
+                    <h:outputText value="#{msgs['login.recover']}"/>
                 </pretty:link>
             </p:outputPanel>
         </h:form>

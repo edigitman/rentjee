@@ -18,16 +18,16 @@
 
     <ui:define name="content">
 
-        <p>Reseteaza parola</p>
+        <p>#{msgs['recoverConfirm.title']}</p>
         <h:form>
             <h:panelGrid columns="2" id="registerForm">
 
-                <h:outputLabel for="password" value="Parola: "/>
+                <h:outputLabel for="password" value="#{msgs['recoverConfirm.pwd']}"/>
                 <p:password id="password" value="#{registerMB.user.password}" feedback="true"
-                            promptLabel="Siguranta parola" weakLabel="Slaba" required="true"
-                            goodLabel="Medie" strongLabel="Puternica" match="confirm"/>
+                            promptLabel="#{msgs['recoverConfirm.pwd.strength']}" weakLabel="#{msgs['recoverConfirm.pwd.weak']}" required="true"
+                            goodLabel="#{msgs['recoverConfirm.pwd.good']}" strongLabel="#{msgs['recoverConfirm.pwd.strong']}" match="confirm"/>
 
-                <h:outputText value="Confirma: "/>
+                <h:outputText value="#{msgs['recoverConfirm.confirm']}"/>
                 <p:password id="confirm" value="#{registerMB.confirm}" required="true"/>
 
                 <p:row>
@@ -37,7 +37,7 @@
                 </p:row>
 
                 <h:outputText/>
-                <p:commandButton value="Rseteaza" action="#{registerMB.recoverConfirm}" update="registerForm"/>
+                <p:commandButton value="#{msgs['recoverConfirm.submit']}" action="#{registerMB.recoverConfirm}" update="registerForm"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

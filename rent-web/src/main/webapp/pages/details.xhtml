@@ -23,7 +23,7 @@
                               rendered="#{userMB.userLogged and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.favNr eq 1)}">
                         <p:ajax event="rate" listener="#{detailsMB.makeFavorite()}" update="titleDiv" />
                     </p:rating>
-                    <h:outputText value="Anunt - "/>
+                    <h:outputText value="#{msgs['details.title']}"/>
                     <h:outputText id="type" value="#{detailsMB.selected.adType}"/>
                     <h:outputText id="accomodation" value="#{detailsMB.selected.buildingType.name}"/>
                 </h:panelGrid>
@@ -31,7 +31,7 @@
                 <h:panelGrid columns="3" style="float: right" styleClass="displayInlineBlock">
                     <pretty:link mappingId="edit" rendered="#{userMB.userLogged and detailsMB.isMyAdvert()}">
                         <f:param value="#{detailsMB.selected.id}"/>
-                        <h:outputText value="editeaza"/>
+                        <h:outputText value="#{msgs['details.edit']}"/>
                     </pretty:link>
                     Status:
                     <h:outputText value="#{detailsMB.selected.status}"
@@ -52,7 +52,7 @@
                     <p:outputPanel id="contactPanel" layout="block" styleClass="ui-grid-col-12">
                         <h:outputText value="Contact: "/>
 
-                        <p:commandButton value="arata cantact" id="ajax" update="contactPanel"
+                        <p:commandButton value="#{msgs['details.showContact']}" id="ajax" update="contactPanel"
                                          rendered="#{!detailsMB.confirmHumanReq}"
                                          actionListener="#{detailsMB.confirmHuman}" />
 
@@ -78,11 +78,11 @@
 
                 <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
-                        <p:outputLabel for="value" value="Pret: "/>
+                        <p:outputLabel for="value" value="#{msgs['details.price']}"/>
                         <h:outputText id="value" size="5" styleClass="textAlign_right"
                                       value="#{detailsMB.selected.value}"/>
 
-                        <p:outputLabel for="deposit" value="Garantie: " styleClass="margin_left_10"
+                        <p:outputLabel for="deposit" value="#{msgs['details.deposit']}" styleClass="margin_left_10"
                                        rendered="#{detailsMB.hasDeposit()}"/>
                         <h:outputText id="deposit" size="5" styleClass="textAlign_right"
                                       rendered="#{detailsMB.hasDeposit()}"
@@ -91,13 +91,13 @@
                         <h:outputText id="curr" size="5" styleClass="textAlign_right"
                                       value=" #{detailsMB.selected.currency}"/>
 
-                        <h:outputText value=", Negociabil" rendered="#{detailsMB.selected.negotiable}"/>
+                        <h:outputText value="#{msgs['details.negotiable']}" rendered="#{detailsMB.selected.negotiable}"/>
                     </div>
                 </div>
 
                 <div class="ui-grid-row margin_top_10" >
                     <div class="ui-grid-col-12">
-                        <p:outputLabel value="Adresa:"/>
+                        <p:outputLabel value="#{msgs['details.address']}"/>
                     </div>
                 </div>
 
@@ -105,10 +105,10 @@
                     <div class="ui-grid-col-12">
                         <h:outputText value="#{detailsMB.selected.address.city.name}"/>
 
-                        <p:outputLabel for="street" value="Strada:" styleClass="margin_left_10"/>
+                        <p:outputLabel for="street" value="#{msgs['details.street']}" styleClass="margin_left_10"/>
                         <h:outputText id="street" size="40" value="#{detailsMB.selected.address.street}"/>
 
-                        <p:outputLabel for="nr" value="Nr.:" styleClass="margin_left_10"/>
+                        <p:outputLabel for="nr" value="#{msgs['details.number']}" styleClass="margin_left_10"/>
                         <h:outputText id="nr" size="2" value="#{detailsMB.selected.address.nr}"/>
                     </div>
                 </div>
