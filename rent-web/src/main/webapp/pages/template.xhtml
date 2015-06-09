@@ -9,7 +9,7 @@
 
 <h:head>
     <h:outputStylesheet name="rent.css" library="css"/>
-    <title>la Chirie</title>
+    <title>#{msgs.title}</title>
     <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/home168.png']}"/>
     <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=ro'></script>
 
@@ -51,7 +51,7 @@
         <p:layoutUnit id="westLayout" position="west" resizable="false" size="180" style="border: none">
             <h2>
                 <pretty:link mappingId="index">
-                    <h:outputText value="La Chirie"/>
+                    <h:outputText value="#{msgs.title}"/>
                 </pretty:link>
             </h2>
             <ui:insert name="menu">
@@ -84,5 +84,21 @@
         })();
     </script>
 
+
+    <!--/Start async trafic.ro/-->
+    <script type="text/javascript" id="trfc_trafic_script">
+        //<![CDATA[
+        t_rid = 'lachirie-ro';
+        (function(){ t_js_dw_time=new Date().getTime();
+            t_js_load_src=((document.location.protocol == 'http:')?'http://storage.':'https://secure.')+'trafic.ro/js/trafic.js?tk='+(Math.pow(10,16)*Math.random())+'&t_rid='+t_rid;
+            if (document.createElement && document.getElementsByTagName && document.insertBefore) {
+                t_as_js_en=true;var sn = document.createElement('script');sn.type = 'text/javascript';sn.async = true; sn.src = t_js_load_src;
+                var psn = document.getElementsByTagName('script')[0];psn.parentNode.insertBefore(sn, psn); } else {
+                document.write(unescape('%3Cscri' + 'pt type="text/javascript" '+'src="'+t_js_load_src+';"%3E%3C/sc' + 'ript%3E')); }})();
+        //]]>
+    </script>
+    <noscript><p><a href="http://www.trafic.ro/statistici/lachirie.ro"><img alt="lachirie.ro" src="http://log.trafic.ro/cgi-bin/pl.dll?rid=lachirie-ro" /></a>
+        <a href="http://www.trafic.ro/">Web analytics</a></p></noscript>
+    <!--/End async trafic.ro/-->
 </h:body>
 </html>

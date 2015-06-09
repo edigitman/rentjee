@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
 
 <composite:interface>
     <composite:attribute name="features" />
@@ -20,12 +20,12 @@
 
 <composite:implementation>
 
-    <h3>Dotari:</h3>
+    <h3><h:outputText value="#{msgs['feat.title']}"/></h3>
 
     <p:outputPanel styleClass="ui-grid-row width_98_pc"
                     rendered="#{not empty cc.attrs.ftClean}">
         <div class="ui-grid-col-2">
-            <p>Curatenie</p>
+            <p><h:outputText value="#{msgs['feat.clean']}"/></p>
         </div>
         <div class="ui-grid-col-10">
             <p:selectManyCheckbox id="gridClean" layout="grid" columns="4"
@@ -46,7 +46,7 @@
     <p:outputPanel styleClass="ui-grid-row margin_top_5 width_98_pc"
                    rendered="#{not empty cc.attrs.ftConfort}">
         <div class="ui-grid-col-2">
-            <p>Confort</p>
+            <p><h:outputText value="#{msgs['feat.comfort']}"/></p>
         </div>
         <div class="ui-grid-col-10">
             <p:selectManyCheckbox id="gridConfort" layout="grid" columns="4"
@@ -66,7 +66,7 @@
     <p:outputPanel styleClass="ui-grid-row margin_top_5 width_98_pc"
                    rendered="#{not empty cc.attrs.ftKitchen}">
         <div class="ui-grid-col-2">
-            <p>Bucatarie</p>
+            <p><h:outputText value="#{msgs['feat.kitchen']}"/></p>
         </div>
         <div class="ui-grid-col-10">
             <p:selectManyCheckbox id="gridKitchen" layout="grid" columns="4"
@@ -87,7 +87,7 @@
     <p:outputPanel styleClass="ui-grid-row margin_top_5 width_98_pc"
                    rendered="#{not empty cc.attrs.ftLiving}">
         <div class="ui-grid-col-2">
-            <p>Living</p>
+            <p><h:outputText value="#{msgs['feat.living']}"/></p>
         </div>
         <div class="ui-grid-col-7">
             <p:selectManyCheckbox id="gridLiving" layout="grid" columns="4"
@@ -108,7 +108,7 @@
     <p:outputPanel styleClass="ui-grid-row margin_top_5 width_98_pc"
                    rendered="#{not empty cc.attrs.ftExterior}">
         <div class="ui-grid-col-2">
-            <p>Exterior</p>
+            <p><h:outputText value="#{msgs['feat.exterior']}"/></p>
         </div>
         <div class="ui-grid-col-10">
             <p:selectManyCheckbox id="gridExterior" layout="grid" columns="4"
@@ -129,7 +129,7 @@
     <p:outputPanel styleClass="ui-grid-row margin_top_5 width_98_pc"
                    rendered="#{not empty cc.attrs.ftOthers}">
         <div class="ui-grid-col-2">
-            <p>Altele</p>
+            <p><h:outputText value="#{msgs['feat.misc']}"/></p>
         </div>
         <div class="ui-grid-col-7">
             <p:selectManyCheckbox id="gridOthers" layout="grid" columns="4"

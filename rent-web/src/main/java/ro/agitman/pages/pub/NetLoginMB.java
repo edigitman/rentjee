@@ -62,6 +62,7 @@ public class NetLoginMB extends AbstractMB {
     private static final Collection<String> SCOPE = Arrays.asList("https://www.googleapis.com/auth/userinfo.profile;https://www.googleapis.com/auth/userinfo.email".split(";"));
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
     private static final String USER_INFO_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
+    private static final String TOKEN_INFO_URL = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=1/";
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     // end google authentication constants
 
@@ -113,7 +114,7 @@ public class NetLoginMB extends AbstractMB {
                 return urlGoogle.setRedirectUri(GOOGLE_CALLBACK_URI).setState(googleStateToken).build();
             case TWITTER:
                 try {
-                    if(twitterRequestToken == null){
+                    if (twitterRequestToken == null) {
                         twitter.setOAuthConsumer(TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET);
                         twitterRequestToken = twitter.getOAuthRequestToken(TWITTER_CALLBACK_URI);
                     }
@@ -130,21 +131,21 @@ public class NetLoginMB extends AbstractMB {
      * ================ FACEBOOK FLOW
      */
     public void facebookFlow(String oauthCode, final String state) throws FacebookException, ServletException {
-        if(facebookStateToken==null || !facebookStateToken.equals(state)){
+        if (facebookStateToken == null || !facebookStateToken.equals(state)) {
             //TODO invalid request
             redirectPretty("home");
         }
 
         facebook4j.auth.AccessToken accessToken = facebook.getOAuthAccessToken(oauthCode);
 
-        Map<String,String> map = new HashMap<>();
-        map.add("input_token", accessToken.getToken());
-        map.add("access_token", accessToken.getToken())
-        RawAPIResponse response = facebook.callGetAPI("/debug_token", map);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("input_token", accessToken.getToken());
+//        map.put("access_token", accessToken.getToken());
+//        RawAPIResponse response = facebook.callGetAPI("/debug_token", map);
 
-        Gson gson = new Gson();
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap = (Map<String, Object>) gson.fromJson(response.asString(), resultMap.getClass());
+//        Gson gson = new Gson();
+//        Map<String, Object> resultMap = new HashMap<>();
+//        resultMap = (Map<String, Object>) gson.fromJson(response.asString(), resultMap.getClass());
         /*
         *{ "data": {
         *    "app_id": 000000000000000,
@@ -161,6 +162,9 @@ public class NetLoginMB extends AbstractMB {
         *}
         */
         //TODO validate values from debug request
+//        if (!FACEBOOK_APP_ID.equals(resultMap.get("app_id"))) {
+//            return;
+//        }
 
         registerLogin(NetTypeEnum.FACEBOOK, facebook.getId(), accessToken.getToken(), accessToken.getExpires(), facebook.getName());
     }
@@ -170,7 +174,7 @@ public class NetLoginMB extends AbstractMB {
      */
 
     public void googleFlow(final String authCode, final String state) throws IOException, ServletException {
-        if(googleStateToken==null || !googleStateToken.equals(state)){
+        if (googleStateToken == null || !googleStateToken.equals(state)) {
             //TODO invalid request
             redirectPretty("home");
         }
@@ -179,7 +183,7 @@ public class NetLoginMB extends AbstractMB {
         final Credential credential = google.createAndStoreCredential(response, null);
         final HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(credential);
 
-        // VAlidate token
+        // Validate token
         //https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=1/fFBGRNJru1FQd44AzqT3Zg
         /*
         *{
@@ -189,16 +193,27 @@ public class NetLoginMB extends AbstractMB {
         *   "expires_in":436
         *}
         */
+        Gson gson = new Gson();
+
+//        final GenericUrl url = new GenericUrl(TOKEN_INFO_URL + credential.getAccessToken());
+//        final HttpRequest request = requestFactory.buildGetRequest(url);
+//        request.getHeaders().setContentType("application/json");
+//        final String jsonIdentity = request.execute().parseAsString();
+//        Map<String, String> map = new HashMap<>();
+//        map = (Map<String, String>) gson.fromJson(jsonIdentity, map.getClass());
+//        if (!GOOGLE_CLIENT_ID.equals(map.get("audience"))) {
+//            return;
+//        }
+
 
         // Make an authenticated request
-        final GenericUrl url = new GenericUrl(USER_INFO_URL);
-        final HttpRequest request = requestFactory.buildGetRequest(url);
-        request.getHeaders().setContentType("application/json");
-        final String jsonIdentity = request.execute().parseAsString();
+        final GenericUrl urlData = new GenericUrl(USER_INFO_URL);
+        final HttpRequest requestData = requestFactory.buildGetRequest(urlData);
+        requestData.getHeaders().setContentType("application/json");
+        final String jsonIdentityData = requestData.execute().parseAsString();
 
-        Gson gson=new Gson();
-        Map<String,String> map=new HashMap<String,String>();
-        map=(Map<String,String>) gson.fromJson(jsonIdentity, map.getClass());
+        Map<String, String> mapData = new HashMap<>();
+        mapData = (Map<String, String>) gson.fromJson(jsonIdentityData, mapData.getClass());
         /**
          * "id": "xx",
          * "name": "xx",
@@ -209,7 +224,7 @@ public class NetLoginMB extends AbstractMB {
          * "gender": "xx",
          * "locale": "xx"
          */
-        registerLogin(NetTypeEnum.GOOGLE, map.get("id"), credential.getAccessToken(), credential.getExpirationTimeMilliseconds(), map.get("name"));
+        registerLogin(NetTypeEnum.GOOGLE, mapData.get("id"), credential.getAccessToken(), credential.getExpirationTimeMilliseconds(), mapData.get("name"));
 
     }
 
@@ -253,7 +268,7 @@ public class NetLoginMB extends AbstractMB {
                 redirectPretty("home");
             } else {
                 //TODO renew token
-                switch(netType){
+                switch (netType) {
                     case FACEBOOK:
                         renewFacebookToken();
                         break;
@@ -283,12 +298,12 @@ public class NetLoginMB extends AbstractMB {
         }
     }
 
-    private void renewFacebookToken(){
+    private void renewFacebookToken() {
     }
 
-    private void renewGoogleToken(){
+    private void renewGoogleToken() {
     }
 
-    private void renewTwitterToken(){
+    private void renewTwitterToken() {
     }
 }

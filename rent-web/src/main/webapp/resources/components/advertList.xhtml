@@ -17,10 +17,10 @@
                  value="#{cc.attrs.adverts}"
                  paginator="true" rows="10" lazy="true" paginatorPosition="bottom"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}"
-                 currentPageReportTemplate="Pagina {currentPage} din {totalPages}"
+                 currentPageReportTemplate="#{msgs['adList.page']} {currentPage} #{msgs['adList.of']} {totalPages}"
                  paginatorAlwaysVisible="false"
                  rowIndexVar="rowIdx"
-                 emptyMessage="Nu sunt anunturi"
+                 emptyMessage="#{msgs['adList.empty']}"
                  rowStyleClass="#{(rowIdx mod 2) eq 1 ? 'highlight' : ''}">
 
         <p:column headerText="" style="width: 95px; text-align: center">
@@ -29,7 +29,7 @@
                 <p:graphicImage value="#{ad.imageList.get(0).urlSmall}" rendered="#{not empty ad.imageList}"/>
                 <p:graphicImage value="/resources/images/home168.png" rendered="#{empty ad.imageList}"/>
             </pretty:link>
-            <p:tooltip for="detailsLink" value="Detalii anunt" trackMouse="true"/>
+            <p:tooltip for="detailsLink" value="#{msgs['adList.details']}" trackMouse="true"/>
         </p:column>
 
 
@@ -42,13 +42,13 @@
                 <h:outputText value="#{ad.description}"/>
 
                 <p:outputPanel>
-                    <h:outputText value="Adresa: "/>
+                    <h:outputText value="#{msgs['adList.address']}"/>
                     <h:outputText value="#{ad.address.city.name}, "/>
-                    <h:outputText value="Str. #{ad.address.street}"/>
+                    <h:outputText value="#{msgs['adList.str']} #{ad.address.street}"/>
                 </p:outputPanel>
 
                 <p:outputPanel>
-                    <h:outputText value="Contact: "/>
+                    <h:outputText value="#{msgs['adList.contact']}"/>
                     <h:outputText value="#{ad.user.name}"/>
                 </p:outputPanel>
 
@@ -57,10 +57,10 @@
 
         <p:column headerText="" style="width: 93px">
             <p:outputPanel>
-                <h:outputText value="Pret: "/>
+                <h:outputText value="#{msgs['adList.price']}"/>
                 <h:outputText value="#{ad.value} "/>
                 <h:outputText value="#{ad.currency}"/>
-                <h:outputText value=", Negociabil" rendered="#{ad.negotiable}"/>
+                <h:outputText value=", #{msgs['adList.negotiable']}" rendered="#{ad.negotiable}"/>
             </p:outputPanel>
         </p:column>
 

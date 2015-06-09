@@ -15,7 +15,7 @@
 
     <ui:define name="content">
         <h:form id="uploadFormId">
-            <h3><h:outputText value="Adauga anunt"/></h3>
+            <h3><h:outputText value="#{msgs['add.title']}"/></h3>
 
             <p:messages autoUpdate="true"/>
 
@@ -23,19 +23,19 @@
                 <!--description-->
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12">
-                        <o:outputLabel for="description" value="Descriere: *"/>
+                        <o:outputLabel for="description" value="#{msgs['add.description']}"/>
                         <p:inputTextarea id="description" maxlength="150"
                                          required="true"
-                                         validatorMessage="Descrierea intre 10 si 150 caractere"
-                                         requiredMessage="Decriere obligatorie"
+                                         validatorMessage="#{msgs['add.description.validator']}"
+                                         requiredMessage="#{msgs['add.description.required']}"
                                          counter="decriptionLeft"
                                          value="#{addMB.advert.description}"
-                                         counterTemplate="{0} charactere remase."
+                                         counterTemplate="{0} #{msgs['add.description.charsLeft']}"
                                          styleClass="width_98_pc height_30_px resize_none">
                             <f:validateLength for="description" minimum="10" maximum="150"/>
                         </p:inputTextarea>
                         <h:outputText id="decriptionLeft"/>
-                        <p:tooltip for="description" value="Descrearea anuntului" trackMouse="true"/>
+                        <p:tooltip for="description" value="#{msgs['add.description.title']}" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -45,41 +45,41 @@
                         <p:selectOneButton id="type" value="#{addMB.advert.adType}"
                                            converter="omnifaces.GenericEnumConverter"
                                            required="true"
-                                           requiredMessage="Tip acomodare obligatoiu">
+                                           requiredMessage="#{msgs['add.type.req']}">
                             <f:selectItems value="#{mdSessionMB.types}"/>
                         </p:selectOneButton>
-                        <p:tooltip for="type" value="Tipul de anunt, Inchiriere sau Gazda, este obligatoriu" trackMouse="true"/>
+                        <p:tooltip for="type" value="#{msgs['add.type.title']}" trackMouse="true"/>
 
                         <p:selectOneMenu id="accomodation" value="#{addMB.advert.buildingType}"
                                          styleClass="valign_middle" required="true"
-                                         requiredMessage="Tip imobil obligatoriu"
+                                         requiredMessage="#{msgs['add.accommodation.req']}"
                                          converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemValue="#{null}" itemLabel="Tip Imobil"/>
                             <f:selectItems value="#{mdSessionMB.accomodations}"/>
                         </p:selectOneMenu>
-                        <p:tooltip for="accomodation" value="Tipul de imobil supus anuntului" trackMouse="true"/>
+                        <p:tooltip for="accomodation" value="#{msgs['add.accommodation.title']}" trackMouse="true"/>
 
-                        <p:outputLabel for="value" value="Valoare:" styleClass="margin_left_5"/>
+                        <p:outputLabel for="value" value="#{msgs['add.value']}" styleClass="margin_left_5"/>
                         <p:inputText id="value" size="3" style="text-align: right"
                                      value="#{addMB.advert.value}"
                                      required="true" autocomplete="false"
-                                     requiredMessage="Valoare obligatorie"
-                                     validatorMessage="Valoarea trebuie sa fie numerica">
+                                     requiredMessage="#{msgs['add.value.req']}"
+                                     validatorMessage="#{msgs['add.value.valid']}">
                             <f:convertNumber maxFractionDigits="2" maxIntegerDigits="4"/>
                         </p:inputText>
-                        <p:tooltip for="value" value="Pretul cerut pentru obiectul anuntului" trackMouse="true"/>
+                        <p:tooltip for="value" value="#{msgs['add.value.title']}" trackMouse="true"/>
 
-                        <p:outputLabel for="deposit" value="Garantie:" styleClass="margin_left_10"/>
+                        <p:outputLabel for="deposit" value="#{msgs['add.deposit']}" styleClass="margin_left_10"/>
                         <p:inputText id="deposit" size="3" styleClass="textAlign_right"
                                      value="#{addMB.advert.deposit}" autocomplete="false"/>
-                        <p:tooltip for="deposit" value="Farantia ceruta pentru obiectul anuntului" trackMouse="true"/>
+                        <p:tooltip for="deposit" value="#{msgs['add.deposit.title']}" trackMouse="true"/>
 
                         <p:selectOneMenu id="curr" value="#{addMB.advert.currency}"
                                          converter="omnifaces.GenericEnumConverter"
                                          styleClass="valign_middle margin_left_10">
                             <f:selectItems value="#{mdSessionMB.currencies}"/>
                         </p:selectOneMenu>
-                        <p:tooltip for="curr" value="Moneda aplicata valorii si garantiei anuntului" trackMouse="true"/>
+                        <p:tooltip for="curr" value="#{msgs['add.currency.title']}" trackMouse="true"/>
 
                         <p:outputLabel for="negot" value="Neg.: " styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="negot" styleClass="valign_middle"
@@ -101,27 +101,27 @@
                         <p:selectOneMenu id="city" value="#{addMB.advert.address.city}"
                                          converter="omnifaces.SelectItemsConverter"
                                          required="true"
-                                         requiredMessage="Oras obligatoriu"
+                                         requiredMessage="#{msgs['add.city.req']}"
                                          styleClass="valign_middle">
-                            <f:selectItem itemLabel="Alege oras" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="#{msgs['add.city.default']}" itemValue="#{null}"/>
                             <f:selectItems value="#{mdSessionMB.cities}"/>
                             <p:ajax event="change" update="neighborhood"/>
                         </p:selectOneMenu>
-                        <p:tooltip for="city" value="Orasul in case se afla imobilul" trackMouse="true"/>
+                        <p:tooltip for="city" value="#{msgs['add.city.title']}" trackMouse="true"/>
 
-                        <p:outputLabel for="street" value="Strada:" styleClass="margin_left_10"/>
+                        <p:outputLabel for="street" value="#{msgs['add.street']}" styleClass="margin_left_10"/>
                         <p:inputText id="street" size="50" autocomplete="false"
                                      required="true"
-                                     requiredMessage="Strada obligatorie"
+                                     requiredMessage="#{msgs['add.street.req']}"
                                      value="#{addMB.advert.address.street}"/>
-                        <p:tooltip for="street" value="Strada pe care se afla imobilul" trackMouse="true"/>
+                        <p:tooltip for="street" value="#{msgs['add.title']}" trackMouse="true"/>
 
-                        <p:outputLabel for="nr" value="Nr.:" styleClass="margin_left_10"/>
+                        <p:outputLabel for="nr" value="#{msgs['add.nr']}" styleClass="margin_left_10"/>
                         <p:inputText id="nr" size="2" autocomplete="false"
                                      required="true"
-                                     requiredMessage="Numar obligatoriu"
+                                     requiredMessage="#{msgs['add.nr.req']}"
                                      value="#{addMB.advert.address.nr}"/>
-                        <p:tooltip for="nr" value="Numarul la care se fla imobilul pe strada" trackMouse="true"/>
+                        <p:tooltip for="nr" value="#{msgs['add.nr.title']}" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -138,27 +138,27 @@
                                          filter="true" filterMatchMode="contains"
                                          converter="omnifaces.SelectItemsConverter"
                                          styleClass="valign_middle width_175 margin_left_5">
-                            <f:selectItem itemLabel="Alege cartier" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="#{msgs['add.neighborhood.default']}" itemValue="#{null}"/>
                             <f:selectItems value="#{addMB.advert.address.city.neighborhoods}"
                                            var="nbh"
                                            itemLabel="#{nbh.name}"/>
                         </p:selectOneMenu>
-                        <p:tooltip for="neighborhood" value="Cartierul unde se afla imobilul" trackMouse="true"/>
+                        <p:tooltip for="neighborhood" value="#{msgs['add.neighborhood.title']}" trackMouse="true"/>
                     </div>
                     <h:panelGroup layout="block" id="detaliiAdresa" styleClass="ui-grid-col-8 textAlign_right">
-                        <p:outputLabel for="bloc" value="Bloc: "/>
+                        <p:outputLabel for="bloc" value="#{msgs['add.bloc']}"/>
                         <p:inputText id="bloc" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.bloc}" autocomplete="false"/>
 
-                        <p:outputLabel for="scara" value="Scara: " styleClass="margin_left_5"/>
+                        <p:outputLabel for="scara" value="#{msgs['add.scara']}" styleClass="margin_left_5"/>
                         <p:inputText id="scara" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.sc}" autocomplete="false"/>
 
-                        <p:outputLabel for="etaj" value="Etaj: " styleClass="margin_left_5"/>
+                        <p:outputLabel for="etaj" value="#{msgs['add.etaj']}" styleClass="margin_left_5"/>
                         <p:inputText id="etaj" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.et}" autocomplete="false"/>
 
-                        <p:outputLabel for="cp" value="C.P.: " styleClass="margin_left_5"/>
+                        <p:outputLabel for="cp" value="#{msgs['add.cp']}" styleClass="margin_left_5"/>
                         <p:inputText id="cp" size="3" styleClass="textAlign_right margin_right_5"
                                      value="#{addMB.advert.address.cp}" autocomplete="false"/>
                     </h:panelGroup>
@@ -167,28 +167,28 @@
                 <!--interval-->
                 <div class="ui-grid-row margin_top_20">
                     <div class="ui-grid-col-12">
-                        <h:outputText value=" Disponibil din: "/>
+                        <h:outputText value="#{msgs['add.available.from']}"/>
                         <p:calendar id="fromDate" value="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/yyyy">
                             <p:ajax event="dateSelect" process="@this" update="untilDate"/>
                             <f:convertDateTime for="untilDate" pattern="dd/MMM/yyyy"/>
                         </p:calendar>
-                        <p:tooltip for="fromDate" value="Data incepand de la care este disponibil imobilul" trackMouse="true"/>
+                        <p:tooltip for="fromDate" value="#{msgs['add.available.from.title']}" trackMouse="true"/>
 
-                        <h:outputText value=" pana: "/>
+                        <h:outputText value="#{msgs['add.available.to']}"/>
                         <p:calendar id="untilDate" value="#{addMB.advert.interval.untilDate}"
                                     disabled="#{addMB.advert.interval.untilUndefined}"
                                     mindate="#{addMB.advert.interval.fromDate}" size="7" pattern="dd/MMM/yyyy">
                             <f:convertDateTime for="untilDate" pattern="dd/MMM/yyyy"/>
                         </p:calendar>
-                        <p:tooltip for="untilDate" value="Data pana la care este disponibil imobilul" trackMouse="true"/>
+                        <p:tooltip for="untilDate" value="#{msgs['add.available.to.title']}" trackMouse="true"/>
 
-                        <h:outputLabel value="Nedeterminat:" for="intervalUndefined" styleClass="margin_left_10"/>
+                        <h:outputLabel value="#{msgs['add.available.to.undefined']}" for="intervalUndefined" styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="intervalUndefined"
                                                  style="vertical-align:middle"
                                                  value="#{addMB.advert.interval.untilUndefined}">
                             <p:ajax process="@this" update="untilDate"/>
                         </p:selectBooleanCheckbox>
-                        <p:tooltip for="intervalUndefined" value="Obiectul anuntului este disponibil spre inchiriere pe perioada nedeterminata" trackMouse="true"/>
+                        <p:tooltip for="intervalUndefined" value="#{msgs['add.available.to.undefined.title']}" trackMouse="true"/>
                     </div>
                 </div>
 
