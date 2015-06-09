@@ -14,36 +14,56 @@
 
         <div class="main">
             <p:outputPanel id="addList" layout="block">
-                <h2>Despre noi:</h2>
-                <b>Acest site ofera o solutie sigura si eficienta pentru adaugarea anunturilor de inchiriere.</b>
+                <h2>#{msgs['about.title']}</h2>
+                <b>#{msgs['about.subtitle']}</b>
             </p:outputPanel>
         </div>
 
-        <p:fieldset legend="de ce noi ?" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.whyUs.question']}" toggleable="true" toggleSpeed="500">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Pentru a oferi o alternativa la siturile generice de anunturi precum si la cele imobiliare generaliste.
-                Segmentul pe care se axeaza acest site este acel de anunturii de inchiriere si atat. Momentan anunturile pot fi adaugate doar
-                pentru marile centre universitare."></h:outputText>
+                <h:outputText value="#{msgs['about.whyUs.answer']}"></h:outputText>
             </h:panelGrid>
         </p:fieldset>
 
-        <p:fieldset legend="pentru cine ?" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.forWho.question']}" toggleable="true" toggleSpeed="500">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Pentru cei care vor sa adauge un anunt de inchiriere gratuit pe un site deidcat acestor tipuri de anunturi."></h:outputText>
+                <h:outputText value="#{msgs['about.forWho.answer1']}"></h:outputText>
 
                 <h:outputText/>
-                <h:outputText value="Pentru cei care cauta expres anunturi de inchiriere."></h:outputText>
+                <h:outputText value="#{msgs['about.forWho.answer2']}"></h:outputText>
             </h:panelGrid>
         </p:fieldset>
 
-        <p:fieldset legend="cat costa ?" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.cost.question']}" toggleable="true" toggleSpeed="500">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Serviciile acestui sinte sunt oferite gratuit atat celui care posteaza cat si celui care cauta anunturi. Nu eista nici o taxa ascunsa si nici nu va fi.
-Situl se sustine folosind tehnologii gratuite si gazduire minima in cloud. Deasemenea daca acest site v-a ajutat este incurajata donarea pentru inbunatarirea serviciilor oferite si in special viteza de accesare / procesare a anunturilor."></h:outputText>
-
+                <h:outputText value="#{msgs['about.cost.answer']}"></h:outputText>
+            </h:panelGrid>
+        </p:fieldset>
+        
+        <p:fieldset legend="#{msgs['about.works.question']}" toggleable="true" toggleSpeed="500">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="#{msgs['about.works.answer1']}"></h:outputText>
+                
+                <h:outputText/>
+                <h:outputText value="#{msgs['about.works.answer2']}"></h:outputText>
+            </h:panelGrid>
+        </p:fieldset>
+        
+        <p:fieldset legend="#{msgs['about.we.question']}" toggleable="true" toggleSpeed="500">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="#{msgs['about.we.answer']}"></h:outputText>
+            </h:panelGrid>
+        </p:fieldset>
+        
+        <p:fieldset legend="#{msgs['about.next.question']}" toggleable="true" toggleSpeed="500">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="#{msgs['about.next.answer']}"></h:outputText>
             </h:panelGrid>
         </p:fieldset>
 

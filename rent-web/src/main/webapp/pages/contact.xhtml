@@ -22,29 +22,29 @@
             <p:growl id="growl" showDetail="true" sticky="true"/>
             <p:messages autoUpdate="true"/>
 
-            <p:outputPanel id="addList" layout="block">
-                <h2>Contact</h2>
-                <p>Formular contact:</p>
+            <p:outputPanel id="contactPanel" layout="block">
+                <h2>#{msgs['contact.title']}</h2>
+                <p>#{msgs['contact.subtitle']}:</p>
 
 
                 <p:panelGrid columns="2">
-                    <o:outputLabel for="email" value="Email:"/>
+                    <o:outputLabel for="email" value="#{msgs['contact.email']}"/>
                     <p:inputText id="email" value="#{indexMB.contactEmail}" required="true">
                         <f:validateRegex
                                 pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                     </p:inputText>
 
-                    <o:outputLabel for="subject" value="Subiect:"/>
+                    <o:outputLabel for="subject" value="#{msgs['contact.subject']}"/>
                     <p:inputText id="subject"  value="#{indexMB.contactSubject}" required="true"/>
 
-                    <o:outputLabel for="description" value="Descriere:"/>
+                    <o:outputLabel for="description" value="#{msgs['contact.description']}"/>
                     <p:inputTextarea id="description"  value="#{indexMB.contactMessage}" maxlength="100"/>
 
                     <h:outputText/>
                     <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
 
                     <h:outputText/>
-                    <p:commandButton value="Trimite email" action="#{indexMB.sendContactEmail}"/>
+                    <p:commandButton value="#{msgs['contact.submit']}" action="#{indexMB.sendContactEmail}"/>
                 </p:panelGrid>
 
             </p:outputPanel>

@@ -30,8 +30,8 @@ create table `rentee`.`rt_help_data` (
   auto_increment =1000
   default charset =utf8
   collate =utf8_romanian_ci;
-  
-  
+
+
 create table `rentee`.`rt_favorite_comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `favorite_id` BIGINT NOT NULL,
@@ -43,3 +43,7 @@ create table `rentee`.`rt_favorite_comment` (
   auto_increment =1000
   default charset =utf8
   collate =utf8_romanian_ci;
+
+-- update user to also have a locale
+ALTER TABLE `rentee`.`users`
+ADD COLUMN `locale` VARCHAR(10) 'ro' AFTER `ROLE`;

@@ -8,10 +8,10 @@
 
     <h:form>
         <p:messages/>
-        <p:panel id="search" header="cautare">
+        <p:panel id="search" header="#{msgs['search.title']}">
 
             <p:selectOneMenu id="city" value="#{indexMB.cityName}" styleClass="valign_middle">
-                <f:selectItem itemValue="-" itemLabel="Alege oras"/>
+                <f:selectItem itemValue="-" itemLabel="#{msgs['search.city']}"/>
                 <f:selectItems value="#{mdSessionMB.cityNames}"/>
                 <p:ajax process="@this" update="searchLink"/>
             </p:selectOneMenu>
@@ -30,13 +30,13 @@
             </p:panelGrid>
 
             <p:panelGrid columns="2" styleClass="tableNoPadding margin_top_10">
-                <h:outputText value="Doar cu poze:"/>
+                <h:outputText value="#{msgs['search.picOnly']}"/>
                 <p:selectBooleanCheckbox value="#{indexMB.onlyImages}" styleClass="valign_middle margin_left_10 searchCh-js">
                     <p:ajax update="searchLink"/>
                 </p:selectBooleanCheckbox>
             </p:panelGrid>
 
-            <p:commandButton id="searchLink" value="cauta"
+            <p:commandButton id="searchLink" value="#{msgs['search.submit']}"
                              styleClass="margin_top_10 width_100_pc"
                              action="pretty:search">
                 <f:param value="#{indexMB.cityName}"/>

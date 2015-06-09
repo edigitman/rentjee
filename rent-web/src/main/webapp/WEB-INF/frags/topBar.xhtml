@@ -7,10 +7,10 @@
     <h:form>
         <h:panelGrid columns="5" cellpadding="10">
 
-            <p:commandButton value="Adauga anunt" action="pretty:add"/>
-            <p:commandButton value="Ajutor" action="pretty:help"/>
-            <p:commandButton value="Contact" action="pretty:contact"/>
-            <p:commandButton value="Despre" action="pretty:about"/>
+            <p:commandButton value="#{msgs['topBar.add']}" action="pretty:add"/>
+            <p:commandButton value="#{msgs['topBar.help']}" action="pretty:help"/>
+            <p:commandButton value="#{msgs['topBar.contact']}" action="pretty:contact"/>
+            <p:commandButton value="#{msgs['topBar.about']}" action="pretty:about"/>
 
             <p:outputPanel layout="block" styleClass="displayInlineBlock">
                 <!--User not logged in-->
@@ -18,11 +18,11 @@
                              columnClasses="noPadding,padding_4,noPadding"
                              rendered="#{!userMB.userLogged}">
                     <pretty:link mappingId="home">
-                        <h:outputText value="Conecteaza-te"/>
+                        <h:outputText value="#{msgs['topBar.connect']}"/>
                     </pretty:link>
                     <h:outputText value="|"/>
                     <pretty:link mappingId="register">
-                        <h:outputText value="Inregistrare"/>
+                        <h:outputText value="#{msgs['topBar.register']}"/>
                     </pretty:link>
                 </p:panelGrid>
 
@@ -31,11 +31,19 @@
                              columnClasses="noPadding,padding_4,noPadding"
                              rendered="#{userMB.userLogged}">
                     <pretty:link mappingId="home">
-                        <h:outputText value="Cont"/>
+                        <h:outputText value="#{msgs['topBar.account']}"/>
                     </pretty:link>
                     <h:outputText value="|"/>
-                    <h:commandLink value="Iesire" action="#{userMB.logOut()}"/>
+                    <h:commandLink value="#{msgs['topBar.logout']}" action="#{userMB.logOut()}"/>
                 </p:panelGrid>
+
+                <!-- Language select -->
+                <h:selectOneMenu value="#{indexMB.localeCode}"
+                                 onchange="submit()"
+                                 valueChangeListener="#{indexMB.countryLocaleCodeChanged}">
+   			        <f:selectItems value="#{indexMB.countriesInMap}" />
+   		        </h:selectOneMenu>
+
             </p:outputPanel>
 
         </h:panelGrid>

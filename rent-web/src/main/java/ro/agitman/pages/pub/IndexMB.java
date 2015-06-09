@@ -53,6 +53,16 @@ public class IndexMB extends AbstractMB{
     private Boolean onlyImages;
     private String title = "Anunturi rencente";
 
+    // language
+	private String localeCode;
+	private static Map<String,Object> countries;
+	static{
+		countries = new LinkedHashMap<String,Object>();
+		countries.put("Engleza", Locale.ENGLISH); //label, value
+		countries.put("Romana", new Locale("ro");
+	}
+
+
     @EJB
     private AdvertService advertService;
 
@@ -130,6 +140,19 @@ public class IndexMB extends AbstractMB{
             info("Am primit mailul tau. Multumim.");
         }
     }
+
+    //value change event listener
+	public void countryLocaleCodeChanged(ValueChangeEvent e){
+
+		String newLocaleValue = e.getNewValue().toString();
+
+		//loop country map to compare the locale code
+        for (Map.Entry<String, Object> entry : countries.entrySet()) {
+    	    if(entry.getValue().toString().equals(newLocaleValue)){
+                FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale)entry.getValue());
+    	    }
+        }
+	}
 
     //============== GETTERS AND SETTERS
 
@@ -212,4 +235,18 @@ public class IndexMB extends AbstractMB{
     public void setContactMessage(String contactMessage) {
         this.contactMessage = contactMessage;
     }
+
+    public Map<String, Object> getCountriesInMap() {
+		return countries;
+	}
+
+
+	public String getLocaleCode() {
+		return localeCode;
+	}
+
+
+	public void setLocaleCode(String localeCode) {
+		this.localeCode = localeCode;
+	}
 }

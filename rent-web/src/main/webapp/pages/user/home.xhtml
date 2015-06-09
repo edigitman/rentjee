@@ -12,13 +12,13 @@
 
     <ui:define name="content">
 
-        <h3>Anunturi</h3>
+        <h3>#{msgs['home.title']}</h3>
 
         <p:tabView dynamic="true" cache="true">
-            <p:tab title="Anunturile active">
+            <p:tab title="#{msgs['home.active']}">
                 <r:advertList adverts="#{addMB.myAds}"/>
             </p:tab>
-            <p:tab title="Anunturi favorite">
+            <p:tab title="#{msgs['home.favorite']}">
                 <r:advertList adverts="#{addMB.favAds}"/>
             </p:tab>
         </p:tabView>
