@@ -119,6 +119,31 @@
                     </div>
                 </div>
 
+                <!-- social connections to the add -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <div class="fb-like"
+                             data-href="http://lachirie.ro/details/#{detailsMB.selected.id}"
+                             data-layout="button_count"
+                             data-action="like"
+                             data-show-faces="true"
+                             data-share="true"></div>
+                    </div>
+                    <div class="ui-grid-col-4">
+                         <!-- Place this tag where you want the +1 button to render. -->
+                        <div class="g-plusone"
+                             data-width="150"
+                             data-href="http://lachirie.ro/details/#{detailsMB.selected.id}"></div>
+                    </div>
+                    <div class="ui-grid-col-4">
+                        <a class="twitter-share-button"
+                           data-count="horizontal"
+                           data-url="http://lachirie.ro/details/#{detailsMB.selected.id}"
+                           href="https://twitter.com/intent/tweet?text=Am%20vazut%20anuntul%20http://lachirie.ro/details/#{detailsMB.selected.id}">
+                            Tweet</a>
+                    </div>
+                </div>
+
                 <p:galleria value="#{detailsMB.selected.imageList}"
                             styleClass="margin_top_15"
                             rendered="#{not empty detailsMB.selected.imageList}"
