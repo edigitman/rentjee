@@ -22,7 +22,7 @@ public class UpdateAdvertStatusScheduler {
     @EJB
     private DataAccessService service;
 
-    @Schedule(second = "1", minute = "*", hour = "5", persistent = false)
+    //@Schedule(second = "1", minute = "*", hour = "5", persistent = false)
     public void executeUpdate() {
         MutableDateTime date = new MutableDateTime();
         System.out.println("Execute batch... at " + date.toString("dd/MM/yy hh:mm:ss"));
