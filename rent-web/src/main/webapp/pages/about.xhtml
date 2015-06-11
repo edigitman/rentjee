@@ -7,6 +7,10 @@
 
 <ui:composition template="/pages/template.xhtml">
     <ui:define name="pageTitle">- despre noi</ui:define>
+    <ui:insert name="pageDescription">
+        <meta name="description="
+        content="despre noi, site de anunturi inchiriere, la chirie in chirie, anunturi gratuite">
+    </ui:insert>
 
     <ui:define name="menu">
         <ui:include src="/WEB-INF/frags/search.xhtml"/>
@@ -44,24 +48,24 @@
                 <h:outputText value="#{msgs['about.cost.answer']}"/>
             </h:panelGrid>
         </p:fieldset>
-        
+
         <p:fieldset legend="#{msgs['about.works.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:graphicImage library="images" name="home.png" width="25px" />
                 <h:outputText value="#{msgs['about.works.answer1']}"/>
-                
+
                 <h:outputText/>
                 <h:outputText value="#{msgs['about.works.answer2']}"/>
             </h:panelGrid>
         </p:fieldset>
-        
+
         <p:fieldset legend="#{msgs['about.we.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:graphicImage library="images" name="home.png" width="25px" />
                 <h:outputText value="#{msgs['about.we.answer']}"/>
             </h:panelGrid>
         </p:fieldset>
-        
+
         <p:fieldset legend="#{msgs['about.next.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
                 <p:graphicImage library="images" name="home.png" width="25px" />
