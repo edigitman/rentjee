@@ -2,7 +2,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pretty="http://ocpsoft.com/prettyfaces">
+                xmlns:pretty="http://ocpsoft.com/prettyfaces"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
         <h:panelGrid columns="5" cellpadding="10">
@@ -38,11 +39,11 @@
                 </p:panelGrid>
 
                 <!-- Language select -->
-                <h:selectOneMenu value="#{indexMB.localeCode}"
-                                 onchange="submit()"
-                                 valueChangeListener="#{indexMB.countryLocaleCodeChanged}">
-   			        <f:selectItems value="#{indexMB.countriesInMap}" />
-   		        </h:selectOneMenu>
+                <!--<h:selectOneMenu value="#{indexMB.locale}"-->
+                                 <!--onchange="submit()"-->
+                                 <!--valueChangeListener="#{indexMB.countryLocaleCodeChanged}">-->
+   			        <!--<f:selectItems value="#{indexMB.countriesInMap}" />-->
+   		        <!--</h:selectOneMenu>-->
 
             </p:outputPanel>
 

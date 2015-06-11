@@ -9,6 +9,8 @@
       xmlns:r="http://java.sun.com/jsf/composite/components">
 
 <ui:composition template="/pages/template.xhtml">
+    <ui:define name="pageTitle">- adauga anunt chirie</ui:define>
+
     <ui:define name="menu">
         <ui:include src="/WEB-INF/frags/userMenu.xhtml"/>
     </ui:define>
@@ -81,10 +83,10 @@
                         </p:selectOneMenu>
                         <p:tooltip for="curr" value="#{msgs['add.currency.title']}" trackMouse="true"/>
 
-                        <p:outputLabel for="negot" value="Neg.: " styleClass="margin_left_10"/>
+                        <p:outputLabel for="negot" value="#{msgs['add.negotiable']}" styleClass="margin_left_10"/>
                         <p:selectBooleanCheckbox id="negot" styleClass="valign_middle"
                                                  value="#{addMB.advert.negotiable}"/>
-                        <p:tooltip for="negot" value="Bifati daca valoarea anuntului este negociabila" trackMouse="true"/>
+                        <p:tooltip for="negot" value="#{msgs['add.negotiable.title']}" trackMouse="true"/>
                     </div>
                 </div>
 
@@ -114,7 +116,7 @@
                                      required="true"
                                      requiredMessage="#{msgs['add.street.req']}"
                                      value="#{addMB.advert.address.street}"/>
-                        <p:tooltip for="street" value="#{msgs['add.title']}" trackMouse="true"/>
+                        <p:tooltip for="street" value="#{msgs['add.street.title']}" trackMouse="true"/>
 
                         <p:outputLabel for="nr" value="#{msgs['add.nr']}" styleClass="margin_left_10"/>
                         <p:inputText id="nr" size="2" autocomplete="false"
@@ -213,19 +215,19 @@
                                       sizeLimit="2097152"
                                       fileLimit="5"
                                       allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                      uploadLabel="Incarca"
-                                      cancelLabel="Anuleaza"
-                                      label="Adauga poze"
-                                      fileLimitMessage="Maxim 5 poze"
-                                      invalidFileMessage="Fisier invalid"
-                                      invalidSizeMessage="Fisieru; depaseste dimensiunea maxima"/>
-                        <p:tooltip for="fileUpload" value="Adauga poze la anunt" trackMouse="true"/>
+                                      uploadLabel="#{msgs['add.img.upload']}"
+                                      cancelLabel="#{msgs['add.img.cancel']}"
+                                      label="#{msgs['add.img.label']}"
+                                      fileLimitMessage="#{msgs['add.img.limit']}"
+                                      invalidFileMessage="#{msgs['add.img.invalid']}"
+                                      invalidSizeMessage="#{msgs['add.img.sizeLimit']}"/>
+                        <p:tooltip for="fileUpload" value="#{msgs['add.img.title']}" trackMouse="true"/>
 
-                        <p:commandButton id="deleteImages" value="Sterge toate pozele"
+                        <p:commandButton id="deleteImages" value="#{msgs['add.img.delete']}"
                                          update=":uploadFormId:uploadPanel" immediate="true"
                                          rendered="#{not empty fileUploadBean.images}"
                                          actionListener="#{fileUploadBean.clearAll()}"/>
-                        <p:tooltip for="deleteImages" value="Sterge toate pozele pentru acest anunt" trackMouse="true"/>
+                        <p:tooltip for="deleteImages" value="#{msgs['add.img.delete.title']}" trackMouse="true"/>
 
                         <ui:repeat value="#{fileUploadBean.images}" var="img">
                             <p:panelGrid columns="1" styleClass="tableNoPadding displayInlineBlock margin_bottom_15 margin_right_15">
@@ -241,7 +243,7 @@
 
                 <div class="ui-grid-row margin_top_10">
                     <div class="ui-grid-col-12">
-                        <p:commandButton id="saveBtn" value="Adauga anunt"
+                        <p:commandButton id="saveBtn" value="#{msgs['add.submit']}"
                                          update="@form"
                                          actionListener="#{addMB.save()}"/>
                     </div>
@@ -249,7 +251,7 @@
             </p:outputPanel>
 
             <p:blockUI block="addPanel" trigger="saveBtn">
-                anunt in curs de procesare
+                #{msgs['add.loading']}
                 <p:graphicImage value="/resources/images/loading.gif" styleClass="width_20 height_20"/>
             </p:blockUI>
         </h:form>

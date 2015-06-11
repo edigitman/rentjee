@@ -5,11 +5,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pretty="http://ocpsoft.com/prettyfaces" xmlns:o="http://omnifaces.org/ui">
-
+      xmlns:pretty="http://ocpsoft.com/prettyfaces" xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:view locale="#{indexMB.locale}">
 <h:head>
     <h:outputStylesheet name="rent.css" library="css"/>
-    <title>#{msgs.title}</title>
+    <title>
+        #{msgs.title}
+        <ui:insert name="pageTitle"> </ui:insert>
+    </title>
     <link rel="shortcut icon" type="image/x-icon" href="#{resource['images/home168.png']}"/>
     <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=ro'></script>
 
@@ -101,4 +105,5 @@
         <a href="http://www.trafic.ro/">Web analytics</a></p></noscript>
     <!--/End async trafic.ro/-->
 </h:body>
+</f:view>
 </html>

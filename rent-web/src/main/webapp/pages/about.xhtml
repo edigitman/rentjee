@@ -6,6 +6,8 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/pages/template.xhtml">
+    <ui:define name="pageTitle">- despre noi</ui:define>
+
     <ui:define name="menu">
         <ui:include src="/WEB-INF/frags/search.xhtml"/>
     </ui:define>
@@ -17,76 +19,84 @@
                 <h2>#{msgs['about.title']}</h2>
                 <b>#{msgs['about.subtitle']}</b>
             </p:outputPanel>
-        </div>
+        </div><br/>
 
-        <p:fieldset legend="#{msgs['about.whyUs.question']}" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.whyUs.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="#{msgs['about.whyUs.answer']}"></h:outputText>
+                <p:graphicImage library="images" name="home.png" width="25px" />
+                <h:outputText value="#{msgs['about.whyUs.answer']}"/>
             </h:panelGrid>
         </p:fieldset>
 
-        <p:fieldset legend="#{msgs['about.forWho.question']}" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.forWho.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="#{msgs['about.forWho.answer1']}"></h:outputText>
+                <p:graphicImage library="images" name="home.png" width="25px" />
+                <h:outputText value="#{msgs['about.forWho.answer1']}"/>
 
                 <h:outputText/>
-                <h:outputText value="#{msgs['about.forWho.answer2']}"></h:outputText>
+                <h:outputText value="#{msgs['about.forWho.answer2']}"/>
             </h:panelGrid>
         </p:fieldset>
 
-        <p:fieldset legend="#{msgs['about.cost.question']}" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.cost.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="#{msgs['about.cost.answer']}"></h:outputText>
+                <p:graphicImage library="images" name="home.png" width="25px" />
+                <h:outputText value="#{msgs['about.cost.answer']}"/>
             </h:panelGrid>
         </p:fieldset>
         
-        <p:fieldset legend="#{msgs['about.works.question']}" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.works.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="#{msgs['about.works.answer1']}"></h:outputText>
+                <p:graphicImage library="images" name="home.png" width="25px" />
+                <h:outputText value="#{msgs['about.works.answer1']}"/>
                 
                 <h:outputText/>
-                <h:outputText value="#{msgs['about.works.answer2']}"></h:outputText>
+                <h:outputText value="#{msgs['about.works.answer2']}"/>
             </h:panelGrid>
         </p:fieldset>
         
-        <p:fieldset legend="#{msgs['about.we.question']}" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.we.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="#{msgs['about.we.answer']}"></h:outputText>
+                <p:graphicImage library="images" name="home.png" width="25px" />
+                <h:outputText value="#{msgs['about.we.answer']}"/>
             </h:panelGrid>
         </p:fieldset>
         
-        <p:fieldset legend="#{msgs['about.next.question']}" toggleable="true" toggleSpeed="500">
+        <p:fieldset legend="#{msgs['about.next.question']}" toggleable="true" toggleSpeed="500" collapsed="true">
             <h:panelGrid columns="2" cellpadding="5">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="#{msgs['about.next.answer']}"></h:outputText>
+                <p:graphicImage library="images" name="home.png" width="25px" />
+                <h:outputText value="#{msgs['about.next.answer']}"/>
             </h:panelGrid>
         </p:fieldset>
 
 
         <div class="technic">
-            Acest site este oferit cu ajutorul urmatoarelor tehnologii:
+            <p>Acest site este oferit cu ajutorul urmatoarelor tehnologii:</p>
 
-            <a href="http://www.digitalocean.com/?refcode=f6c9cc25417a">
+            <a href="http://www.digitalocean.com/?refcode=f6c9cc25417a" style="margin-right: 100px" target="_blank">
                 <img src="https://www.digitalocean.com/assets/images/logos-badges/png/DO_Proudly_Hosted_Badge_Blue-735d53ec.png"
                      alt="digitalOcean"
                      style="width: 100px"/>
             </a>
 
-            <a href="http://www.wildfly.org/">
-                <img src="http://i0.wp.com/tuxtor.shekalug.org/wp-content/uploads/2015/02/wildfly-logo.png" alt="wildfly" style="width: 100px"/>
+            <a href="http://cloudinary.com/invites/lpov9zyyucivvxsnalc5/r13xccyqtkvngkextbig" target="_blank">
+                <img src="http://res-1.cloudinary.com/cloudinary/image/asset/dpr_2.0/logo-e0df892053afd966cc0bfe047ba93ca4.png"
+                    alt="Cloudinary"
+                    style="width: 100px"/>
+            </a><br/>
+
+            <a href="http://www.wildfly.org/" style="margin-right: 100px" target="_blank">
+                <img src="http://i0.wp.com/tuxtor.shekalug.org/wp-content/uploads/2015/02/wildfly-logo.png"
+                     alt="wildfly"
+                     style="width: 100px"/>
             </a>
 
-            <a href="http://mysql.org">
-                mysql
-            </a>
+            <a href="https://www.mysql.com/" target="_blank">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFvyWc-w4b8zpjE8UlOaloEFcpuJTUirwMTQSzFBsSJa0F0teQIBLOKxo"
+                     alt="MySql"
+                     style="width: 100px"/>
+            </a><br/>
          </div>
-
-
     </ui:define>
 
 </ui:composition>

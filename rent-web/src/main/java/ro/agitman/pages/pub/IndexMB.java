@@ -18,10 +18,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by edi on 2/10/2015.
@@ -35,7 +35,7 @@ import java.util.Map;
         @URLMapping(id = "about", pattern = "/about", viewId = "/pages/about.jsf?faces-redirect=true"),
         @URLMapping(id = "search", pattern = "/index/#{indexMB.cityName}/#{indexMB.minPrice}/#{indexMB.maxPrice}/#{indexMB.onlyImages}", viewId = "/pages/index.jsf?faces-redirect=true")
 })
-public class IndexMB extends AbstractMB{
+public class IndexMB extends AbstractMB {
 
     @EJB
     private MailService mailService;
@@ -54,13 +54,14 @@ public class IndexMB extends AbstractMB{
     private String title = "Anunturi rencente";
 
     // language
-	private String localeCode;
-	private static Map<String,Object> countries;
-	static{
-		countries = new LinkedHashMap<String,Object>();
-		countries.put("Engleza", Locale.ENGLISH); //label, value
-		countries.put("Romana", new Locale("ro");
-	}
+    private Locale locale;
+    private static Map<String, Locale> countries;
+
+    static {
+        countries = new LinkedHashMap<String, Locale>();
+        countries.put("Engleza", Locale.ENGLISH); //label, value
+        countries.put("Romana", new Locale("ro", "RO"));
+    }
 
 
     @EJB
@@ -102,6 +103,7 @@ public class IndexMB extends AbstractMB{
 
     @PostConstruct
     public void load() {
+        FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("ro", "RO"));
         lazyAdverts = getLazyModel();
     }
 
@@ -120,19 +122,19 @@ public class IndexMB extends AbstractMB{
         };
     }
 
-    private long findByName(String name){
-        if(name == null || name.isEmpty() || "-".equals(name)){
+    private long findByName(String name) {
+        if (name == null || name.isEmpty() || "-".equals(name)) {
             return 0L;
         }
-        for(MdCity city : mdSession.getCitiesList()){
-            if(city.getName().equals(name))
+        for (MdCity city : mdSession.getCitiesList()) {
+            if (city.getName().equals(name))
                 return city.getId();
         }
         return 0L;
     }
 
-    public void sendContactEmail(){
-        if(validateCapthca()) {
+    public void sendContactEmail() {
+        if (validateCapthca()) {
             mailService.sendContactEmail(contactEmail, contactSubject, contactMessage);
             contactMessage = null;
             contactSubject = null;
@@ -142,17 +144,18 @@ public class IndexMB extends AbstractMB{
     }
 
     //value change event listener
-	public void countryLocaleCodeChanged(ValueChangeEvent e){
+    public void countryLocaleCodeChanged(ValueChangeEvent e) {
 
-		String newLocaleValue = e.getNewValue().toString();
+        String newLocaleValue = e.getNewValue().toString();
 
-		//loop country map to compare the locale code
-        for (Map.Entry<String, Object> entry : countries.entrySet()) {
-    	    if(entry.getValue().toString().equals(newLocaleValue)){
-                FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale)entry.getValue());
-    	    }
+        //loop country map to compare the locale code
+        for (Map.Entry<String, Locale> entry : countries.entrySet()) {
+            if (entry.getValue().toString().equals(newLocaleValue)) {
+                locale = entry.getValue();
+                FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+            }
         }
-	}
+    }
 
     //============== GETTERS AND SETTERS
 
@@ -236,17 +239,15 @@ public class IndexMB extends AbstractMB{
         this.contactMessage = contactMessage;
     }
 
-    public Map<String, Object> getCountriesInMap() {
-		return countries;
-	}
+    public Map<String, Locale> getCountriesInMap() {
+        return countries;
+    }
 
+    public Locale getLocale() {
+        return locale;
+    }
 
-	public String getLocaleCode() {
-		return localeCode;
-	}
-
-
-	public void setLocaleCode(String localeCode) {
-		this.localeCode = localeCode;
-	}
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
 }

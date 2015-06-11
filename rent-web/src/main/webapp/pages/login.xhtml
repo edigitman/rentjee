@@ -7,6 +7,8 @@
       xmlns:p="http://primefaces.org/ui" xmlns:pretty="http://ocpsoft.com/prettyfaces">
 
 <ui:composition template="/pages/template.xhtml">
+    <ui:define name="pageTitle">- conecteaza-te</ui:define>
+
     <ui:define name="menu">
         <ui:include src="/WEB-INF/frags/search.xhtml"/>
     </ui:define>
@@ -41,13 +43,13 @@
 
             <p:panelGrid columns="1">
 
-                <h:link href="#{netLogin.getAuthRequestLink('FACEBOOK')}" styleClass="margin_left_80">
+                <p:link href="#{netLogin.getAuthRequestLink('FACEBOOK')}" styleClass="margin_left_80">
                     <h:graphicImage library="images" name="signin-facebook.png" />
-                </h:link>
+                </p:link>
 
-                <h:link href="#{netLogin.getAuthRequestLink('GOOGLE')}" styleClass="margin_left_80">
+                <p:link href="#{netLogin.getAuthRequestLink('GOOGLE')}" styleClass="margin_left_80">
                     <h:graphicImage library="images" name="signin-google.png" style="width: 150px" />
-                </h:link>
+                </p:link>
 
                 <!--<p:link href="#{netLogin.getAuthRequestLink('TWITTER')}" value="twitter"/>-->
             </p:panelGrid>
