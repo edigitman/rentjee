@@ -33,6 +33,11 @@
                 <h:outputText value="#{msgs['register.confirm']}"/>
                 <p:password id="confirm" value="#{registerMB.confirm}" required="true"/>
 
+                <h:outputText value="#{msgs['register.agency']}"/>
+                <p:selectBooleanCheckbox value="#{registerMB.user.agency}" />
+
+                <!--TODO if agency also provie info: address -->
+
                 <h:outputText/>
                 <div class="g-recaptcha" data-sitekey="6Lddv_4SAAAAAFUqSNhzw9tS5a9QN3wU0hFIIHCC"></div>
 

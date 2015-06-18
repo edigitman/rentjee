@@ -93,8 +93,13 @@ public class DetailsMB extends AbstractMB {
         advertService.save(selected, null);
     }
 
+// FIXME Duplicate of 'isMine'
     public boolean isMyAdvert() {
         return selected != null && selected.getUser().getId().equals(user.getId());
+    }
+    
+    public boolean isMyFavAdvert() {
+        return selected != null && user.;
     }
 
     public void confirmHuman(ActionEvent actionEvent){
@@ -106,7 +111,7 @@ public class DetailsMB extends AbstractMB {
                 selected.getDeposit() != null &&
                 !new BigDecimal("0.00").equals(selected.getDeposit());
     }
-
+// FIXME Duplicate of 'isMyAdvert'
     public boolean isMine() {
         return user != null && selected.getUser().getId().equals(user.getId());
     }

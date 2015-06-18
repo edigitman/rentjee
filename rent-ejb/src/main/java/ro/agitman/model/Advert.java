@@ -50,6 +50,8 @@ public class Advert extends AbstractModel {
     private AdvertStatusEnum status;
     private Date statusUpdate;
     private Boolean withPictures;
+    private Boolean addressPrivate;
+    private Boolean noAgency;
 
     private BigDecimal value;
     private BigDecimal deposit;
@@ -238,5 +240,21 @@ public class Advert extends AbstractModel {
 
     public void setWithPictures(Boolean withPictures) {
         this.withPictures = withPictures;
+    }
+
+    public Boolean isAddressPrivate() {
+        return addressPrivate;
+    }
+
+    public void setAddressPrivate(Boolean addressPrivate) {
+        this.addressPrivate = addressPrivate;
+    }
+
+    public Boolean isNoAgency() {
+        return noAgency;
+    }
+
+    public void setNoAgency(Boolean noAgency) {
+        this.noAgency = noAgency;
     }
 }

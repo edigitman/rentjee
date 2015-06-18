@@ -151,6 +151,7 @@
                         </p:selectOneMenu>
                         <p:tooltip for="neighborhood" value="#{msgs['add.neighborhood.title']}" trackMouse="true"/>
                     </div>
+                    <!--TODO posibility to hide address from public-->
                     <h:panelGroup layout="block" id="detaliiAdresa" styleClass="ui-grid-col-8 textAlign_right">
                         <p:outputLabel for="bloc" value="#{msgs['add.bloc']}"/>
                         <p:inputText id="bloc" size="3" styleClass="textAlign_right margin_right_5"
@@ -195,6 +196,15 @@
                             <p:ajax process="@this" update="untilDate"/>
                         </p:selectBooleanCheckbox>
                         <p:tooltip for="intervalUndefined" value="#{msgs['add.available.to.undefined.title']}" trackMouse="true"/>
+                    </div>
+                </div>
+
+                <div class="ui-grid-row margin_top_20">
+                    <div class="ui-grid-col-12">
+                       <p:outputLabel for="noAgency" value="Fara agentii"/>
+                       <p:selectBooleanCheckbox id="noAgency"
+                                                style="vertical-align:middle"
+                                                value="#{addMB.advert.noAgency}"/>
                     </div>
                 </div>
 

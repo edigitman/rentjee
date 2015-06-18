@@ -5,8 +5,7 @@ use rentee;
 
 create table `md_building_type` (
   `id`       bigint(20) not null auto_increment,
-  `name`     varchar(55)
-             character set utf8 default null,
+  `name`     varchar(55) character set utf8 default null,
   `ordering` int(2) default null,
   primary key (`id`)
 )
@@ -138,7 +137,10 @@ create table `users` (
   `phone3`       varchar(20) default null,
   `regtoken`     varchar(60) default null,
   `role`         varchar(10) default null,
+  `locale`       VARCHAR(10) default 'ro',
   `net_user_id`  bigint(20),
+  `agency`       tinyint(1)  default '0',
+  `address_id`  bigint(20) default null,
   primary key (`id`),
   unique key `email` (`email`)
 )
@@ -151,6 +153,7 @@ create table `rt_net_user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `picurl` VARCHAR(100) NULL,
   `tokenexp` DATETIME NULL,
+  `token` VARCHAR(300);
   `net_type` VARCHAR(10) NULL,
   PRIMARY KEY (`id`)
 )
@@ -178,6 +181,8 @@ create table `rt_advert` (
   `negotiable`       tinyint(1) default '0',
   `value`            decimal(11, 2) default null,
   `withpictures`     tinyint(1) default '0',
+  `address_private`  tinyint(1) default '0',
+  `no_agency      `  tinyint(1) default '0',
   primary key (`id`),
   key `fk_rt_advert_adusr` (`adusr`),
   key `fk_rt_advert_buildingtypeid` (`buildingtypeid`),
@@ -253,3 +258,28 @@ create table `rt_favorites` (
   auto_increment =1000
   default charset =latin1;
 
+create table `rentee`.`rt_favorite_comment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `favorite_id` BIGINT(20) NOT NULL,
+  `text` VARCHAR(140) NULL,
+  `datecreated` datetime default null,
+  PRIMARY KEY (`id`),
+  key `fk_rt_favcomm_favorites` (`favorite_id`),
+)
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
+
+  create table `rentee`.`rt_help_data` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `question` VARCHAR(100) NULL,
+  `answer` VARCHAR(200) NULL,
+  `help_type` VARCHAR(10) NULL,
+  `hits` int 0,
+  PRIMARY KEY (`id`)
+)
+  engine =innodb
+  auto_increment =1000
+  default charset =utf8
+  collate =utf8_romanian_ci;
