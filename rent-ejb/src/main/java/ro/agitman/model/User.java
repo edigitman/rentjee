@@ -26,7 +26,7 @@ public class User extends AbstractModel {
     private String regToken;
     private boolean confirmedBl;
     private NetUser netUser;
-    private Address = address;
+    private Address address;
     private Boolean agency;
 
     @Id
@@ -124,7 +124,7 @@ public class User extends AbstractModel {
         this.netUser = netUser;
     }
 
-    public Boolean isAgency(){
+    public Boolean getAgency(){
         return this.agency;
     }
 
@@ -135,7 +135,7 @@ public class User extends AbstractModel {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     public Address getAddress(){
-        return this.Address;
+        return this.address;
     }
 
     public void setAddress(Address address){

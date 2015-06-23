@@ -41,11 +41,11 @@
                     </pretty:link>
                     Status:
                     <h:outputText value="#{detailsMB.selected.status}"
-                                  rendered="#{not detailsMB.isMine() or (detailsMB.selected.status ne 'ACTIVE' and detailsMB.selected.status ne 'RETIRED')}"/>
+                                  rendered="#{not detailsMB.isMyAdvert() or (detailsMB.selected.status ne 'ACTIVE' and detailsMB.selected.status ne 'RETIRED')}"/>
                     <p:inputSwitch id="statusSwitch" value="#{detailsMB.active}"
                                    onLabel="activ" offLabel="inactiv" label="Status: "
 
-                                   rendered="#{detailsMB.isMine() and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.selected.status eq 'RETIRED')}">
+                                   rendered="#{detailsMB.isMyAdvert() and (detailsMB.selected.status eq 'ACTIVE' or detailsMB.selected.status eq 'RETIRED')}">
                         <p:ajax listener="#{detailsMB.updateActive()}" update=":details:statusSwitch"/>
                     </p:inputSwitch>
                 </h:panelGrid>

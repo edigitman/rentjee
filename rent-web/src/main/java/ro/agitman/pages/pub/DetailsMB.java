@@ -6,12 +6,12 @@ import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import ro.agitman.AbstractMB;
-import ro.agitman.pages.account.UserMB;
 import ro.agitman.dto.AdvertStatusEnum;
 import ro.agitman.dto.DotariEnum;
 import ro.agitman.facade.AdvertService;
 import ro.agitman.model.Advert;
 import ro.agitman.model.User;
+import ro.agitman.pages.account.UserMB;
 import ro.agitman.util.RentUtils;
 
 import javax.ejb.EJB;
@@ -78,31 +78,32 @@ public class DetailsMB extends AbstractMB {
     public List<SelectItem> getDotari(Integer cat) {
         List<SelectItem> result = new ArrayList<>();
         for (DotariEnum dotare : dotari) {
-            if(dotare.getCat() == cat)
+            if (dotare.getCat() == cat)
                 result.add(new SelectItem(dotare, dotare.gethName()));
         }
         return result;
     }
 
     public void updateActive() {
-        if(active){
+        if (active) {
             selected.setStatus(AdvertStatusEnum.ACTIVE);
-        }else {
+        } else {
             selected.setStatus(AdvertStatusEnum.RETIRED);
         }
         advertService.save(selected, null);
     }
 
-// FIXME Duplicate of 'isMine'
+    // FIXME Duplicate of 'isMine'
     public boolean isMyAdvert() {
         return selected != null && selected.getUser().getId().equals(user.getId());
     }
-    
+
     public boolean isMyFavAdvert() {
-        return selected != null && user.;
+        List<Advert> favs = advertService.findFavoritesForUser(user);
+        return selected != null && favs.contains(selected);
     }
 
-    public void confirmHuman(ActionEvent actionEvent){
+    public void confirmHuman(ActionEvent actionEvent) {
         confirmHumanReq = true;
     }
 
@@ -110,10 +111,6 @@ public class DetailsMB extends AbstractMB {
         return selected != null &&
                 selected.getDeposit() != null &&
                 !new BigDecimal("0.00").equals(selected.getDeposit());
-    }
-// FIXME Duplicate of 'isMyAdvert'
-    public boolean isMine() {
-        return user != null && selected.getUser().getId().equals(user.getId());
     }
 
     public Advert getSelected() {

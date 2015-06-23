@@ -153,7 +153,7 @@ create table `rt_net_user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `picurl` VARCHAR(100) NULL,
   `tokenexp` DATETIME NULL,
-  `token` VARCHAR(300);
+  `token` VARCHAR(300),
   `net_type` VARCHAR(10) NULL,
   PRIMARY KEY (`id`)
 )
@@ -182,7 +182,7 @@ create table `rt_advert` (
   `value`            decimal(11, 2) default null,
   `withpictures`     tinyint(1) default '0',
   `address_private`  tinyint(1) default '0',
-  `no_agency      `  tinyint(1) default '0',
+  `no_agency`        tinyint(1) default '0',
   primary key (`id`),
   key `fk_rt_advert_adusr` (`adusr`),
   key `fk_rt_advert_buildingtypeid` (`buildingtypeid`),
@@ -264,19 +264,19 @@ create table `rentee`.`rt_favorite_comment` (
   `text` VARCHAR(140) NULL,
   `datecreated` datetime default null,
   PRIMARY KEY (`id`),
-  key `fk_rt_favcomm_favorites` (`favorite_id`),
+  key `fk_rt_favcomm_favorites` (`favorite_id`)
 )
   engine =innodb
   auto_increment =1000
   default charset =utf8
   collate =utf8_romanian_ci;
 
-  create table `rentee`.`rt_help_data` (
+create table `rentee`.`rt_help_data` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `question` VARCHAR(100) NULL,
   `answer` VARCHAR(200) NULL,
   `help_type` VARCHAR(10) NULL,
-  `hits` int 0,
+  `hits` int default 0,
   PRIMARY KEY (`id`)
 )
   engine =innodb

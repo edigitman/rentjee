@@ -242,7 +242,8 @@ public class Advert extends AbstractModel {
         this.withPictures = withPictures;
     }
 
-    public Boolean isAddressPrivate() {
+    @Column(name = "address_private")
+    public Boolean getAddressPrivate() {
         return addressPrivate;
     }
 
@@ -250,7 +251,8 @@ public class Advert extends AbstractModel {
         this.addressPrivate = addressPrivate;
     }
 
-    public Boolean isNoAgency() {
+    @Column(name = "no_agency")
+    public Boolean getNoAgency() {
         return noAgency;
     }
 
