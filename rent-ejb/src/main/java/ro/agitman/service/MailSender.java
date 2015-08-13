@@ -18,7 +18,7 @@ public class MailSender {
         // email: lachirie@gmail.com
         // pwd: stailachirie
 
-        sendgrid = new SendGrid("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");
+        sendgrid = new SendGrid("code");
     }
 
     public void sendEmail(String to, String subject, String body) {

@@ -53,13 +53,13 @@ public class NetLoginMB extends AbstractMB {
      * GOOGLE CONSTANTS
      */
     //Please provide a value for the CLIENT_ID constant before proceeding, set this up at https://code.google.com/apis/console/
-    private static final String GOOGLE_CLIENT_ID = "110601991148-k98gmuuci6jrkud13rlv7hfek6av9rmg.apps.googleusercontent.com";
+    private static final String GOOGLE_CLIENT_ID = "code";
     //Please provide a value for the CLIENT_SECRET constant before proceeding, set this up at https://code.google.com/apis/console/
-    private static final String GOOGLE_CLIENT_SECRET = "72gGioXxD0YrF6bTkNyY5reK";
+    private static final String GOOGLE_CLIENT_SECRET = "secret";
     //Callback URI that google will redirect to after successful authentication
     private static final String GOOGLE_CALLBACK_URI = "http://lachirie.ro/callback/g/";
     // start google authentication constants
-    private static final Collection<String> SCOPE = Arrays.asList("https://www.googleapis.com/auth/userinfo.profile;https://www.googleapis.com/auth/userinfo.email".split(";"));
+    private static final Collection<String> SCOPE = Arrays.asList("scops".split(";"));
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
     private static final String USER_INFO_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
     private static final String TOKEN_INFO_URL = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=1/";
@@ -69,16 +69,16 @@ public class NetLoginMB extends AbstractMB {
     /**
      * TWITTER CONSTANTS
      */
-    private static final String TWITTER_CLIENT_ID = "ao9wePfdfd5DpcDK2eNiM85dx";
-    private static final String TWITTER_CLIENT_SECRET = "h7EjOYcmDQ8jeFxphLQqXuWVnd0EddnOfdx1pvBCCmpE35nKUV";
+    private static final String TWITTER_CLIENT_ID = "id";
+    private static final String TWITTER_CLIENT_SECRET = "secret";
     private static final String TWITTER_CALLBACK_URI = "http://lachirie.ro/callback/t/";
 
     /**
      * FACEBOOK CONSTANTS
      */
-    private static final String FACEBOOK_CLIENT_TOKEN = "6871c65216ce1479b5ed96048c7e3c11";
-    private static final String FACEBOOK_APP_ID = "1078929275454685";
-    private static final String FACEBOOK_APP_SECRET = "649624dada428322177646ade99ab56b";
+    private static final String FACEBOOK_CLIENT_TOKEN = "token";
+    private static final String FACEBOOK_APP_ID = "id";
+    private static final String FACEBOOK_APP_SECRET = "secret";
     private static final String FACEBOOK_CALLBACK_URI = "http://lachirie.ro/callback/f/";
 
     private GoogleAuthorizationCodeFlow google;

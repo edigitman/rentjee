@@ -11,9 +11,9 @@ import javax.ejb.Singleton;
 public class ClaudinaryManager {
 
     private final Cloudinary claudinary= new Cloudinary(Cloudinary.asMap(
-            "cloud_name", "dl2g1uqtc",
-            "api_key", "471616466767527",
-            "api_secret", "o1mDIm4IWTBVEg1j2sfpXi020X8"));
+            "cloud_name", "null",
+            "api_key", "number",
+            "api_secret", "secret"));
 
     public Cloudinary getClaudinary() {
         return claudinary;
